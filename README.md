@@ -70,3 +70,4 @@ npm run build:check  # 렌더링 오류만 확인
 1. `terms.md`를 `terms-2026-10-15.md`로 보관하고(쪽 설정의 `permalink`를 `/terms-2026-10-15`로, `title`을 `이용약관 이전 버전`으로), `terms-2026-10-26.md`를 `terms.md`로 바꿉니다(`permalink: /terms`, `title: 이용약관`). 방침도 같은 방식으로 합니다.
 2. 새 `terms.md`, `privacy.md` 안의 "시행 예정 개정본입니다" 안내와 문서 사이 링크(`terms-2026-10-26` → `terms`)를 고칩니다.
 3. `_data/legal.json`의 버전 목록(현행 ↔ 이전 버전), `changelog.md`의 적용 기간 표, 홈·업데이트의 안내 문구를 바꿉니다.
+"# OMNI-bot-site" 
