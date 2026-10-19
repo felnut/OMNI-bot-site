@@ -14,18 +14,18 @@ description: OMNI의 슬래시 명령어를 분류별로 살펴보고 사용법�
 
   <div class="tools" id="tools">
     <label class="sr-only" for="q">명령어 검색</label>
-    <input class="search" id="q" type="search" placeholder="명령어나 기능으로 검색 (예: 급식, 순위, 차단)" autocomplete="off">
+    <div class="search-field">{% include icon.html name="search" %}<input class="search" id="q" type="search" placeholder="명령어나 기능으로 검색 (예: 급식, 순위, 차단)" autocomplete="off"></div>
     <div class="filters" id="filters" role="group" aria-label="분류">
       <button type="button" data-cat="" aria-pressed="true">전체</button>
       {%- for c in site.data.commands.categories %}
-      <button type="button" data-cat="{{ c.key }}" aria-pressed="false" style="--c: {{ c.color }}">{{ c.emoji }} {{ c.label }}</button>
+      <button type="button" data-cat="{{ c.key }}" aria-pressed="false" style="--c: {{ c.color }}">{% include category-icon.html category=c.key %} {{ c.label }}</button>
       {%- endfor %}
     </div>
   </div>
 
   {%- for c in site.data.commands.categories %}
   <section class="cmd-group" id="{{ c.key }}" data-cat="{{ c.key }}" style="--c: {{ c.color }}">
-    <h2>{{ c.emoji }} {{ c.label }} <small>명령어 {{ c.count }}개</small></h2>
+    <h2>{% include category-icon.html category=c.key %} {{ c.label }} <small>명령어 {{ c.count }}개</small></h2>
     <p class="blurb">{{ c.blurb }}</p>
     {%- for m in c.commands %}
     <article class="cmd" id="cmd-{{ m.name }}" data-text="{{ m.name }} {{ m.description }}{% for u in m.usages %} {{ u.syntax }} {{ u.description }}{% endfor %}">

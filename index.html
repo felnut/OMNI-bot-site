@@ -8,23 +8,23 @@ description: 미니게임·주식, 음악, 학교 정보, 서버 관리를 한 �
     <div class="hero-copy">
       <p class="eyebrow"><span class="blue-dot" aria-hidden="true"></span> YOUR SERVER. ALL TOGETHER.</p>
       <h1>모든 순간을,<br><span>OMNI</span> 하나로.</h1>
-      <p class="lead">같이 놀고, 음악을 듣고, 하루를 나누는 곳.<br>우리 디스코드 서버에 필요한 모든 것을 연결해요.</p>
+      <p class="lead">같이 놀고, 음악을 듣고, 하루를 나누는 곳.<br> 우리 디스코드 서버에 필요한 모든 것을 연결해요.</p>
       <div class="actions">
-        {% if site.data.bot.invite_url %}<a class="btn" href="{{ site.data.bot.invite_url | escape }}" rel="noopener">서버에 초대하기 <span aria-hidden="true">↗</span></a>{% endif %}
-        <a class="btn btn-ghost" href="{{ '/commands' | relative_url }}">명령어 둘러보기 <span aria-hidden="true">→</span></a>
+        {% if site.data.bot.invite_url %}<a class="btn" href="{{ site.data.bot.invite_url | escape }}" rel="noopener">서버에 초대하기 {% include icon.html name="arrow-up-right" %}</a>{% endif %}
+        <a class="btn btn-ghost" href="{{ '/commands' | relative_url }}">명령어 둘러보기 {% include icon.html name="arrow-right" %}</a>
       </div>
-      <p class="note"><span aria-hidden="true">✓</span> 무료로 시작해요 <span class="note-divider" aria-hidden="true">/</span> 한국어로 편하게</p>
+      <p class="note">{% include icon.html name="check" %} 무료로 시작해요 <span class="note-divider" aria-hidden="true">/</span> 한국어로 편하게</p>
     </div>
     <div class="hero-art" aria-label="파랑, 하늘색, 검정 곡선이 하나로 이어지는 OMNI 심볼" role="img">
       <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
       <img class="hero-mark" src="{{ '/assets/omni-mark.svg' | relative_url }}" width="560" height="560" alt="">
       <span class="orbit-label label-top">PLAY. CONNECT. ENJOY.</span>
-      <span class="float-tag tag-music"><span aria-hidden="true">♫</span> 함께 듣는 음악</span>
-      <span class="float-tag tag-game"><span aria-hidden="true">↗</span> 더 즐거운 서버</span>
+      <span class="float-tag tag-music">{% include icon.html name="music-2" %} 함께 듣는 음악</span>
+      <span class="float-tag tag-game">{% include icon.html name="arrow-up-right" %} 더 즐거운 서버</span>
       <span class="art-caption">DIFFERENT MOMENTS. ONE OMNI.</span>
     </div>
   </div>
-  <div class="wrap hero-bottom"><span>하나의 봇, 더 많은 가능성.</span><a href="#features">OMNI 알아보기 <span aria-hidden="true">↓</span></a></div>
+  <div class="wrap hero-bottom"><span>하나의 봇, 더 많은 가능성.</span><a href="#features">OMNI 알아보기 {% include icon.html name="arrow-down" %}</a></div>
 </section>
 
 <div class="stats-strip">
@@ -43,21 +43,13 @@ description: 미니게임·주식, 음악, 학교 정보, 서버 관리를 한 �
       {% for c in site.data.commands.categories %}
       <article class="cat cat-{{ c.key }}">
         <div class="cat-top"><span class="cat-index">0{{ forloop.index }}</span><span class="count">{{ c.count }} COMMANDS</span></div>
-        <div class="cat-symbol" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          {% case c.key %}
-          {% when 'game' %}<path d="M15 15h18c5 0 8 5 9 13l1 6c1 7-5 8-9 2l-3-4H17l-3 4c-4 6-10 5-9-2l1-6c1-8 4-13 9-13Z"/><path d="M16 21v8m-4-4h8m11-2h.1m5 5h.1"/>
-          {% when 'music' %}<path d="M18 34V12l22-5v23M18 19l22-5"/><ellipse cx="12" cy="35" rx="6" ry="5"/><ellipse cx="34" cy="31" rx="6" ry="5"/>
-          {% when 'school' %}<path d="M7 42V17h34v25M4 42h40M13 17V9h22v8M21 42V32h6v10M14 24h2m8 0h1m7 0h2M14 31h2m16 0h2"/>
-          {% when 'util' %}<path d="m25 7 5 13 13 5-13 5-5 13-5-13-13-5 13-5 5-13ZM8 4v8M4 8h8"/>
-          {% else %}<path d="m24 5 16 6v13c0 10-16 19-16 19S8 34 8 24V11l16-6Z"/><path d="m17 24 5 5 10-11"/>
-          {% endcase %}
-        </svg></div>
-        <h3><a href="{{ '/commands' | relative_url }}#{{ c.key }}">{{ c.label }} <span aria-hidden="true">↗</span></a></h3>
+        <div class="cat-symbol">{% include category-icon.html category=c.key %}</div>
+        <h3><a href="{{ '/commands' | relative_url }}#{{ c.key }}">{{ c.label }} {% include icon.html name="arrow-up-right" %}</a></h3>
         <p>{{ c.blurb }}</p>
         <ul class="chips">{% for m in c.commands limit: 3 %}<li><a href="{{ '/commands' | relative_url }}#cmd-{{ m.name }}">/{{ m.name }}</a></li>{% endfor %}</ul>
       </article>
       {% endfor %}
-      <a class="cat cat-more" href="{{ '/commands' | relative_url }}"><span class="eyebrow">FIND YOUR COMMAND</span><strong>무엇을 해 볼까요?</strong><span>{{ site.data.bot.command_total }}개의 명령어 둘러보기 <span aria-hidden="true">→</span></span><img src="{{ '/assets/omni-mark.svg' | relative_url }}" width="150" height="150" alt=""></a>
+      <a class="cat cat-more" href="{{ '/commands' | relative_url }}"><span class="eyebrow">FIND YOUR COMMAND</span><strong>무엇을 해 볼까요?</strong><span>{{ site.data.bot.command_total }}개의 명령어 둘러보기 {% include icon.html name="arrow-right" %}</span><img src="{{ '/assets/omni-mark.svg' | relative_url }}" width="150" height="150" alt=""></a>
     </div>
   </div>
 </section>
@@ -65,7 +57,8 @@ description: 미니게임·주식, 음악, 학교 정보, 서버 관리를 한 �
 <section class="section demo-section">
   <div class="wrap demo-grid">
     <div class="demo-copy"><p class="eyebrow">JUST TYPE /</p><h2>대화하듯 가볍게.<br>슬래시 하나로 시작.</h2><p class="sub">채팅창에 <code>/</code>를 입력하고 하고 싶은 일을 골라 보세요. OMNI가 바로 함께할게요.</p><ol class="steps"><li><span>01</span><div><strong>서버에 OMNI 초대하기</strong><p>함께할 서버를 선택하고 권한을 확인해요.</p></div></li><li><span>02</span><div><strong>채팅창에서 명령어 고르기</strong><p>게임, 음악, 학교 정보까지 바로 찾아요.</p></div></li><li><span>03</span><div><strong>친구들과 더 즐겁게</strong><p>평범했던 서버의 일상이 조금 더 다채로워져요.</p></div></li></ol></div>
-    <div class="demo-panel">      <div class="demo" id="demo">
+    <div class="demo-panel">
+      <div class="demo" id="demo">
         <div class="demo-top"><span class="mono">#일반</span><span>예시 화면</span></div>
         <div class="demo-feed" id="demo-feed" aria-hidden="true">
           <div class="msg">
@@ -119,32 +112,32 @@ description: 미니게임·주식, 음악, 학교 정보, 서버 관리를 한 �
     <p class="sub">처음 쓰기 전에 많이 궁금해하는 것들이에요.</p>
     <div class="faq">
       <details>
-        <summary>무료인가요?</summary>
+        <summary>무료인가요?{% include icon.html name="plus" %}</summary>
         <div class="ans"><p>네, 무료예요. 봇 안의 돈과 주식은 게임용 데이터라서 현금으로 바꿀 수 없어요.</p></div>
       </details>
       <details>
-        <summary>어떻게 초대하나요?</summary>
+        <summary>어떻게 초대하나요?{% include icon.html name="plus" %}</summary>
         <div class="ans"><p>위의 &lsquo;서버에 초대하기&rsquo;를 눌러 서버를 고르고 요청한 권한을 허용하면 돼요. 서버를 관리할 수 있는 권한이 있어야 초대할 수 있어요.</p></div>
       </details>
       <details>
-        <summary>왜 이런 권한이 필요한가요?</summary>
+        <summary>왜 이런 권한이 필요한가요?{% include icon.html name="plus" %}</summary>
         <div class="ans">
           <p>메시지 보내기와 음성 채널 연결은 명령어 응답과 음악 재생에, 메시지 관리와 채널 관리는 메시지 정리·슬로우모드·채널 잠금에 써요. 멤버 추방·차단·타임아웃은 서버 운영 명령에, 별명 변경은 서버에서 봇 이름을 OMNI로 맞추는 데 써요.</p>
           <p>관리자(Administrator) 권한은 요청하지 않아요.</p>
         </div>
       </details>
       <details>
-        <summary>명령어가 보이지 않아요</summary>
+        <summary>명령어가 보이지 않아요{% include icon.html name="plus" %}</summary>
         <div class="ans">
           <p>디스코드를 새로고침(Ctrl+R)해 보세요. 서버 운영 명령은 서버 관리 권한이 있는 역할에게만 보여요. 서버 설정의 연동에서 OMNI를 열면 명령어별 사용 권한을 바꿀 수 있어요.</p>
         </div>
       </details>
       <details>
-        <summary>어떤 정보를 저장하나요?</summary>
+        <summary>어떤 정보를 저장하나요?{% include icon.html name="plus" %}</summary>
         <div class="ans"><p>게임 기능에는 Discord 사용자 ID와 잔액, 출석 기록처럼 기능에 필요한 정보만 저장해요. 마지막으로 쓴 뒤 12개월이 지나면 삭제돼요. 항목별 보유 기간은 <a href="{{ '/privacy' | relative_url }}">개인정보 처리방침</a>에서 확인할 수 있어요.</p></div>
       </details>
       <details>
-        <summary>음악이 재생되지 않아요</summary>
+        <summary>음악이 재생되지 않아요{% include icon.html name="plus" %}</summary>
         <div class="ans"><p>음성 채널에 먼저 들어간 뒤 <code>/음악 재생</code>을 써 보세요. 외부 서비스 사정으로 일부 곡은 재생되지 않을 수 있어요. 저작권 관련 신고나 문의는 <a href="mailto:{{ site.data.bot.contact }}">{{ site.data.bot.contact }}</a>로 보내 주세요.</p></div>
       </details>
     </div>

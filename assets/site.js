@@ -3,6 +3,30 @@
   "use strict";
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  // Content stays visible without JS; animate each section only when it enters view.
+  var motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+  if (!motionPreference.matches && "IntersectionObserver" in window && Element.prototype.animate) {
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting || motionPreference.matches) return;
+        entry.target.animate(
+          [{ opacity: 0, transform: "translateY(22px)" }, { opacity: 1, transform: "translateY(0)" }],
+          { duration: 650, easing: "cubic-bezier(.2,.7,.2,1)" }
+        );
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".section-heading, .cat, .demo-copy, .demo-panel, .points > div, .faq details").forEach(function (el) {
+      revealObserver.observe(el);
+    });
+    motionPreference.addEventListener("change", function (event) {
+      if (event.matches) {
+        revealObserver.disconnect();
+        document.getAnimations().forEach(function (animation) { animation.cancel(); });
+      }
+    });
+  }
+
   /* ---------- 첫 화면 데모 ---------- */
   var demo = document.getElementById("demo");
   if (demo) {
@@ -49,17 +73,19 @@
       var i = 0;
       var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
       (async function loop() {
-        while (true) {
+        while (!motionPreference.matches) {
           var scene = scenes[i % scenes.length];
           i += 1;
           typed.textContent = "";
           for (var k = 1; k <= scene.cmd.length; k++) {
+            if (motionPreference.matches) { picker.hidden = true; typed.textContent = ""; return; }
             typed.textContent = scene.cmd.slice(0, k);
             showPicker(typed.textContent);
             await wait(95);
           }
           await wait(550);
           picker.hidden = true;
+          if (motionPreference.matches) { typed.textContent = ""; return; }
           typed.textContent = "";
           addExchange(scene);
           await wait(4200);

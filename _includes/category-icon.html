@@ -1,0 +1,7 @@
+{%- case include.category -%}
+{%- when 'game' -%}{% include icon.html name="gamepad-2" %}
+{%- when 'music' -%}{% include icon.html name="music-2" %}
+{%- when 'school' -%}{% include icon.html name="school" %}
+{%- when 'util' -%}{% include icon.html name="sparkles" %}
+{%- else -%}{% include icon.html name="shield-check" %}
+{%- endcase -%}
