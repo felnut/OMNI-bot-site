@@ -1,0 +1,14 @@
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="{{ '/' | relative_url }}" aria-label="OMNI 첫 화면"><span class="slash" aria-hidden="true">/</span>OMNI</a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="{{ '/commands' | relative_url }}"{% if page.url contains '/commands' %} aria-current="page"{% endif %}>명령어</a>
+      <a href="{{ '/updates' | relative_url }}"{% if page.url contains '/updates' %} aria-current="page"{% endif %}>업데이트</a>
+      <a href="{{ '/terms' | relative_url }}"{% if page.url contains '/terms' %} aria-current="page"{% endif %}>이용약관</a>
+      <a href="{{ '/privacy' | relative_url }}"{% if page.url contains '/privacy' %} aria-current="page"{% endif %}>개인정보</a>
+    </nav>
+    {%- if site.data.bot.invite_url %}
+    <a class="btn btn-small" href="{{ site.data.bot.invite_url | escape }}" rel="noopener">서버에 초대하기</a>
+    {%- endif %}
+  </div>
+</header>

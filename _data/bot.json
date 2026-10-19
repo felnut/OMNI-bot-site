@@ -1,0 +1,11 @@
+{
+  "name": "OMNI",
+  "command_total": 32,
+  "category_total": 5,
+  "subcommand_total": 69,
+  "invite_url": "https://discord.com/oauth2/authorize?client_id=1466808879680848014&permissions=1374459882518&scope=bot%20applications.commands",
+  "invite_permissions": "1374459882518",
+  "contact": "dev@felnut.com",
+  "github": "https://github.com/felnut/OMNI-Bot",
+  "generated_at": "2026-10-19"
+}

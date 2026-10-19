@@ -1,0 +1,146 @@
+---
+layout: wide
+body_class: home
+description: 미니게임·주식, 음악, 학교 정보, 서버 관리를 한 봇에 담은 한국어 디스코드 봇 OMNI. 슬래시 명령어를 무료로 쓸 수 있어요.
+---
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>게임부터 급식까지,<br>슬래시 하나로.</h1>
+      <p class="lead">OMNI는 미니게임과 주식, 음악, 학교 정보, 서버 관리를 한 봇에 담은 한국어 디스코드 봇이에요. 슬래시 명령어 {{ site.data.bot.command_total }}개를 무료로 쓸 수 있어요.</p>
+      <div class="actions">
+        {%- if site.data.bot.invite_url %}
+        <a class="btn" href="{{ site.data.bot.invite_url | escape }}" rel="noopener">서버에 초대하기</a>
+        {%- endif %}
+        <a class="btn btn-ghost" href="{{ '/commands' | relative_url }}">명령어 보기</a>
+      </div>
+      <p class="note">초대한 뒤 채팅창에 <code>/</code>만 입력하면 바로 시작할 수 있어요.</p>
+    </div>
+
+    <div>
+      <div class="demo" id="demo">
+        <div class="demo-top"><span class="mono">#일반</span><span>예시 화면</span></div>
+        <div class="demo-feed" id="demo-feed" aria-hidden="true">
+          <div class="msg">
+            <div class="av">민</div>
+            <div class="who">민서<span>오늘 오후 5:02</span></div>
+            <div class="body"><span class="cmd-used">/랭킹</span></div>
+          </div>
+          <div class="msg">
+            <div class="av">/</div>
+            <div class="who">OMNI<span>오늘 오후 5:02</span></div>
+            <div class="body">
+              <div class="reply" style="--c:#E8590C"><b>🏆 전체 서버 돈 랭킹 TOP 10</b><br>🥇 @민서 <b>12,480,000 원</b><br>🥈 @준호 <b>9,310,000 원</b><br>🥉 @하린 <b>7,055,000 원</b></div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-input" aria-hidden="true">
+          <span id="demo-typed"></span><span class="caret"></span>
+          <div class="picker" id="demo-picker" hidden><ul id="demo-list"></ul></div>
+        </div>
+        <p class="demo-foot">닉네임과 순위, 곡 목록은 모두 예시예요.</p>
+      </div>
+      <p class="sr-only">예시 화면: 채팅창에 슬래시를 입력하면 명령어 목록이 나타나고, /랭킹을 실행하면 돈 순위가, /음악추천 차트를 실행하면 음악 차트가 표시돼요.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="wrap">
+    <h2>OMNI가 하는 일</h2>
+    <p class="sub">분류의 이름이나 명령어를 누르면 사용법을 볼 수 있어요.</p>
+    <div class="cats">
+      {%- for c in site.data.commands.categories %}
+      <div class="cat" style="--c: {{ c.color }}">
+        <div class="bar"></div>
+        <div class="name">
+          <h3><a href="{{ '/commands' | relative_url }}#{{ c.key }}">{{ c.emoji }} {{ c.label }}</a></h3>
+          <span class="count">명령어 {{ c.count }}개</span>
+        </div>
+        <div class="what">
+          <p>{{ c.blurb }}</p>
+          <ul class="chips">
+            {%- for m in c.commands %}
+            <li><a href="{{ '/commands' | relative_url }}#cmd-{{ m.name }}">/{{ m.name }}</a></li>
+            {%- endfor %}
+          </ul>
+        </div>
+      </div>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <h2>이런 점이 편해요</h2>
+    <p class="sub">자주 쓰는 기능을 이렇게 다듬었어요.</p>
+    <div class="points">
+      <div>
+        <h3>음악 차트를 한 번에 보고 바로 틀어요</h3>
+        <p><code>/음악추천 차트</code>로 유튜브 뮤직, 멜론, 스포티파이의 TOP 10을 나눠서 보고, <code>/음악추천 받기</code>로 고른 곡을 바로 재생해요. 추천 기준 사이트는 서버 운영자가 정할 수 있어요.</p>
+      </div>
+      <div>
+        <h3>학교를 여러 곳 등록해요</h3>
+        <p>서버마다 학교를 5곳까지 등록하고, <code>/급식</code>, <code>/시간표</code>, <code>/학사일정</code>에서 학교를 골라 조회해요. 급식 알림은 매일 아침 채널로 올려줘요.</p>
+      </div>
+      <div>
+        <h3>운영 명령은 운영자만 써요</h3>
+        <p>경고, 차단, 타임아웃 같은 서버 운영 명령은 서버 소유자와 서버 관리 권한이 있는 역할만 쓸 수 있어요. 관리자 권한은 요청하지 않아요.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="wrap">
+    <h2>자주 묻는 질문</h2>
+    <p class="sub">처음 쓰기 전에 많이 궁금해하는 것들이에요.</p>
+    <div class="faq">
+      <details>
+        <summary>무료인가요?</summary>
+        <div class="ans"><p>네, 무료예요. 봇 안의 돈과 주식은 게임용 데이터라서 현금으로 바꿀 수 없어요.</p></div>
+      </details>
+      <details>
+        <summary>어떻게 초대하나요?</summary>
+        <div class="ans"><p>위의 &lsquo;서버에 초대하기&rsquo;를 눌러 서버를 고르고 요청한 권한을 허용하면 돼요. 서버를 관리할 수 있는 권한이 있어야 초대할 수 있어요.</p></div>
+      </details>
+      <details>
+        <summary>왜 이런 권한이 필요한가요?</summary>
+        <div class="ans">
+          <p>메시지 보내기와 음성 채널 연결은 명령어 응답과 음악 재생에, 메시지 관리와 채널 관리는 메시지 정리·슬로우모드·채널 잠금에 써요. 멤버 추방·차단·타임아웃은 서버 운영 명령에, 별명 변경은 서버에서 봇 이름을 OMNI로 맞추는 데 써요.</p>
+          <p>관리자(Administrator) 권한은 요청하지 않아요.</p>
+        </div>
+      </details>
+      <details>
+        <summary>명령어가 보이지 않아요</summary>
+        <div class="ans">
+          <p>디스코드를 새로고침(Ctrl+R)해 보세요. 서버 운영 명령은 서버 관리 권한이 있는 역할에게만 보여요. 서버 설정의 연동에서 OMNI를 열면 명령어별 사용 권한을 바꿀 수 있어요.</p>
+        </div>
+      </details>
+      <details>
+        <summary>어떤 정보를 저장하나요?</summary>
+        <div class="ans"><p>게임 기능에는 Discord 사용자 ID와 잔액, 출석 기록처럼 기능에 필요한 정보만 저장해요. 마지막으로 쓴 뒤 12개월이 지나면 삭제돼요. 항목별 보유 기간은 <a href="{{ '/privacy' | relative_url }}">개인정보 처리방침</a>에서 확인할 수 있어요.</p></div>
+      </details>
+      <details>
+        <summary>음악이 재생되지 않아요</summary>
+        <div class="ans"><p>음성 채널에 먼저 들어간 뒤 <code>/음악 재생</code>을 써 보세요. 외부 서비스 사정으로 일부 곡은 재생되지 않을 수 있어요. 저작권 관련 신고나 문의는 <a href="mailto:{{ site.data.bot.contact }}">{{ site.data.bot.contact }}</a>로 보내 주세요.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="section closing">
+  <div class="wrap">
+    <h2>초대하고 <span class="mono">/</span> 만 입력해 보세요</h2>
+    <p class="sub">따로 설정하지 않아도 바로 쓸 수 있어요.</p>
+    <div class="actions">
+      {%- if site.data.bot.invite_url %}
+      <a class="btn" href="{{ site.data.bot.invite_url | escape }}" rel="noopener">서버에 초대하기</a>
+      {%- endif %}
+      <a class="btn btn-ghost" href="{{ '/commands' | relative_url }}">명령어 보기</a>
+    </div>
+  </div>
+</section>
+
+<script type="application/json" id="demo-data">[{% assign first = true %}{% for c in site.data.commands.categories %}{% for m in c.commands %}{% unless first %},{% endunless %}{% assign first = false %}{"n":"/{{ m.name }}","d":{{ m.description | jsonify }},"c":"{{ c.color }}"}{% endfor %}{% endfor %}]</script>

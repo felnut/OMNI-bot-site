@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko">
+<head>
+{% include head.html %}
+</head>
+<body class="legal">
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+{% include header.html %}
+<main id="main" class="wrap legal-wrap">
+  <article class="prose legal-doc">
+{{ content }}
+  </article>
+
+  <aside class="legal-side" aria-label="문서 안내">
+    {%- assign group = site.data.legal[page.legal] %}
+    {%- if group %}
+    <section class="versions">
+      <h2>{{ group.name }} 버전</h2>
+      <ul>
+        {%- for v in group.versions %}
+        <li{% if v.path and v.path == page.permalink %} class="is-current"{% endif %}>
+          {%- if v.path %}
+          <a href="{{ v.path | relative_url }}"{% if v.path == page.permalink %} aria-current="page"{% endif %}><b>{{ v.label }}</b><span>{{ v.note }}</span></a>
+          {%- else %}
+          <a href="{{ v.url }}" rel="noopener"><b>{{ v.label }}</b><span>{{ v.note }}</span></a>
+          {%- endif %}
+        </li>
+        {%- endfor %}
+      </ul>
+    </section>
+    {%- endif %}
+    <details class="toc" id="toc" hidden open>
+      <summary>목차</summary>
+      <ol id="toc-list"></ol>
+    </details>
+  </aside>
+</main>
+{% include footer.html %}
+<script src="{{ '/assets/site.js' | relative_url }}" defer></script>
+</body>
+</html>

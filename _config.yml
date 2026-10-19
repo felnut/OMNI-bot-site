@@ -1,0 +1,25 @@
+title: OMNI
+description: 게임, 음악, 학교 정보, 서버 관리를 한 봇에 담은 한국어 디스코드 봇 OMNI
+lang: ko
+url: https://felnut.github.io
+# ⚠️ baseurl은 게시하는 주소에 맞춰야 합니다 (README의 '게시' 참고).
+#  - 프로젝트 사이트(felnut.github.io/저장소이름)면 "/저장소이름"
+#  - 사용자 사이트(felnut.github.io 저장소)나 사용자 지정 도메인이면 ""
+baseurl: /OMNI-Bot
+
+# 게시하지 않을 파일
+exclude:
+  - README.md
+  - package.json
+  - package-lock.json
+  - node_modules
+  - tools
+  - .preview
+  - .gitignore
+
+# 모든 페이지에 사이트 공통 틀(머리글·바닥글)을 씌운다. 첫 화면과 명령어 페이지는 각자 layout: wide 를 지정한다
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
