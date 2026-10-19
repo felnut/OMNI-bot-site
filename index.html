@@ -3,111 +3,83 @@ layout: wide
 body_class: home
 description: 미니게임·주식, 음악, 학교 정보, 서버 관리를 한 봇에 담은 한국어 디스코드 봇 OMNI. 슬래시 명령어를 무료로 쓸 수 있어요.
 ---
-<section class="hero">
+<section class="hero product-hero">
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <p class="eyebrow"><span class="blue-dot" aria-hidden="true"></span> YOUR SERVER. ALL TOGETHER.</p>
-      <h1>모든 순간을,<br><span>OMNI</span> 하나로.</h1>
-      <p class="lead">같이 놀고, 음악을 듣고, 하루를 나누는 곳.<br> 우리 디스코드 서버에 필요한 모든 것을 연결해요.</p>
+      <p class="eyebrow">친구들과 쓰는 한국어 디스코드 봇</p>
+      <h1>오늘 급식부터<br>같이 듣는 음악까지,<br><span>우리 서버에서.</span></h1>
+      <p class="lead">점심 메뉴를 확인하고, 친구와 순위를 겨루고, 음성 채널에서 음악을 들어요. 학교·게임·음악 명령어를 OMNI 하나에서 찾을 수 있어요.</p>
       <div class="actions">
-        {% if site.data.bot.invite_url %}<a class="btn" href="{{ site.data.bot.invite_url | escape }}" rel="noopener">서버에 초대하기 {% include icon.html name="arrow-up-right" %}</a>{% endif %}
-        <a class="btn btn-ghost" href="{{ '/commands' | relative_url }}">명령어 둘러보기 {% include icon.html name="arrow-right" %}</a>
+        {% if site.data.bot.invite_url %}<a class="btn" href="{{ site.data.bot.invite_url | escape }}" rel="noopener">서버에 OMNI 추가 {% include icon.html name="arrow-up-right" %}</a>{% endif %}
+        <a class="btn btn-ghost" href="{{ '/commands' | relative_url }}">명령어 찾기 {% include icon.html name="search" %}</a>
       </div>
-      <p class="note">{% include icon.html name="check" %} 무료로 시작해요 <span class="note-divider" aria-hidden="true">/</span> 한국어로 편하게</p>
+      <div class="invite-trust">
+        <p>{% include icon.html name="shield-check" %} <strong>관리자(Administrator) 권한을 요청하지 않아요.</strong></p>
+        <p>메시지·음성·멤버 관리 등 기능별 권한은 필요해요.<br><a href="#permissions">요청 권한 보기</a><span aria-hidden="true"> · </span><a href="{{ '/privacy' | relative_url }}">저장하는 정보 확인</a></p>
+      </div>
     </div>
-    <div class="hero-art" aria-label="파랑, 하늘색, 검정 곡선이 하나로 이어지는 OMNI 심볼" role="img">
-      <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
-      <img class="hero-mark" src="{{ '/assets/omni-mark.svg' | relative_url }}" width="560" height="560" alt="">
-      <span class="orbit-label label-top">PLAY. CONNECT. ENJOY.</span>
-      <span class="float-tag tag-music">{% include icon.html name="music-2" %} 함께 듣는 음악</span>
-      <span class="float-tag tag-game">{% include icon.html name="arrow-up-right" %} 더 즐거운 서버</span>
-      <span class="art-caption">DIFFERENT MOMENTS. ONE OMNI.</span>
+    <div class="product-demo" id="demo">
+      <div class="server-bar"><img src="{{ '/assets/omni-mark.svg' | relative_url }}" width="32" height="32" alt=""><strong>방과 후 아지트</strong><span>사용 예시</span></div>
+      <div class="channel-bar"><span aria-hidden="true">#</span> 오늘-뭐하지 <span class="channel-topic">우리 서버의 하루</span></div>
+      <div class="scene-choices" id="scene-choices" role="group" aria-label="응답 예시 선택" hidden>
+        <button type="button" data-scene="school" aria-pressed="true">{% include icon.html name="school" %} /급식</button>
+        <button type="button" data-scene="music" aria-pressed="false">{% include icon.html name="music-2" %} /음악추천</button>
+        <button type="button" data-scene="game" aria-pressed="false">{% include icon.html name="gamepad-2" %} /랭킹</button>
+      </div>
+      <div id="demo-panels" aria-live="polite" aria-atomic="true">
+        <div class="scene" data-scene="school">
+          <div class="chat-person"><span class="chat-avatar">하</span><div><strong>하린</strong><p>오늘 점심 뭐 나와?</p></div></div>
+          <div class="slash-bubble">/급식</div>
+          <div class="bot-response"><img src="{{ '/assets/omni-mark.svg' | relative_url }}" width="32" height="32" alt=""><div><p class="bot-name">OMNI <span>앱</span></p><div class="discord-embed"><p class="embed-label">학교 · 급식 조회</p><h2>오늘의 중식</h2><p>현미밥 · 소고기미역국<br>간장불고기 · 배추김치 · 사과</p><span class="embed-foot">가상의 학교와 메뉴로 구성한 응답 예시</span></div></div></div>
+          <p class="scene-setup">먼저 <code>/학교등록 검색 &lt;이름&gt;</code>으로 학교를 등록해 주세요.</p>
+          <a class="scene-guide" href="{{ '/commands' | relative_url }}#cmd-급식">급식 사용법 {% include icon.html name="arrow-right" %}</a>
+        </div>
+        <div class="scene" data-scene="music" hidden>
+          <div class="chat-person"><span class="chat-avatar">준</span><div><strong>준호</strong><p>게임하면서 들을 노래 골라 보자.</p></div></div>
+          <div class="slash-bubble">/음악추천 차트</div>
+          <div class="bot-response"><img src="{{ '/assets/omni-mark.svg' | relative_url }}" width="32" height="32" alt=""><div><p class="bot-name">OMNI <span>앱</span></p><div class="discord-embed"><p class="embed-label">음악 · 사이트별 차트</p><h2>다음 곡, 같이 골라요.</h2><ol class="sample-ranking"><li><span>01</span> 오늘의 플레이리스트</li><li><span>02</span> 집으로 가는 길</li><li><span>03</span> 우리의 여름</li></ol><span class="embed-foot">곡명과 순위는 가상의 예시입니다.</span></div></div></div>
+          <p class="scene-setup">재생하려면 음성 채널에 입장한 뒤 <code>/음악 재생 &lt;검색어&gt;</code>를 사용해요.</p>
+          <a class="scene-guide" href="{{ '/commands' | relative_url }}#cmd-음악">음악 사용법 {% include icon.html name="arrow-right" %}</a>
+        </div>
+        <div class="scene" data-scene="game" hidden>
+          <div class="chat-person"><span class="chat-avatar">민</span><div><strong>민서</strong><p>출석했어! 지금 내 순위는?</p></div></div>
+          <div class="slash-bubble">/랭킹</div>
+          <div class="bot-response"><img src="{{ '/assets/omni-mark.svg' | relative_url }}" width="32" height="32" alt=""><div><p class="bot-name">OMNI <span>앱</span></p><div class="discord-embed"><p class="embed-label">게임 · 전체 서버 돈 순위</p><h2>오늘의 랭킹</h2><ol class="sample-ranking"><li><span>01</span> 민서 <b>12,480,000 원</b></li><li><span>02</span> 준호 <b>9,310,000 원</b></li><li><span>03</span> 하린 <b>7,055,000 원</b></li></ol><span class="embed-foot">닉네임·잔액·순위는 예시입니다.</span></div></div></div>
+          <p class="scene-setup">출석과 미니게임으로 모으는 게임용 돈이에요. 현금으로 바꿀 수 없어요.</p>
+          <a class="scene-guide" href="{{ '/commands' | relative_url }}#cmd-랭킹">랭킹 사용법 {% include icon.html name="arrow-right" %}</a>
+        </div>
+      </div>
+      <p class="demo-disclaimer">명령어를 골라 응답을 살펴보세요. 실제 Discord 서버에 연결되지 않는 예시입니다.</p>
     </div>
   </div>
-  <div class="wrap hero-bottom"><span>하나의 봇, 더 많은 가능성.</span><a href="#features">OMNI 알아보기 {% include icon.html name="arrow-down" %}</a></div>
 </section>
-
-<div class="stats-strip">
-  <div class="wrap stats">
-    <p><strong>{{ site.data.bot.command_total }}<span>개</span></strong><span>슬래시 명령어</span></p>
-    <p><strong>{{ site.data.bot.category_total }}<span>가지</span></strong><span>다채로운 기능</span></p>
-    <p><strong>무료</strong><span>부담 없이, 모든 기능</span></p>
-    <p class="stat-message">복잡한 설정 대신,<br><b>슬래시 하나면 충분해요.</b></p>
-  </div>
-</div>
-
+<section class="use-strip"><div class="wrap"><p><strong>같이 노는 친구들에게</strong> 게임과 음악</p><p><strong>같은 학교 친구들에게</strong> 급식과 시간표</p><p><strong>서버를 맡은 운영자에게</strong> 권한별 관리 명령</p></div></section>
 <section class="section features-section" id="features">
   <div class="wrap">
-    <div class="section-heading"><div><p class="eyebrow">MADE FOR YOUR EVERYDAY</p><h2>어떤 순간에도,<br>OMNI가 함께.</h2></div><p class="sub">신나는 게임 한 판부터 매일의 학교 소식까지.<br>서버의 일상을 채우는 다섯 가지 기능을 만나 보세요.</p></div>
+    <div class="section-heading"><div><h2>대화가 끝나도,<br>같이 할 일은 계속.</h2><p class="sub">자주 쓰는 게임과 음악을 중심으로, 우리 서버에 필요한 기능을 골라 쓰세요.</p></div><a href="{{ '/commands' | relative_url }}" class="text-link">명령어 {{ site.data.bot.command_total }}개 모두 보기 {% include icon.html name="arrow-right" %}</a></div>
     <div class="cats">
       {% for c in site.data.commands.categories %}
       <article class="cat cat-{{ c.key }}">
-        <div class="cat-top"><span class="cat-index">0{{ forloop.index }}</span><span class="count">{{ c.count }} COMMANDS</span></div>
         <div class="cat-symbol">{% include category-icon.html category=c.key %}</div>
+        <p class="cat-audience">{% case c.key %}{% when 'game' %}친구와 가볍게 한 판{% when 'music' %}같은 채널, 같은 플레이리스트{% when 'school' %}학교 친구들과{% when 'util' %}함께 쓰는 도구{% else %}서버 운영자를 위해{% endcase %}</p>
         <h3><a href="{{ '/commands' | relative_url }}#{{ c.key }}">{{ c.label }} {% include icon.html name="arrow-up-right" %}</a></h3>
         <p>{{ c.blurb }}</p>
+        <span class="count">명령어 {{ c.count }}개</span>
         <ul class="chips">{% for m in c.commands limit: 3 %}<li><a href="{{ '/commands' | relative_url }}#cmd-{{ m.name }}">/{{ m.name }}</a></li>{% endfor %}</ul>
       </article>
       {% endfor %}
-      <a class="cat cat-more" href="{{ '/commands' | relative_url }}"><span class="eyebrow">FIND YOUR COMMAND</span><strong>무엇을 해 볼까요?</strong><span>{{ site.data.bot.command_total }}개의 명령어 둘러보기 {% include icon.html name="arrow-right" %}</span><img src="{{ '/assets/omni-mark.svg' | relative_url }}" width="150" height="150" alt=""></a>
     </div>
   </div>
 </section>
-
-<section class="section demo-section">
-  <div class="wrap demo-grid">
-    <div class="demo-copy"><p class="eyebrow">JUST TYPE /</p><h2>대화하듯 가볍게.<br>슬래시 하나로 시작.</h2><p class="sub">채팅창에 <code>/</code>를 입력하고 하고 싶은 일을 골라 보세요. OMNI가 바로 함께할게요.</p><ol class="steps"><li><span>01</span><div><strong>서버에 OMNI 초대하기</strong><p>함께할 서버를 선택하고 권한을 확인해요.</p></div></li><li><span>02</span><div><strong>채팅창에서 명령어 고르기</strong><p>게임, 음악, 학교 정보까지 바로 찾아요.</p></div></li><li><span>03</span><div><strong>친구들과 더 즐겁게</strong><p>평범했던 서버의 일상이 조금 더 다채로워져요.</p></div></li></ol></div>
-    <div class="demo-panel">
-      <div class="demo" id="demo">
-        <div class="demo-top"><span class="mono">#일반</span><span>예시 화면</span></div>
-        <div class="demo-feed" id="demo-feed" aria-hidden="true">
-          <div class="msg">
-            <div class="av">민</div>
-            <div class="who">민서<span>오늘 오후 5:02</span></div>
-            <div class="body"><span class="cmd-used">/랭킹</span></div>
-          </div>
-          <div class="msg">
-            <div class="av bot-avatar" aria-hidden="true"></div>
-            <div class="who">OMNI<span>오늘 오후 5:02</span></div>
-            <div class="body">
-              <div class="reply" style="--c:#E8590C"><b>🏆 전체 서버 돈 랭킹 TOP 10</b><br>🥇 @민서 <b>12,480,000 원</b><br>🥈 @준호 <b>9,310,000 원</b><br>🥉 @하린 <b>7,055,000 원</b></div>
-            </div>
-          </div>
-        </div>
-        <div class="demo-input" aria-hidden="true">
-          <span id="demo-typed"></span><span class="caret"></span>
-          <div class="picker" id="demo-picker" hidden><ul id="demo-list"></ul></div>
-        </div>
-        <p class="demo-foot">닉네임과 순위, 곡 목록은 모두 예시예요.</p>
-      </div>
-      <p class="sr-only">예시 화면: 채팅창에 슬래시를 입력하면 명령어 목록이 나타나고, /랭킹을 실행하면 돈 순위가, /음악추천 차트를 실행하면 음악 차트가 표시돼요.</p></div>
-  </div>
+<section class="section setup-section" id="start">
+  <div class="wrap"><h2>초대 전에 확인하고,<br>쓸 기능만 준비하세요.</h2><div class="points">
+    <div><h3>서버와 권한 선택</h3><p>서버를 관리할 수 있는 계정으로 초대하고 요청 권한을 확인해요. 운영 명령은 서버 소유자와 서버 관리 권한이 있는 역할만 사용할 수 있어요.</p><a href="#permissions">권한 설명 보기</a></div>
+    <div><h3>음악은 음성 채널에서</h3><p>음성 채널에 먼저 입장한 뒤 <code>/음악 재생</code>을 실행해요. 외부 서비스 사정에 따라 일부 곡은 재생되지 않을 수 있어요.</p><a href="{{ '/commands' | relative_url }}#cmd-음악">재생 명령어 보기</a></div>
+    <div><h3>학교 정보는 등록 후에</h3><p><code>/학교등록 검색</code>으로 학교를 등록해요. 서버마다 최대 5곳을 등록할 수 있고, 급식 알림은 운영자가 채널을 지정해야 해요.</p><a href="{{ '/commands' | relative_url }}#cmd-학교등록">학교 등록 방법</a></div>
+  </div></div>
 </section>
-<section class="section">
-  <div class="wrap">
-    <p class="eyebrow">THOUGHTFULLY CONNECTED</p>
-    <h2>작은 디테일까지, 편하게.</h2>
-    <p class="sub">자주 쓰는 기능을 이렇게 다듬었어요.</p>
-    <div class="points">
-      <div>
-        <h3>음악 차트를 한 번에 보고 바로 틀어요</h3>
-        <p><code>/음악추천 차트</code>로 유튜브 뮤직, 멜론, 스포티파이의 TOP 10을 나눠서 보고, <code>/음악추천 받기</code>로 고른 곡을 바로 재생해요. 추천 기준 사이트는 서버 운영자가 정할 수 있어요.</p>
-      </div>
-      <div>
-        <h3>학교를 여러 곳 등록해요</h3>
-        <p>서버마다 학교를 5곳까지 등록하고, <code>/급식</code>, <code>/시간표</code>, <code>/학사일정</code>에서 학교를 골라 조회해요. 급식 알림은 매일 아침 채널로 올려줘요.</p>
-      </div>
-      <div>
-        <h3>운영 명령은 운영자만 써요</h3>
-        <p>경고, 차단, 타임아웃 같은 서버 운영 명령은 서버 소유자와 서버 관리 권한이 있는 역할만 쓸 수 있어요. 관리자 권한은 요청하지 않아요.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section class="section" id="faq">
   <div class="wrap">
-    <p class="eyebrow">A LITTLE HELP</p>
     <h2>궁금한 게 있나요?</h2>
     <p class="sub">처음 쓰기 전에 많이 궁금해하는 것들이에요.</p>
     <div class="faq">
@@ -119,7 +91,7 @@ description: 미니게임·주식, 음악, 학교 정보, 서버 관리를 한 �
         <summary>어떻게 초대하나요?{% include icon.html name="plus" %}</summary>
         <div class="ans"><p>위의 &lsquo;서버에 초대하기&rsquo;를 눌러 서버를 고르고 요청한 권한을 허용하면 돼요. 서버를 관리할 수 있는 권한이 있어야 초대할 수 있어요.</p></div>
       </details>
-      <details>
+      <details id="permissions">
         <summary>왜 이런 권한이 필요한가요?{% include icon.html name="plus" %}</summary>
         <div class="ans">
           <p>메시지 보내기와 음성 채널 연결은 명령어 응답과 음악 재생에, 메시지 관리와 채널 관리는 메시지 정리·슬로우모드·채널 잠금에 써요. 멤버 추방·차단·타임아웃은 서버 운영 명령에, 별명 변경은 서버에서 봇 이름을 OMNI로 맞추는 데 써요.</p>
@@ -144,18 +116,4 @@ description: 미니게임·주식, 음악, 학교 정보, 서버 관리를 한 �
   </div>
 </section>
 
-<section class="section closing">
-  <div class="wrap">
-    <p class="eyebrow">LET’S MAKE IT OMNI.</p>
-    <h2>우리 서버의 다음 순간,<br>OMNI와 함께해요.</h2>
-    <p class="sub">따로 설정하지 않아도 바로 쓸 수 있어요.</p>
-    <div class="actions">
-      {%- if site.data.bot.invite_url %}
-      <a class="btn" href="{{ site.data.bot.invite_url | escape }}" rel="noopener">서버에 초대하기</a>
-      {%- endif %}
-      <a class="btn btn-ghost" href="{{ '/commands' | relative_url }}">명령어 보기</a>
-    </div>
-  </div>
-</section>
-
-<script type="application/json" id="demo-data">[{% assign first = true %}{% for c in site.data.commands.categories %}{% for m in c.commands %}{% unless first %},{% endunless %}{% assign first = false %}{"n":"/{{ m.name }}","d":{{ m.description | jsonify }},"c":"{{ c.color }}"}{% endfor %}{% endfor %}]</script>
+<section class="section closing"><div class="wrap"><h2>오늘은 우리 서버에서<br>무엇을 해 볼까요?</h2><p class="sub">무료로 초대하고, 필요한 기능의 설정부터 시작하세요.</p><div class="actions">{% if site.data.bot.invite_url %}<a class="btn" href="{{ site.data.bot.invite_url | escape }}" rel="noopener">서버에 OMNI 추가 {% include icon.html name="arrow-up-right" %}</a>{% endif %}<a class="btn btn-ghost" href="#start">시작 전 확인하기</a></div><p class="closing-trust">관리자(Administrator) 권한은 요청하지 않아요. <a href="#permissions">기능별 권한</a> · <a href="{{ '/privacy' | relative_url }}">개인정보 처리방침</a></p></div></section>

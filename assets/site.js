@@ -1,7 +1,6 @@
 // OMNI 사이트: 첫 화면의 슬래시 명령어 데모, 명령어 페이지의 검색·분류 필터
 (function () {
   "use strict";
-  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // Content stays visible without JS; animate each section only when it enters view.
   var motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -27,72 +26,26 @@
     });
   }
 
-  /* ---------- 첫 화면 데모 ---------- */
-  var demo = document.getElementById("demo");
-  if (demo) {
-    var feed = document.getElementById("demo-feed");
-    var typed = document.getElementById("demo-typed");
-    var picker = document.getElementById("demo-picker");
-    var list = document.getElementById("demo-list");
-    var cmds = [];
-    try { cmds = JSON.parse(document.getElementById("demo-data").textContent); } catch (e) { cmds = []; }
-
-    // 예시 장면: 입력할 명령어, 분류 색, 닉네임, 봇의 응답(예시 데이터)
-    var scenes = [
-      { cmd: "/랭킹", color: "#E8590C", user: "민서", reply: "<b>🏆 전체 서버 돈 랭킹 TOP 10</b><br>🥇 @민서 <b>12,480,000 원</b><br>🥈 @준호 <b>9,310,000 원</b><br>🥉 @하린 <b>7,055,000 원</b>" },
-      { cmd: "/음악추천 차트", color: "#7048E8", user: "준호", reply: "<pre>한국\n유튜브 뮤직 한국 차트 TOP 10\n1. NEON - A2O LITE\n2. 퇴사할게여 - 소연\n3. LOVE ATTACK - RESCENE\n멜론 차트 TOP 10\n1. NEON - A2O, A2O LITE\n2. 퇴사할게여 - 소연</pre>" },
-      { cmd: "/급식", color: "#1971C2", user: "하린", reply: "<b>🍴 오늘의 중식</b><br>현미밥, 미역국, 불고기<br>콩나물무침, 배추김치, 사과" },
-      { cmd: "/디데이 목록", color: "#2F9E44", user: "서윤", reply: "<b>⏳ D-day</b><br><code>D-45</code> 기말고사<br><code>D-72</code> 겨울방학" }
-    ];
-
-    var esc = function (s) { return s.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
-    var time = function () { return "오늘 오후 5:0" + Math.floor(Math.random() * 10); };
-
-    function showPicker(text) {
-      // 입력한 글자로 시작하는 명령어를 보여준다 (띄어쓰기 뒤에는 닫는다)
-      if (!text || text.indexOf(" ") !== -1) { picker.hidden = true; return; }
-      var matches = cmds.filter(function (c) { return c.n.indexOf(text) === 0; }).slice(0, 4);
-      if (!matches.length) { picker.hidden = true; return; }
-      list.innerHTML = matches.map(function (c) {
-        return '<li><span class="n" style="color:' + c.c + '">' + esc(c.n) + '</span><span class="d">' + esc(c.d) + "</span></li>";
-      }).join("");
-      picker.hidden = false;
-    }
-
-    function addExchange(scene) {
-      var pair = document.createElement("div");
-      pair.style.display = "contents";
-      pair.innerHTML =
-        '<div class="msg"><div class="av">' + esc(scene.user.charAt(0)) + '</div><div class="who">' + esc(scene.user) + "<span>" + time() + '</span></div><div class="body"><span class="cmd-used">' + esc(scene.cmd) + "</span></div></div>" +
-        '<div class="msg"><div class="av bot-avatar" aria-hidden="true"></div><div class="who">OMNI<span>' + time() + '</span></div><div class="body"><div class="reply" style="--c:' + scene.color + '">' + scene.reply + "</div></div></div>";
-      feed.replaceChildren(pair); // 최근 한 번의 주고받음만 남긴다
-    }
-
-    if (!reduce) {
-      // 첫 응답이 도착할 때까지 기본 예시를 유지해 빈 채팅창이 보이지 않게 한다.
-      var i = 0;
-      var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
-      (async function loop() {
-        while (!motionPreference.matches) {
-          var scene = scenes[i % scenes.length];
-          i += 1;
-          typed.textContent = "";
-          for (var k = 1; k <= scene.cmd.length; k++) {
-            if (motionPreference.matches) { picker.hidden = true; typed.textContent = ""; return; }
-            typed.textContent = scene.cmd.slice(0, k);
-            showPicker(typed.textContent);
-            await wait(95);
-          }
-          await wait(550);
-          picker.hidden = true;
-          if (motionPreference.matches) { typed.textContent = ""; return; }
-          typed.textContent = "";
-          addExchange(scene);
-          await wait(4200);
-        }
-      })();
-    }
+  /* 응답 예시: 자동 재생 없이 사용자가 장면을 선택한다. */
+  var sceneChoices = document.getElementById("scene-choices");
+  if (sceneChoices) {
+    sceneChoices.hidden = false;
+    var sceneButtons = Array.from(sceneChoices.querySelectorAll("button"));
+    var scenes = Array.from(document.querySelectorAll(".scene"));
+    sceneButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        sceneButtons.forEach(function (item) { item.setAttribute("aria-pressed", String(item === button)); });
+        scenes.forEach(function (scene) { scene.hidden = scene.dataset.scene !== button.dataset.scene; });
+      });
+    });
   }
+
+  function openLinkedFAQ() {
+    var target = document.querySelector(".faq details:target");
+    if (target) target.open = true;
+  }
+  openLinkedFAQ();
+  window.addEventListener("hashchange", openLinkedFAQ);
 
   /* ---------- 약관·방침: 제목(##)으로 목차 만들기 ---------- */
   var tocBox = document.getElementById("toc");
@@ -162,6 +115,7 @@
         shown += visible;
       });
       empty.hidden = shown !== 0;
+      document.getElementById("result-count").textContent = "명령어 " + shown + "개";
     };
 
     var select = function (cat) {
@@ -173,8 +127,24 @@
     buttons.forEach(function (b) { b.addEventListener("click", function () { select(b.getAttribute("data-cat")); }); });
     q.addEventListener("input", apply);
 
-    // 주소의 #분류 로 들어오면 그 분류만 보여준다. #cmd-이름 이면 전체를 보여주고 그 명령어로 이동한다
-    var hash = decodeURIComponent(location.hash.replace("#", ""));
-    if (hash && buttons.some(function (b) { return b.getAttribute("data-cat") === hash; })) select(hash);
+    // Deep links must reveal a command even after a different category was selected.
+    function followHash() {
+      var hash;
+      try { hash = decodeURIComponent(location.hash.slice(1)); } catch (error) { return; }
+      if (buttons.some(function (b) { return b.dataset.cat === hash; })) {
+        q.value = "";
+        select(hash);
+      } else if (hash.startsWith("cmd-")) {
+        var target = document.getElementById(hash);
+        if (target && target.classList.contains("cmd")) {
+          q.value = "";
+          select("");
+          target.open = true;
+          requestAnimationFrame(function () { target.scrollIntoView({ block: "start" }); });
+        }
+      }
+    }
+    followHash();
+    window.addEventListener("hashchange", followHash);
   }
 })();

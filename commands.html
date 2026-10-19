@@ -6,9 +6,8 @@ description: OMNI의 슬래시 명령어를 분류별로 살펴보고 사용법�
 ---
 <div class="wrap">
   <div class="page-head">
-    <p class="eyebrow">EXPLORE OMNI</p>
-    <h1>슬래시 하나의 가능성.</h1>
-    <p>OMNI의 슬래시 명령어 {{ site.data.bot.command_total }}개예요. 채팅창에 <code>/</code>를 입력하고 아래 이름을 따라 쓰면 돼요.</p>
+    <h1>명령어 찾기</h1>
+    <p>{{ site.data.bot.command_total }}개 명령어를 검색하고, 이름을 눌러 사용법을 펼쳐 보세요.</p>
     <p class="legend"><code>&lt;이름&gt;</code>은 꼭 입력해야 하는 칸, <code>[이름]</code>은 선택 칸이에요.</p>
   </div>
 
@@ -23,22 +22,21 @@ description: OMNI의 슬래시 명령어를 분류별로 살펴보고 사용법�
     </div>
   </div>
 
+  <p id="result-count" class="result-count" role="status">전체 {{ site.data.bot.command_total }}개 명령어</p>
   {%- for c in site.data.commands.categories %}
   <section class="cmd-group" id="{{ c.key }}" data-cat="{{ c.key }}" style="--c: {{ c.color }}">
     <h2>{% include category-icon.html category=c.key %} {{ c.label }} <small>명령어 {{ c.count }}개</small></h2>
     <p class="blurb">{{ c.blurb }}</p>
     {%- for m in c.commands %}
-    <article class="cmd" id="cmd-{{ m.name }}" data-text="{{ m.name }} {{ m.description }}{% for u in m.usages %} {{ u.syntax }} {{ u.description }}{% endfor %}">
-      <h3>/{{ m.name }}</h3>
-      {%- if m.usages.size > 1 %}
-      <p class="desc">{{ m.description }}</p>
-      {%- endif %}
+    <details class="cmd" id="cmd-{{ m.name }}" data-text="{{ m.name }} {{ m.description }}{% for u in m.usages %} {{ u.syntax }} {{ u.description }}{% endfor %}">
+      <summary><span class="cmd-name">/{{ m.name }}</span><span class="cmd-summary">{{ m.description }}</span>{% include icon.html name="plus" %}</summary>
+      <div class="cmd-detail"><p class="cmd-hint">사용법 · <code>&lt;항목&gt;</code> 필수 / <code>[항목]</code> 선택</p>
       <ul>
         {%- for u in m.usages %}
         <li><code>{{ u.syntax }}</code><span>{{ u.description }}</span></li>
         {%- endfor %}
-      </ul>
-    </article>
+      </ul></div>
+    </details>
     {%- endfor %}
   </section>
   {%- endfor %}
