@@ -1,4 +1,4 @@
-// OMNI 사이트: 첫 화면의 슬래시 명령어 데모, 명령어 페이지의 검색·분류 필터
+// OMNI 사이트: 명령어 페이지의 검색·분류 필터
 (function () {
   "use strict";
 
@@ -15,7 +15,7 @@
         revealObserver.unobserve(entry.target);
       });
     }, { threshold: 0.12 });
-    document.querySelectorAll(".section-heading, .cat, .demo-copy, .demo-panel, .points > div, .faq details").forEach(function (el) {
+    document.querySelectorAll(".section-heading, .cat, .points > div, .faq details").forEach(function (el) {
       revealObserver.observe(el);
     });
     motionPreference.addEventListener("change", function (event) {
@@ -23,20 +23,6 @@
         revealObserver.disconnect();
         document.getAnimations().forEach(function (animation) { animation.cancel(); });
       }
-    });
-  }
-
-  /* 응답 예시: 자동 재생 없이 사용자가 장면을 선택한다. */
-  var sceneChoices = document.getElementById("scene-choices");
-  if (sceneChoices) {
-    sceneChoices.hidden = false;
-    var sceneButtons = Array.from(sceneChoices.querySelectorAll("button"));
-    var scenes = Array.from(document.querySelectorAll(".scene"));
-    sceneButtons.forEach(function (button) {
-      button.addEventListener("click", function () {
-        sceneButtons.forEach(function (item) { item.setAttribute("aria-pressed", String(item === button)); });
-        scenes.forEach(function (scene) { scene.hidden = scene.dataset.scene !== button.dataset.scene; });
-      });
     });
   }
 

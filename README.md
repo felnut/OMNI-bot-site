@@ -4,7 +4,7 @@ Discord 봇 OMNI의 소개 사이트입니다. Vercel로 게시하는 정적 사
 
 | 주소 | 내용 | 파일 |
 |---|---|---|
-| `/` | 홈: 선택형 응답 예시, 기능 소개, 초대·설정 안내, 자주 묻는 질문 | `index.html` |
+| `/` | 홈: 기능 소개, 초대·설정 안내, 자주 묻는 질문 | `index.html` |
 | `/commands` | 접이식 명령어 목록(검색·분류 필터, 직접 링크 자동 펼침) | `commands.html` |
 | `/updates` | 업데이트 내역 | `updates.md` |
 | `/terms`, `/privacy` | 이용약관, 개인정보 처리방침(현행본) | `terms.md`, `privacy.md` |
@@ -55,7 +55,7 @@ Vercel 프로젝트를 이 저장소의 `main`에 연결하면 푸시할 때 자
 
 ### 디자인
 
-배너·프로필의 파랑, 하늘색, 검정과 흰 여백을 공통 스타일로 사용합니다. `assets/omni-mark.svg`는 프로필 심볼을 참고해 만든 벡터이며, `assets/favicon.svg`에도 같은 형태를 사용합니다. 한글·영문은 Pretendard Variable 1.3.9를 자체 호스팅합니다. UI 아이콘은 Lucide 1.59.0의 필요한 SVG만 `assets/icons.svg`에 포함했습니다. 원본 패키지는 npm의 `pretendard@1.3.9`, `lucide-static@1.59.0`이며 라이선스는 `assets/licenses/`에 보관합니다. 두 자산 모두 외부 CDN 요청 없이 제공됩니다. 스크롤 등장 효과는 한 번만 실행되며 모션 줄이기 설정에서는 효과를 끕니다. 홈은 급식·음악추천·랭킹 응답을 직접 선택하는 예시를 제공하며 자동 재생하지 않습니다. 표시된 메뉴·곡·순위는 예시 데이터이고 Discord 서버에 연결하지 않습니다. 명령어는 데스크톱 2열·모바일 1열의 네이티브 아코디언이며 JavaScript 없이도 사용법을 펼칠 수 있습니다.
+배너·프로필의 파랑, 하늘색, 검정과 흰 여백을 공통 스타일로 사용합니다. `assets/omni-mark.svg`는 프로필 심볼을 참고해 만든 벡터이며, `assets/favicon.svg`에도 같은 형태를 사용합니다. 한글·영문은 Pretendard Variable 1.3.9를 자체 호스팅합니다. UI 아이콘은 Lucide 1.59.0의 필요한 SVG만 `assets/icons.svg`에 포함했습니다. 원본 패키지는 npm의 `pretendard@1.3.9`, `lucide-static@1.59.0`이며 라이선스는 `assets/licenses/`에 보관합니다. 두 자산 모두 외부 CDN 요청 없이 제공됩니다. 스크롤 등장 효과는 한 번만 실행되며 모션 줄이기 설정에서는 효과를 끕니다. 명령어는 데스크톱 2열·모바일 1열의 네이티브 아코디언이며 JavaScript 없이도 사용법을 펼칠 수 있습니다.
 
 ### 새 주소로 옮길 때 (봇 쪽 작업)
 

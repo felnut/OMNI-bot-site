@@ -338,55 +338,20 @@ h1, h2, h3 { text-wrap: balance; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
-/* Product-led landing: one familiar server, three concrete use cases. */
-.product-hero .hero-grid { grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: 54px; padding-block: 64px; }
+/* Intro and invitation, followed by feature and setup guidance. */
+.product-hero .hero-grid { display: block; min-height: 0; padding-block: 76px; text-align: center; }
+.product-hero .hero-copy { max-width: 880px; margin-inline: auto; }
+.product-hero .actions { justify-content: center; }
 .product-hero h1 { font-size: clamp(38px,4.1vw,58px); line-height: 1.25; letter-spacing: -.04em; }
 .product-hero h1 > span { font-weight: 750; }
 .product-hero h1 > span::after { display: none; }
-.product-hero .lead { max-width: 27em; font-size: 1.05rem; }
+.product-hero .lead { max-width: 40em; margin-inline: auto; font-size: 1.05rem; }
 .product-hero .eyebrow { letter-spacing: .025em; font-size: .85rem; }
 .invite-trust { margin-top: 24px; font-size: .78rem; line-height: 1.8; color: #485463; }
 .invite-trust p { margin: 5px 0; }
 .invite-trust strong { font-weight: 600; }
 .invite-trust .icon { width: 17px; height: 17px; color: var(--blue); }
 .invite-trust a { color: #164eb6; }
-.product-demo { color: #f2f3f5; background: #303238; border: 1px solid #42454d; border-radius: 14px; overflow: hidden; box-shadow: 0 22px 60px #172a481c; }
-.server-bar { display: flex; gap: 10px; align-items: center; background: #24262b; padding: 14px 20px; }
-.server-bar img, .bot-response > img { background: #fff; border-radius: 50%; padding: 2px; flex-shrink: 0; }
-.server-bar strong { font-size: .92rem; }
-.server-bar > span { margin-left: auto; color: #cad0db; font-size: .7rem; border: 1px solid #535862; padding: 2px 7px; border-radius: 4px; }
-.channel-bar { display: flex; gap: 10px; align-items: center; padding: 12px 20px; border-bottom: 1px solid #454850; font-weight: 600; font-size: .85rem; }
-.channel-bar > span:first-child { font-size: 1.3rem; color: #aeb8c7; }
-.channel-topic { border-left: 1px solid #535862; margin-left: 5px; padding-left: 13px; color: #bfc7d4; font-size: .72rem; font-weight: 400; }
-.scene-choices { display: flex; padding: 18px 20px 0; gap: 7px; }
-.scene-choices button { flex: 1; display: flex; justify-content: center; gap: 7px; align-items: center; border: 1px solid #606674; border-radius: 6px; color: #e3e7ef; background: #363941; padding: 10px 6px; font-size: .8rem; cursor: pointer; transition: background .2s, border-color .2s; }
-.scene-choices button[aria-pressed="true"] { background: #0757ff; border-color: #75a4ff; color: #fff; }
-.scene-choices button:hover { border-color: #a1bdff; }
-.scene-choices .icon { width: 17px; height: 17px; }
-.scene { padding: 24px 20px 14px; min-height: 365px; }
-.chat-person { display: flex; align-items: start; gap: 11px; font-size: .85rem; }
-.chat-person strong { font-size: .8rem; color: #e1e6ef; }
-.chat-person p { margin: 3px 0 0; }
-.chat-avatar { width: 32px; height: 32px; display: grid; place-items: center; background: #566c91; border-radius: 50%; flex-shrink: 0; }
-.slash-bubble { margin: 12px 0 16px 43px; color: #d6e6ff; background: #3b4660; border-radius: 5px; padding: 5px 10px; width: fit-content; font-size: .82rem; }
-.bot-response { display: flex; align-items: start; gap: 11px; }
-.bot-response > div { flex: 1; min-width: 0; }
-.bot-name { margin: 0 0 8px; font-size: .85rem; font-weight: 700; }
-.bot-name > span { font-size: .62rem; background: #5262c7; padding: 2px 5px; border-radius: 3px; margin-left: 4px; }
-.discord-embed { border-left: 3px solid #71abff; background: #26282e; border-radius: 4px; padding: 15px 16px; min-height: 164px; }
-.discord-embed h2 { font-size: 1rem; margin: 7px 0 12px; line-height: 1.5; letter-spacing: -.02em; }
-.discord-embed p { font-size: .83rem; margin: 0; line-height: 1.8; }
-.discord-embed .embed-label { color: #a9caff; font-size: .7rem; }
-.embed-foot { display: block; color: #b9c1cf; font-size: .65rem; margin-top: 12px; }
-.sample-ranking { list-style: none; padding: 0; margin: 0; font-size: .8rem; }
-.sample-ranking li { display: flex; gap: 10px; margin: 5px 0; }
-.sample-ranking li > span { color: #a9caff; font-variant-numeric: tabular-nums; }
-.sample-ranking b { margin-left: auto; font-weight: 500; }
-.scene-setup { margin: 16px 0 6px 43px; font-size: .73rem; color: #c5cede; line-height: 1.75; }
-.scene-setup code { font-family: var(--sans); }
-.scene-guide { margin-left: 43px; color: #b0cfff; font-size: .75rem; }
-.scene-guide .icon { width: 15px; height: 15px; }
-.demo-disclaimer { margin: 0; padding: 12px 20px; background: #292b31; color: #bfc7d4; font-size: .65rem; border-top: 1px solid #454850; }
 .use-strip { border-block: 1px solid var(--line); background: #f7f9fc; }
 .use-strip .wrap { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; padding-block: 25px; }
 .use-strip p { display: grid; gap: 4px; margin: 0; font-size: .85rem; color: #465365; }
@@ -440,7 +405,6 @@ h1, h2, h3 { text-wrap: balance; }
   .product-hero .hero-grid { grid-template-columns: 1fr; padding-block: 42px; gap: 36px; }
   .product-hero .hero-copy { max-width: 620px; }
   .product-hero .lead { max-width: 35em; }
-  .product-demo { width: 100%; max-width: 650px; }
   .cat { grid-column: span 3; }
   .cat-admin { grid-column: span 6; }
   .use-strip .wrap { gap: 16px; }
@@ -450,17 +414,6 @@ h1, h2, h3 { text-wrap: balance; }
   .product-hero .lead { font-size: 1rem; }
   .product-hero .eyebrow { font-size: .8rem; }
   .invite-trust { font-size: .75rem; }
-  .scene-choices { padding-inline: 12px; gap: 5px; }
-  .scene-choices button { font-size: .74rem; gap: 4px; }
-  .scene-choices .icon { width: 14px; height: 14px; }
-  .server-bar, .channel-bar { padding-inline: 14px; }
-  .channel-topic { display: none; }
-  .scene { padding-inline: 12px; min-height: 390px; }
-  .discord-embed { padding: 12px; }
-  .discord-embed h2 { font-size: .9rem; }
-  .sample-ranking { font-size: .7rem; }
-  .sample-ranking li { gap: 6px; }
-  .scene-setup, .scene-guide { margin-left: 0; }
   .use-strip .wrap { grid-template-columns: 1fr; gap: 14px; }
   .use-strip p { display: flex; flex-wrap: wrap; gap: 6px 12px; }
   .text-link { margin-top: 18px; }

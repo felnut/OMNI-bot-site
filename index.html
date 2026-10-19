@@ -7,7 +7,7 @@ description: 미니게임·주식, 음악, 학교 정보, 서버 관리를 한 �
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <p class="eyebrow">친구들과 쓰는 한국어 디스코드 봇</p>
-      <h1>오늘 급식부터<br>같이 듣는 음악까지,<br><span>우리 서버에서.</span></h1>
+      <h1>오늘 급식부터 같이 듣는 음악까지,<br><span>우리 서버에서.</span></h1>
       <p class="lead">점심 메뉴를 확인하고, 친구와 순위를 겨루고, 음성 채널에서 음악을 들어요. 학교·게임·음악 명령어를 OMNI 하나에서 찾을 수 있어요.</p>
       <div class="actions">
         {% if site.data.bot.invite_url %}<a class="btn" href="{{ site.data.bot.invite_url | escape }}" rel="noopener">서버에 OMNI 추가 {% include icon.html name="arrow-up-right" %}</a>{% endif %}
@@ -18,39 +18,7 @@ description: 미니게임·주식, 음악, 학교 정보, 서버 관리를 한 �
         <p>메시지·음성·멤버 관리 등 기능별 권한은 필요해요.<br><a href="#permissions">요청 권한 보기</a><span aria-hidden="true"> · </span><a href="{{ '/privacy' | relative_url }}">저장하는 정보 확인</a></p>
       </div>
     </div>
-    <div class="product-demo" id="demo">
-      <div class="server-bar"><img src="{{ '/assets/omni-mark.svg' | relative_url }}" width="32" height="32" alt=""><strong>방과 후 아지트</strong><span>사용 예시</span></div>
-      <div class="channel-bar"><span aria-hidden="true">#</span> 오늘-뭐하지 <span class="channel-topic">우리 서버의 하루</span></div>
-      <div class="scene-choices" id="scene-choices" role="group" aria-label="응답 예시 선택" hidden>
-        <button type="button" data-scene="school" aria-pressed="true">{% include icon.html name="school" %} /급식</button>
-        <button type="button" data-scene="music" aria-pressed="false">{% include icon.html name="music-2" %} /음악추천</button>
-        <button type="button" data-scene="game" aria-pressed="false">{% include icon.html name="gamepad-2" %} /랭킹</button>
-      </div>
-      <div id="demo-panels" aria-live="polite" aria-atomic="true">
-        <div class="scene" data-scene="school">
-          <div class="chat-person"><span class="chat-avatar">하</span><div><strong>하린</strong><p>오늘 점심 뭐 나와?</p></div></div>
-          <div class="slash-bubble">/급식</div>
-          <div class="bot-response"><img src="{{ '/assets/omni-mark.svg' | relative_url }}" width="32" height="32" alt=""><div><p class="bot-name">OMNI <span>앱</span></p><div class="discord-embed"><p class="embed-label">학교 · 급식 조회</p><h2>오늘의 중식</h2><p>현미밥 · 소고기미역국<br>간장불고기 · 배추김치 · 사과</p><span class="embed-foot">가상의 학교와 메뉴로 구성한 응답 예시</span></div></div></div>
-          <p class="scene-setup">먼저 <code>/학교등록 검색 &lt;이름&gt;</code>으로 학교를 등록해 주세요.</p>
-          <a class="scene-guide" href="{{ '/commands' | relative_url }}#cmd-급식">급식 사용법 {% include icon.html name="arrow-right" %}</a>
-        </div>
-        <div class="scene" data-scene="music" hidden>
-          <div class="chat-person"><span class="chat-avatar">준</span><div><strong>준호</strong><p>게임하면서 들을 노래 골라 보자.</p></div></div>
-          <div class="slash-bubble">/음악추천 차트</div>
-          <div class="bot-response"><img src="{{ '/assets/omni-mark.svg' | relative_url }}" width="32" height="32" alt=""><div><p class="bot-name">OMNI <span>앱</span></p><div class="discord-embed"><p class="embed-label">음악 · 사이트별 차트</p><h2>다음 곡, 같이 골라요.</h2><ol class="sample-ranking"><li><span>01</span> 오늘의 플레이리스트</li><li><span>02</span> 집으로 가는 길</li><li><span>03</span> 우리의 여름</li></ol><span class="embed-foot">곡명과 순위는 가상의 예시입니다.</span></div></div></div>
-          <p class="scene-setup">재생하려면 음성 채널에 입장한 뒤 <code>/음악 재생 &lt;검색어&gt;</code>를 사용해요.</p>
-          <a class="scene-guide" href="{{ '/commands' | relative_url }}#cmd-음악">음악 사용법 {% include icon.html name="arrow-right" %}</a>
-        </div>
-        <div class="scene" data-scene="game" hidden>
-          <div class="chat-person"><span class="chat-avatar">민</span><div><strong>민서</strong><p>출석했어! 지금 내 순위는?</p></div></div>
-          <div class="slash-bubble">/랭킹</div>
-          <div class="bot-response"><img src="{{ '/assets/omni-mark.svg' | relative_url }}" width="32" height="32" alt=""><div><p class="bot-name">OMNI <span>앱</span></p><div class="discord-embed"><p class="embed-label">게임 · 전체 서버 돈 순위</p><h2>오늘의 랭킹</h2><ol class="sample-ranking"><li><span>01</span> 민서 <b>12,480,000 원</b></li><li><span>02</span> 준호 <b>9,310,000 원</b></li><li><span>03</span> 하린 <b>7,055,000 원</b></li></ol><span class="embed-foot">닉네임·잔액·순위는 예시입니다.</span></div></div></div>
-          <p class="scene-setup">출석과 미니게임으로 모으는 게임용 돈이에요. 현금으로 바꿀 수 없어요.</p>
-          <a class="scene-guide" href="{{ '/commands' | relative_url }}#cmd-랭킹">랭킹 사용법 {% include icon.html name="arrow-right" %}</a>
-        </div>
-      </div>
-      <p class="demo-disclaimer">명령어를 골라 응답을 살펴보세요. 실제 Discord 서버에 연결되지 않는 예시입니다.</p>
-    </div>
+
   </div>
 </section>
 <section class="use-strip"><div class="wrap"><p><strong>같이 노는 친구들에게</strong> 게임과 음악</p><p><strong>같은 학교 친구들에게</strong> 급식과 시간표</p><p><strong>서버를 맡은 운영자에게</strong> 권한별 관리 명령</p></div></section>
