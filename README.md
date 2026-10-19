@@ -1,6 +1,6 @@
 # OMNI 소개 사이트
 
-Discord 봇 OMNI의 소개 사이트입니다. Jekyll(GitHub Pages)로 게시하는 정적 사이트이고, 봇 코드는 옆 폴더 `01_DanBungBot`(저장소 `felnut/OMNI-Bot`)에 있습니다.
+Discord 봇 OMNI의 소개 사이트입니다. Vercel로 게시하는 정적 사이트이고, 봇 코드는 옆 폴더 `01_DanBungBot`(저장소 `felnut/OMNI-Bot`)에 있습니다.
 
 | 주소 | 내용 | 파일 |
 |---|---|---|
@@ -35,20 +35,27 @@ Ruby/Jekyll이 없어도 볼 수 있게 Liquid·Markdown으로 같은 구조를 
 
 ```bash
 npm install          # 처음 한 번
-npm run preview      # http://127.0.0.1:4173/OMNI-Bot/
+npm run preview      # http://127.0.0.1:4173/
 npm run build:check  # 렌더링 오류만 확인
 ```
 
-실제 게시는 Jekyll(kramdown)이 만들기 때문에 표나 중첩 목록 같은 마크다운 표현은 미리보기와 조금 다를 수 있습니다. 게시한 뒤 약관·방침 페이지가 정상인지 한 번 확인하세요.
+Vercel 배포도 같은 렌더러를 사용합니다. `npm run preview`는 파일 변경을 감지하지 않으므로 수정 후 서버를 다시 실행하세요. 배포한 뒤 약관·방침 페이지가 정상인지 한 번 확인하세요.
 
-## 게시
+## 게시 (Vercel)
 
-1. 이 폴더를 GitHub 저장소로 올립니다(예: `felnut/OMNI-Bot-site`).
-2. 저장소 Settings → Pages에서 `main` 브랜치, `/ (root)`를 선택합니다.
-3. `_config.yml`의 `baseurl`을 게시 주소에 맞춥니다.
-   - 프로젝트 사이트(`felnut.github.io/OMNI-Bot-site`)라면 `"/OMNI-Bot-site"`
-   - 저장소 이름이 `felnut.github.io`이거나 사용자 지정 도메인을 연결하면 `""`
-4. 게시 주소가 정해지면 봇 쪽의 안내 주소도 바꿔야 합니다(아래).
+사이트 주소는 `https://omni-bot-site.vercel.app`입니다. `vercel.json`에 설치·빌드·출력 경로를 지정했습니다.
+
+- 설치: `npm ci --include=dev`
+- 빌드: `npm run build:check`
+- 정적 파일 출력: `.preview`
+- `cleanUrls: true`로 `/commands`, `/terms` 같은 확장자 없는 주소를 제공합니다.
+- `_config.yml`: `url`은 배포 도메인, `baseurl`은 빈 문자열입니다.
+
+Vercel 프로젝트를 이 저장소의 `main`에 연결하면 푸시할 때 자동 배포합니다. 배포 성공은 Vercel의 Deployments에서 확인하세요. Vercel은 저장소의 Liquid/Markdown 렌더러를 사용하며 Jekyll을 실행하지 않습니다.
+
+### 디자인
+
+배너·프로필의 파랑, 하늘색, 검정과 흰 여백을 공통 스타일로 사용합니다. `assets/omni-mark.svg`는 프로필 심볼을 참고해 만든 벡터이며, `assets/favicon.svg`에도 같은 형태를 사용합니다. 글꼴은 외부 서비스 요청 없이 시스템 글꼴로 표시합니다. 홈 데모는 모션 줄이기 설정에서 정지된 예시를 제공합니다.
 
 ### 새 주소로 옮길 때 (봇 쪽 작업)
 

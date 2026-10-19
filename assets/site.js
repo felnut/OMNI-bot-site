@@ -40,14 +40,12 @@
       pair.style.display = "contents";
       pair.innerHTML =
         '<div class="msg"><div class="av">' + esc(scene.user.charAt(0)) + '</div><div class="who">' + esc(scene.user) + "<span>" + time() + '</span></div><div class="body"><span class="cmd-used">' + esc(scene.cmd) + "</span></div></div>" +
-        '<div class="msg"><div class="av">/</div><div class="who">OMNI<span>' + time() + '</span></div><div class="body"><div class="reply" style="--c:' + scene.color + '">' + scene.reply + "</div></div></div>";
-      feed.appendChild(pair);
-      while (feed.children.length > 2) feed.removeChild(feed.firstChild); // 최근 한 번의 주고받음만 남긴다
+        '<div class="msg"><div class="av bot-avatar" aria-hidden="true"></div><div class="who">OMNI<span>' + time() + '</span></div><div class="body"><div class="reply" style="--c:' + scene.color + '">' + scene.reply + "</div></div></div>";
+      feed.replaceChildren(pair); // 최근 한 번의 주고받음만 남긴다
     }
 
     if (!reduce) {
-      // 애니메이션을 쓰는 경우에는 미리 넣어 둔 기본 장면(스크립트가 없을 때 보이는 화면)을 비우고 처음부터 보여준다
-      while (feed.firstChild) feed.removeChild(feed.firstChild);
+      // 첫 응답이 도착할 때까지 기본 예시를 유지해 빈 채팅창이 보이지 않게 한다.
       var i = 0;
       var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
       (async function loop() {
