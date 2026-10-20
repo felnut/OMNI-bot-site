@@ -10,7 +10,7 @@
       <a href="{{ '/privacy' | relative_url }}"{% if page.url contains '/privacy' %} aria-current="page"{% endif %}>개인정보처리방침</a>
     </nav>
     {%- if site.data.bot.invite_url %}
-    <a class="btn btn-small" href="{{ site.data.bot.invite_url | escape }}" rel="noopener">서버에 초대하기 {% include icon.html name="arrow-up-right" %}</a>
+    <a class="btn btn-small" href="{{ site.data.bot.invite_url | escape }}" target="_blank" rel="noopener noreferrer">서버에 초대하기 {% include icon.html name="arrow-up-right" %}</a>
     {%- endif %}
   </div>
 </header>

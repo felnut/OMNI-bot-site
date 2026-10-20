@@ -9,6 +9,14 @@
   var backToTop = document.getElementById("back-to-top");
   var compact = false;
   var scrollPending = false;
+  var motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var navigationAnimation;
+  var scrollAnimation;
+
+  function cancelTopScroll() {
+    cancelAnimationFrame(scrollAnimation);
+    scrollAnimation = null;
+  }
 
   function closeNavigation(restoreFocus) {
     header.classList.remove("nav-open");
@@ -19,6 +27,8 @@
     scrollPending = false;
     var nextCompact = compact ? window.scrollY > 40 : window.scrollY > 120;
     if (nextCompact !== compact) {
+      var oldHeight = header.getBoundingClientRect().height;
+      if (navigationAnimation) navigationAnimation.cancel();
       var focusInNav = nav.contains(document.activeElement);
       var focusOnToggle = document.activeElement === navToggle;
       compact = nextCompact;
@@ -27,6 +37,12 @@
       if (!compact) closeNavigation(false);
       if (compact && focusInNav) navToggle.focus({ preventScroll: true });
       if (!compact && focusOnToggle) header.querySelector(".brand").focus({ preventScroll: true });
+      if (!motionPreference.matches && header.animate) {
+        navigationAnimation = header.animate(
+          [{ height: oldHeight + "px", opacity: .8 }, { height: header.getBoundingClientRect().height + "px", opacity: 1 }],
+          { duration: 280, easing: "cubic-bezier(.22,1,.36,1)" }
+        );
+      }
     }
     backToTop.hidden = window.scrollY < 360;
   }
@@ -53,8 +69,28 @@
       if (event.key === "Escape" && header.classList.contains("nav-open")) closeNavigation(true);
     });
     backToTop.addEventListener("click", function () {
+      cancelTopScroll();
       header.querySelector(".brand").focus({ preventScroll: true });
-      window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+      if (motionPreference.matches) {
+        window.scrollTo({ top: 0, behavior: "instant" });
+        return;
+      }
+      var from = window.scrollY;
+      var started = performance.now();
+      function step(now) {
+        var progress = Math.min((now - started) / 850, 1);
+        var easeOutQuint = 1 - Math.pow(1 - progress, 5);
+        window.scrollTo({ top: from * (1 - easeOutQuint), behavior: "instant" });
+        scrollAnimation = progress < 1 ? requestAnimationFrame(step) : null;
+      }
+      scrollAnimation = requestAnimationFrame(step);
+    });
+    ["wheel", "touchstart", "pointerdown", "keydown"].forEach(function (type) {
+      window.addEventListener(type, cancelTopScroll, { passive: true });
+    });
+    motionPreference.addEventListener("change", function () {
+      cancelTopScroll();
+      if (navigationAnimation) navigationAnimation.cancel();
     });
   }
 
@@ -72,7 +108,6 @@
   });
 
   // Content stays visible without JS; animate each section only when it enters view.
-  var motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
   if (!motionPreference.matches && "IntersectionObserver" in window && Element.prototype.animate) {
     var revealObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {

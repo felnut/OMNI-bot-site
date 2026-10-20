@@ -4,8 +4,8 @@
     "versions": [
       { "label": "현행", "note": "2026-10-15 시행", "path": "/terms" },
       { "label": "개정본", "note": "2026-10-26 시행 예정", "path": "/terms-2026-10-26" },
-      { "label": "이전 버전", "note": "2026-10-14", "url": "https://github.com/felnut/OMNI-Bot/blob/2cd1723/docs/terms.md" },
-      { "label": "이전 버전", "note": "2026-10-01 ~ 10-13", "url": "https://github.com/felnut/OMNI-Bot/blob/e181ff2/docs/terms.md" }
+      { "label": "2026년 10월 14일 판", "note": "2026-10-14", "url": "https://github.com/felnut/OMNI-Bot/blob/2cd1723/docs/terms.md" },
+      { "label": "2026년 10월 1일 판", "note": "2026-10-01 ~ 10-13", "url": "https://github.com/felnut/OMNI-Bot/blob/e181ff2/docs/terms.md" }
     ]
   },
   "privacy": {
@@ -13,8 +13,8 @@
     "versions": [
       { "label": "현행", "note": "2026-10-15 시행", "path": "/privacy" },
       { "label": "개정본", "note": "2026-10-26 시행 예정", "path": "/privacy-2026-10-26" },
-      { "label": "이전 버전", "note": "2026-10-14", "url": "https://github.com/felnut/OMNI-Bot/blob/2cd1723/docs/privacy.md" },
-      { "label": "이전 버전", "note": "2026-10-01 ~ 10-13", "url": "https://github.com/felnut/OMNI-Bot/blob/e181ff2/docs/privacy.md" }
+      { "label": "2026년 10월 14일 판", "note": "2026-10-14", "url": "https://github.com/felnut/OMNI-Bot/blob/2cd1723/docs/privacy.md" },
+      { "label": "2026년 10월 1일 판", "note": "2026-10-01 ~ 10-13", "url": "https://github.com/felnut/OMNI-Bot/blob/e181ff2/docs/privacy.md" }
     ]
   }
 }
