@@ -6,17 +6,10 @@
   var header = document.querySelector(".site-header");
   var nav = document.getElementById("primary-nav");
   var navToggle = document.getElementById("nav-toggle");
-  var backToTop = document.getElementById("back-to-top");
   var compact = false;
   var scrollPending = false;
   var motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
   var navigationAnimation;
-  var scrollAnimation;
-
-  function cancelTopScroll() {
-    cancelAnimationFrame(scrollAnimation);
-    scrollAnimation = null;
-  }
 
   function closeNavigation(restoreFocus) {
     header.classList.remove("nav-open");
@@ -44,9 +37,8 @@
         );
       }
     }
-    backToTop.hidden = window.scrollY < 360;
   }
-  if (header && nav && navToggle && backToTop) {
+  if (header && nav && navToggle) {
     updateScrollState();
     window.addEventListener("scroll", function () {
       if (!scrollPending) {
@@ -68,28 +60,7 @@
     document.addEventListener("keydown", function (event) {
       if (event.key === "Escape" && header.classList.contains("nav-open")) closeNavigation(true);
     });
-    backToTop.addEventListener("click", function () {
-      cancelTopScroll();
-      header.querySelector(".brand").focus({ preventScroll: true });
-      if (motionPreference.matches) {
-        window.scrollTo({ top: 0, behavior: "instant" });
-        return;
-      }
-      var from = window.scrollY;
-      var started = performance.now();
-      function step(now) {
-        var progress = Math.min((now - started) / 850, 1);
-        var easeOutQuint = 1 - Math.pow(1 - progress, 5);
-        window.scrollTo({ top: from * (1 - easeOutQuint), behavior: "instant" });
-        scrollAnimation = progress < 1 ? requestAnimationFrame(step) : null;
-      }
-      scrollAnimation = requestAnimationFrame(step);
-    });
-    ["wheel", "touchstart", "pointerdown", "keydown"].forEach(function (type) {
-      window.addEventListener(type, cancelTopScroll, { passive: true });
-    });
     motionPreference.addEventListener("change", function () {
-      cancelTopScroll();
       if (navigationAnimation) navigationAnimation.cancel();
     });
   }
