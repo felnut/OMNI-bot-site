@@ -15,7 +15,7 @@
         revealObserver.unobserve(entry.target);
       });
     }, { threshold: 0.12 });
-    document.querySelectorAll(".section-heading, .cat, .points > div, .faq details").forEach(function (el) {
+    document.querySelectorAll(".section-heading, .feature-row, .points > div, .faq details").forEach(function (el) {
       revealObserver.observe(el);
     });
     motionPreference.addEventListener("change", function (event) {

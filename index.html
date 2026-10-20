@@ -3,44 +3,49 @@ layout: wide
 body_class: home
 description: 미니게임·주식, 음악, 학교 정보, 서버 관리를 한 봇에 담은 한국어 디스코드 봇 OMNI. 슬래시 명령어를 무료로 쓸 수 있어요.
 ---
-<section class="hero product-hero">
-  <div class="wrap hero-grid">
-    <div class="hero-copy">
-      <p class="eyebrow">친구들과 쓰는 한국어 디스코드 봇</p>
-      <h1>오늘 급식부터 같이 듣는 음악까지,<br><span>우리 서버에서.</span></h1>
-      <p class="lead">점심 메뉴를 확인하고, 친구와 순위를 겨루고, 음성 채널에서 음악을 들어요. 학교·게임·음악 명령어를 OMNI 하나에서 찾을 수 있어요.</p>
+<section class="masthead" aria-labelledby="home-title">
+  <div class="wrap mast-grid">
+    <div class="mast-copy">
+      <p class="mast-label"><span class="brand-spark" aria-hidden="true">{% include icon.html name="sparkles" %}</span> 한 서버, 다섯 가지 재미.</p>
+      <h1 id="home-title">놀고, 듣고,<br><span>매일을 나누고.</span></h1>
+      <p class="lead">랭킹을 겨루는 친구도, 음악을 고르는 친구도,<br>내일 급식이 궁금한 친구도. 모두 모이는 곳에 <b>OMNI.</b></p>
       <div class="actions">
-        {% if site.data.bot.invite_url %}<a class="btn" href="{{ site.data.bot.invite_url | escape }}" rel="noopener">서버에 OMNI 추가 {% include icon.html name="arrow-up-right" %}</a>{% endif %}
-        <a class="btn btn-ghost" href="{{ '/commands' | relative_url }}">명령어 찾기 {% include icon.html name="search" %}</a>
+        {% if site.data.bot.invite_url %}<a class="btn btn-invite" href="{{ site.data.bot.invite_url | escape }}" rel="noopener">우리 서버에 초대하기 {% include icon.html name="arrow-up-right" %}</a>{% endif %}
+        <a class="mast-text-link" href="{{ '/commands' | relative_url }}">명령어 찾기 {% include icon.html name="search" %}</a>
       </div>
-      <div class="invite-trust">
-        <p>{% include icon.html name="shield-check" %} <strong>관리자(Administrator) 권한을 요청하지 않아요.</strong></p>
-        <p>메시지·음성·멤버 관리 등 기능별 권한은 필요해요.<br><a href="#permissions">요청 권한 보기</a><span aria-hidden="true"> · </span><a href="{{ '/privacy' | relative_url }}">저장하는 정보 확인</a></p>
-      </div>
+      <div class="mast-caption"><span>한국어 디스코드 봇</span><span>모든 기능 무료</span></div>
+      <div class="mast-arc" aria-hidden="true"></div>
     </div>
-
+    <nav class="function-index" aria-label="기능 바로 탐색">
+      <div class="index-heading"><h2>오늘은<br>어느 쪽으로?</h2><img src="{{ '/assets/omni-mark.svg' | relative_url }}" width="64" height="64" alt=""></div>
+      <ol>
+        {% for c in site.data.commands.categories %}
+        <li><a href="#feature-{{ c.key }}"><span class="index-number">0{{ forloop.index }}</span>{% include category-icon.html category=c.key %}<span>{{ c.label }}</span>{% include icon.html name="arrow-down" %}</a></li>
+        {% endfor %}
+      </ol>
+      <p>다섯 방향의 즐거움이, 하나의 서버로.</p>
+    </nav>
   </div>
+  <div class="wrap trust-line"><p>{% include icon.html name="shield-check" %} 관리자(Administrator) 권한은 요청하지 않아요.</p><a href="#permissions">기능별 요청 권한 {% include icon.html name="arrow-right" %}</a><a href="{{ '/privacy' | relative_url }}">저장하는 정보 확인 {% include icon.html name="arrow-right" %}</a></div>
 </section>
-<section class="use-strip"><div class="wrap"><p><strong>같이 노는 친구들에게</strong> 게임과 음악</p><p><strong>같은 학교 친구들에게</strong> 급식과 시간표</p><p><strong>서버를 맡은 운영자에게</strong> 권한별 관리 명령</p></div></section>
 <section class="section features-section" id="features">
   <div class="wrap">
-    <div class="section-heading"><div><h2>대화가 끝나도,<br>같이 할 일은 계속.</h2><p class="sub">자주 쓰는 게임과 음악을 중심으로, 우리 서버에 필요한 기능을 골라 쓰세요.</p></div><a href="{{ '/commands' | relative_url }}" class="text-link">명령어 {{ site.data.bot.command_total }}개 모두 보기 {% include icon.html name="arrow-right" %}</a></div>
-    <div class="cats">
+    <div class="section-heading"><div><p class="section-code">01 — OMNI의 다섯 방향</p><h2>따로 있던 즐거움,<br>여기서 만나다.</h2></div><p class="sub">학교·게임·음악, 그리고 서버의 작은 일들.<br>필요한 기능을 골라 우리 서버의 일상에 더해 보세요.</p></div>
+    <div class="feature-ledger">
       {% for c in site.data.commands.categories %}
-      <article class="cat cat-{{ c.key }}">
-        <div class="cat-symbol">{% include category-icon.html category=c.key %}</div>
-        <p class="cat-audience">{% case c.key %}{% when 'game' %}친구와 가볍게 한 판{% when 'music' %}같은 채널, 같은 플레이리스트{% when 'school' %}학교 친구들과{% when 'util' %}함께 쓰는 도구{% else %}서버 운영자를 위해{% endcase %}</p>
-        <h3><a href="{{ '/commands' | relative_url }}#{{ c.key }}">{{ c.label }} {% include icon.html name="arrow-up-right" %}</a></h3>
-        <p>{{ c.blurb }}</p>
-        <span class="count">명령어 {{ c.count }}개</span>
-        <ul class="chips">{% for m in c.commands limit: 3 %}<li><a href="{{ '/commands' | relative_url }}#cmd-{{ m.name }}">/{{ m.name }}</a></li>{% endfor %}</ul>
+      <article class="feature-row" id="feature-{{ c.key }}">
+        <span class="feature-number" aria-hidden="true">0{{ forloop.index }}</span>
+        <div class="feature-title"><span class="feature-symbol">{% include category-icon.html category=c.key %}</span><h3><a href="{{ '/commands' | relative_url }}#{{ c.key }}">{{ c.label }} {% include icon.html name="arrow-up-right" %}</a></h3><span class="count">{{ c.count }}개 명령어</span></div>
+        <div class="feature-description"><p class="feature-tagline">{% case c.key %}{% when 'game' %}오늘의 출석이, 내일의 순위로.{% when 'music' %}같이 있으면, 같은 노래가 좋아서.{% when 'school' %}내일 급식부터 방학까지.{% when 'util' %}작은 일은 가볍게 해결하고.{% else %}즐거운 서버에는 든든한 운영도.{% endcase %}</p><p>{{ c.blurb }}</p>
+        <ul class="command-links">{% for m in c.commands limit: 3 %}<li><a href="{{ '/commands' | relative_url }}#cmd-{{ m.name }}">/{{ m.name }}</a></li>{% endfor %}</ul></div>
       </article>
       {% endfor %}
     </div>
+    <a class="all-commands" href="{{ '/commands' | relative_url }}"><span>원하는 기능, 바로 찾아보세요.</span><strong>{{ site.data.bot.command_total }}개 명령어 모아보기 {% include icon.html name="arrow-right" %}</strong></a>
   </div>
 </section>
 <section class="section setup-section" id="start">
-  <div class="wrap"><h2>초대 전에 확인하고,<br>쓸 기능만 준비하세요.</h2><div class="points">
+  <div class="wrap setup-grid"><div class="section-heading"><p class="section-code">02 — 시작하기</p><h2>우리 서버에 맞게.<br>준비는 이 세 가지.</h2><p class="sub">음악과 학교 정보는 먼저 설정이 필요해요. 사용할 기능부터 차근차근 준비하세요.</p></div><div class="points">
     <div><h3>서버와 권한 선택</h3><p>서버를 관리할 수 있는 계정으로 초대하고 요청 권한을 확인해요. 운영 명령은 서버 소유자와 서버 관리 권한이 있는 역할만 사용할 수 있어요.</p><a href="#permissions">권한 설명 보기</a></div>
     <div><h3>음악은 음성 채널에서</h3><p>음성 채널에 먼저 입장한 뒤 <code>/음악 재생</code>을 실행해요. 외부 서비스 사정에 따라 일부 곡은 재생되지 않을 수 있어요.</p><a href="{{ '/commands' | relative_url }}#cmd-음악">재생 명령어 보기</a></div>
     <div><h3>학교 정보는 등록 후에</h3><p><code>/학교등록 검색</code>으로 학교를 등록해요. 서버마다 최대 5곳을 등록할 수 있고, 급식 알림은 운영자가 채널을 지정해야 해요.</p><a href="{{ '/commands' | relative_url }}#cmd-학교등록">학교 등록 방법</a></div>
@@ -48,7 +53,8 @@ description: 미니게임·주식, 음악, 학교 정보, 서버 관리를 한 �
 </section>
 <section class="section" id="faq">
   <div class="wrap">
-    <h2>궁금한 게 있나요?</h2>
+    <p class="section-code">03 — 자주 묻는 질문</p>
+    <h2>궁금한 건,<br>여기서 풀고 가요.</h2>
     <p class="sub">처음 쓰기 전에 많이 궁금해하는 것들이에요.</p>
     <div class="faq">
       <details>
@@ -84,4 +90,4 @@ description: 미니게임·주식, 음악, 학교 정보, 서버 관리를 한 �
   </div>
 </section>
 
-<section class="section closing"><div class="wrap"><h2>오늘은 우리 서버에서<br>무엇을 해 볼까요?</h2><p class="sub">무료로 초대하고, 필요한 기능의 설정부터 시작하세요.</p><div class="actions">{% if site.data.bot.invite_url %}<a class="btn" href="{{ site.data.bot.invite_url | escape }}" rel="noopener">서버에 OMNI 추가 {% include icon.html name="arrow-up-right" %}</a>{% endif %}<a class="btn btn-ghost" href="#start">시작 전 확인하기</a></div><p class="closing-trust">관리자(Administrator) 권한은 요청하지 않아요. <a href="#permissions">기능별 권한</a> · <a href="{{ '/privacy' | relative_url }}">개인정보 처리방침</a></p></div></section>
+<section class="join-section"><div class="wrap join-grid"><div><p class="section-code">다음은, 우리 서버 차례.</p><h2>함께할 준비,<br>됐나요?</h2></div><div class="join-action"><p>OMNI를 초대하고<br>우리 서버의 다섯 방향을 열어 보세요.</p>{% if site.data.bot.invite_url %}<a class="btn" href="{{ site.data.bot.invite_url | escape }}" rel="noopener">우리 서버에 초대하기 {% include icon.html name="arrow-up-right" %}</a>{% endif %}<a href="#start" class="join-check">시작 전 설정 확인하기</a></div><span class="join-orbit" aria-hidden="true"></span></div></section>
