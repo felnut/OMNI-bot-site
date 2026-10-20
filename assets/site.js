@@ -95,6 +95,37 @@
     });
   }
 
+  // Animate the disclosure's height so the following questions move with it.
+  document.querySelectorAll(".faq details").forEach(function (details) {
+    var summary = details.querySelector("summary");
+    var animation;
+    var expanded = details.open;
+    function finish() {
+      details.open = expanded;
+      details.style.overflow = "";
+      if (animation) animation.cancel();
+      animation = null;
+    }
+    summary.addEventListener("click", function (event) {
+      if (!Element.prototype.animate || motionPreference.matches) return;
+      event.preventDefault();
+      var start = details.getBoundingClientRect().height;
+      expanded = animation ? !expanded : !details.open;
+      if (animation) animation.cancel();
+      details.open = true;
+      var end = expanded ? details.getBoundingClientRect().height : summary.getBoundingClientRect().height + 1;
+      details.style.overflow = "hidden";
+      animation = details.animate(
+        [{ height: start + "px" }, { height: end + "px" }],
+        { duration: 300, easing: "cubic-bezier(.2,.7,.2,1)" }
+      );
+      animation.onfinish = finish;
+    });
+    motionPreference.addEventListener("change", function () {
+      if (animation) finish();
+    });
+  });
+
   function openLinkedFAQ() {
     var target = document.querySelector(".faq details:target");
     if (target) target.open = true;

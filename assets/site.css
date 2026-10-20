@@ -117,7 +117,6 @@ code, .mono, kbd { font-family: var(--mono); }
 .faq details[open] summary > .icon { transform: rotate(45deg); }
 .faq .ans { padding: 0 20px 20px 0; color: var(--ink-2); font-size: .9rem; }
 .faq .ans p { margin: 0 0 8px; }
-.faq details[open] .ans { animation: enter .25s ease; }
 .faq code { background: #edf3ff; padding: 2px 3px; font-size: .85em; }
 .join-section { background: #d5e9ff; overflow: hidden; }
 .join-grid { position: relative; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding-block: 64px; gap: 40px; }
@@ -134,8 +133,8 @@ code, .mono, kbd { font-family: var(--mono); }
 .foot-links a { text-decoration: none; }
 .foot-links a:hover { text-decoration: underline; }
 .footer-signature { display: flex; align-items: center; justify-content: space-between; margin-top: 40px; border-top: 1px solid var(--ink); padding-top: 20px; overflow: hidden; }
-.footer-signature > span { font-size: clamp(95px,17vw,238px); letter-spacing: -.075em; font-weight: 850; line-height: 1; color: var(--blue); }
-.footer-signature img { width: clamp(64px,12vw,150px); }
+.footer-signature > span { font-size: clamp(48px,7vw,88px); letter-spacing: -.075em; font-weight: 850; line-height: 1; color: var(--blue); }
+.footer-signature img { width: clamp(36px,5vw,56px); }
 /* Command reference: compact native disclosure, usable without JavaScript. */
 .page-head { padding: 54px 0 24px; border-bottom: 2px solid var(--ink); }
 .page-head h1 { font-size: clamp(34px,4vw,52px); letter-spacing: -.04em; line-height: 1.2; margin: 0 0 16px; }
