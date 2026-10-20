@@ -44,16 +44,9 @@ description: 미니게임·주식, 음악, 학교 정보, 서버 관리를 한 �
     <a class="all-commands" href="{{ '/commands' | relative_url }}"><span>원하는 기능, 바로 찾아보세요.</span><strong>{{ site.data.bot.command_total }}개 명령어 모아보기 {% include icon.html name="arrow-right" %}</strong></a>
   </div>
 </section>
-<section class="section setup-section" id="start">
-  <div class="wrap setup-grid"><div class="section-heading"><p class="section-code">02 — 시작하기</p><h2>우리 서버에 맞게.<br>준비는 이 세 가지.</h2><p class="sub">음악과 학교 정보는 먼저 설정이 필요해요. 사용할 기능부터 차근차근 준비하세요.</p></div><div class="points">
-    <div><h3>서버와 권한 선택</h3><p>서버를 관리할 수 있는 계정으로 초대하고 요청 권한을 확인해요. 운영 명령은 서버 소유자와 서버 관리 권한이 있는 역할만 사용할 수 있어요.</p><a href="#permissions">권한 설명 보기</a></div>
-    <div><h3>음악은 음성 채널에서</h3><p>음성 채널에 먼저 입장한 뒤 <code>/음악 재생</code>을 실행해요. 외부 서비스 사정에 따라 일부 곡은 재생되지 않을 수 있어요.</p><a href="{{ '/commands' | relative_url }}#cmd-음악">재생 명령어 보기</a></div>
-    <div><h3>학교 정보는 등록 후에</h3><p><code>/학교등록 검색</code>으로 학교를 등록해요. 서버마다 최대 5곳을 등록할 수 있고, 급식 알림은 운영자가 채널을 지정해야 해요.</p><a href="{{ '/commands' | relative_url }}#cmd-학교등록">학교 등록 방법</a></div>
-  </div></div>
-</section>
 <section class="section" id="faq">
   <div class="wrap">
-    <p class="section-code">03 — 자주 묻는 질문</p>
+    <p class="section-code">02 — 자주 묻는 질문</p>
     <h2>궁금한 건,<br>여기서 풀고 가요.</h2>
     <p class="sub">처음 쓰기 전에 많이 궁금해하는 것들이에요.</p>
     <div class="faq">
@@ -90,4 +83,4 @@ description: 미니게임·주식, 음악, 학교 정보, 서버 관리를 한 �
   </div>
 </section>
 
-<section class="join-section"><div class="wrap join-grid"><div><p class="section-code">다음은, 우리 서버 차례.</p><h2>함께할 준비,<br>됐나요?</h2></div><div class="join-action"><p>OMNI를 초대하고<br>우리 서버의 다섯 방향을 열어 보세요.</p>{% if site.data.bot.invite_url %}<a class="btn" href="{{ site.data.bot.invite_url | escape }}" rel="noopener">우리 서버에 초대하기 {% include icon.html name="arrow-up-right" %}</a>{% endif %}<a href="#start" class="join-check">시작 전 설정 확인하기</a></div><span class="join-orbit" aria-hidden="true"></span></div></section>
+<section class="join-section"><div class="wrap join-grid"><div><p class="section-code">다음은, 우리 서버 차례.</p><h2>함께할 준비,<br>됐나요?</h2></div><div class="join-action"><p>OMNI를 초대하고<br>우리 서버의 다섯 방향을 열어 보세요.</p>{% if site.data.bot.invite_url %}<a class="btn" href="{{ site.data.bot.invite_url | escape }}" rel="noopener">우리 서버에 초대하기 {% include icon.html name="arrow-up-right" %}</a>{% endif %}<a href="#permissions" class="join-check">초대 전 요청 권한 확인하기</a></div><span class="join-orbit" aria-hidden="true"></span></div></section>

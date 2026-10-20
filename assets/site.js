@@ -2,6 +2,75 @@
 (function () {
   "use strict";
 
+  // Collapse navigation after leaving the top, without oscillating as its height changes.
+  var header = document.querySelector(".site-header");
+  var nav = document.getElementById("primary-nav");
+  var navToggle = document.getElementById("nav-toggle");
+  var backToTop = document.getElementById("back-to-top");
+  var compact = false;
+  var scrollPending = false;
+
+  function closeNavigation(restoreFocus) {
+    header.classList.remove("nav-open");
+    navToggle.setAttribute("aria-expanded", "false");
+    if (restoreFocus) navToggle.focus({ preventScroll: true });
+  }
+  function updateScrollState() {
+    scrollPending = false;
+    var nextCompact = compact ? window.scrollY > 40 : window.scrollY > 120;
+    if (nextCompact !== compact) {
+      var focusInNav = nav.contains(document.activeElement);
+      var focusOnToggle = document.activeElement === navToggle;
+      compact = nextCompact;
+      document.documentElement.classList.toggle("is-scrolled", compact);
+      navToggle.hidden = !compact;
+      if (!compact) closeNavigation(false);
+      if (compact && focusInNav) navToggle.focus({ preventScroll: true });
+      if (!compact && focusOnToggle) header.querySelector(".brand").focus({ preventScroll: true });
+    }
+    backToTop.hidden = window.scrollY < 360;
+  }
+  if (header && nav && navToggle && backToTop) {
+    updateScrollState();
+    window.addEventListener("scroll", function () {
+      if (!scrollPending) {
+        scrollPending = true;
+        requestAnimationFrame(updateScrollState);
+      }
+    }, { passive: true });
+    navToggle.addEventListener("click", function () {
+      var open = navToggle.getAttribute("aria-expanded") !== "true";
+      header.classList.toggle("nav-open", open);
+      navToggle.setAttribute("aria-expanded", String(open));
+    });
+    nav.addEventListener("click", function (event) {
+      if (event.target.closest("a") && compact) closeNavigation(true);
+    });
+    document.addEventListener("click", function (event) {
+      if (compact && !header.contains(event.target)) closeNavigation(false);
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && header.classList.contains("nav-open")) closeNavigation(true);
+    });
+    backToTop.addEventListener("click", function () {
+      header.querySelector(".brand").focus({ preventScroll: true });
+      window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+    });
+  }
+
+  // Native disclosure works without JS; enhance dismissal for dropdown behavior.
+  document.querySelectorAll("details.versions").forEach(function (versions) {
+    document.addEventListener("click", function (event) {
+      if (!versions.contains(event.target)) versions.open = false;
+    });
+    versions.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && versions.open) {
+        versions.open = false;
+        versions.querySelector("summary").focus();
+      }
+    });
+  });
+
   // Content stays visible without JS; animate each section only when it enters view.
   var motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
   if (!motionPreference.matches && "IntersectionObserver" in window && Element.prototype.animate) {
@@ -15,7 +84,7 @@
         revealObserver.unobserve(entry.target);
       });
     }, { threshold: 0.12 });
-    document.querySelectorAll(".section-heading, .feature-row, .points > div, .faq details").forEach(function (el) {
+    document.querySelectorAll(".section-heading, .feature-row, .faq details").forEach(function (el) {
       revealObserver.observe(el);
     });
     motionPreference.addEventListener("change", function (event) {

@@ -14,9 +14,10 @@
   <aside class="legal-side" aria-label="문서 안내">
     {%- assign group = site.data.legal[page.legal] %}
     {%- if group %}
-    <section class="versions">
-      <h2>{{ group.name }} 버전</h2>
-      <ul>
+    {%- assign current_version = group.versions | where: "path", page.permalink | first %}
+    <details class="versions">
+      <summary>문서 버전 <span class="version-current">{{ current_version.label | default: "선택" }}</span>{% include icon.html name="chevron-down" %}</summary>
+      <div class="version-menu"><ul aria-label="{{ group.name }} 버전 목록">
         {%- for v in group.versions %}
         <li{% if v.path and v.path == page.permalink %} class="is-current"{% endif %}>
           {%- if v.path %}
@@ -26,8 +27,8 @@
           {%- endif %}
         </li>
         {%- endfor %}
-      </ul>
-    </section>
+      </ul></div>
+    </details>
     {%- endif %}
     <details class="toc" id="toc" hidden open>
       <summary>목차</summary>
