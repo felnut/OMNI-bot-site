@@ -29,11 +29,12 @@ description: OMNI의 슬래시 명령어를 분류별로 살펴보고 사용법�
     <p class="blurb">{{ c.blurb }}</p>
     {%- for m in c.commands %}
     <details class="cmd" id="cmd-{{ m.name }}" data-text="{{ m.name }} {{ m.description }}{% for u in m.usages %} {{ u.syntax }} {{ u.description }}{% endfor %}">
-      <summary><span class="cmd-name">/{{ m.name }}</span><span class="cmd-summary">{{ m.description }}</span>{% include icon.html name="plus" %}</summary>
+      {%- assign op_only = m.description contains '[서버 운영자 전용]' -%}
+      <summary><span class="cmd-name">/{{ m.name }}{% if op_only %}<span class="cmd-badge">운영자 전용</span>{% endif %}</span><span class="cmd-summary">{{ m.description | remove: '[서버 운영자 전용] ' }}</span>{% include icon.html name="plus" %}</summary>
       <div class="cmd-detail"><p class="cmd-hint">사용법 · <code>&lt;항목&gt;</code> 필수 / <code>[항목]</code> 선택</p>
       <ul>
         {%- for u in m.usages %}
-        <li><code>{{ u.syntax }}</code><span>{{ u.description }}</span></li>
+        <li><code>{{ u.syntax }}</code>{% unless m.usages.size == 1 and u.description == m.description %}<span>{{ u.description | remove: '[서버 운영자 전용] ' }}</span>{% endunless %}</li>
         {%- endfor %}
       </ul></div>
     </details>
@@ -41,5 +42,5 @@ description: OMNI의 슬래시 명령어를 분류별로 살펴보고 사용법�
   </section>
   {%- endfor %}
 
-  <p class="empty" id="empty" role="status" hidden>검색 결과가 없어요. 다른 단어로 찾아보거나 분류를 &lsquo;전체&rsquo;로 바꿔 보세요.</p>
+  <div class="empty" id="empty" role="status" hidden><p><b id="empty-term"></b> 검색 결과가 없어요. 철자를 확인하거나 다른 단어로 찾아보세요.</p><button type="button" class="reset-btn" id="reset-filters">검색어·분류 초기화</button></div>
 </div>

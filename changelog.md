@@ -14,7 +14,7 @@ description: 이용약관과 개인정보 처리방침의 변경 내역과 이�
 
 | 적용 기간 | 버전 |
 |---|---|
-| 2026-10-26 ~ (시행 예정) | [개정본 보기](privacy-2026-10-26) |
+| 2026-10-26 ~ (시행 예정) | [개정본 보기](pre-privacy) |
 | 2026-10-15 ~ 현재 | [현행 버전](privacy) |
 | 2026-10-14 ~ 2026-10-14 | [2026년 10월 14일 판](https://github.com/felnut/OMNI-Bot/blob/2cd1723/docs/privacy.md) |
 | 2026-10-01 ~ 2026-10-13 | [2026년 10월 1일 판](https://github.com/felnut/OMNI-Bot/blob/e181ff2/docs/privacy.md) |
@@ -45,7 +45,7 @@ description: 이용약관과 개인정보 처리방침의 변경 내역과 이�
 
 | 적용 기간 | 버전 |
 |---|---|
-| 2026-10-26 ~ (시행 예정) | [개정본 보기](terms-2026-10-26) |
+| 2026-10-26 ~ (시행 예정) | [개정본 보기](pre-terms) |
 | 2026-10-15 ~ 현재 | [현행 버전](terms) |
 | 2026-10-14 ~ 2026-10-14 | [2026년 10월 14일 판](https://github.com/felnut/OMNI-Bot/blob/2cd1723/docs/terms.md) |
 | 2026-10-01 ~ 2026-10-13 | [2026년 10월 1일 판](https://github.com/felnut/OMNI-Bot/blob/e181ff2/docs/terms.md) |

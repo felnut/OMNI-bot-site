@@ -207,6 +207,7 @@
         shown += visible;
       });
       empty.hidden = shown !== 0;
+      document.getElementById("empty-term").textContent = q.value.trim() ? "‘" + q.value.trim() + "’에 대한" : "선택한 분류에";
       document.getElementById("result-count").textContent = "명령어 " + shown + "개";
     };
 
@@ -218,6 +219,11 @@
 
     buttons.forEach(function (b) { b.addEventListener("click", function () { select(b.getAttribute("data-cat")); }); });
     q.addEventListener("input", apply);
+    document.getElementById("reset-filters").addEventListener("click", function () {
+      q.value = "";
+      select("");
+      q.focus();
+    });
 
     // Deep links must reveal a command even after a different category was selected.
     function followHash() {

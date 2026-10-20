@@ -8,9 +8,10 @@ description: 미니게임·주식 음악 학교 정보 서버 관리를 한 봇�
     <div class="mast-copy">
       <p class="mast-label"><span class="brand-spark" aria-hidden="true">{% include icon.html name="sparkles" %}</span> 한 서버 다섯 가지 재미</p>
       <h1 id="home-title">놀고 듣고<br><span>매일을 나누고</span></h1>
-      <p class="lead">랭킹을 겨루는 친구도 음악을 고르는 친구도<br>내일 급식이 궁금한 친구도 모두 모이는 곳에 <b>OMNI</b></p>
+      <p class="lead">게임부터 음악과 학교 정보까지,<br>서버의 일상을 함께하는 디스코드 봇 <b>OMNI</b></p>
       <div class="actions">
-        {% if site.data.bot.invite_url %}<a class="btn btn-invite" href="{{ site.data.bot.invite_url | escape }}" target="_blank" rel="noopener noreferrer">우리 서버에 초대하기 {% include icon.html name="arrow-up-right" %}</a>{% endif %}
+        {% if site.data.bot.invite_url %}<a class="btn btn-invite" href="{{ site.data.bot.invite_url | escape }}" target="_blank" rel="noopener noreferrer">서버에 초대하기 {% include icon.html name="arrow-up-right" %}</a>{% endif %}
+        <p class="invite-note">{% include icon.html name="shield-check" %} 관리자 권한 요청 없음 <a href="#permissions">요청 권한 보기</a></p>
       </div>
       <div class="mast-caption"><span>한국어 디스코드 봇</span><span>모든 기능 무료</span></div>
       <div class="mast-arc" aria-hidden="true"></div>
@@ -25,7 +26,7 @@ description: 미니게임·주식 음악 학교 정보 서버 관리를 한 봇�
       <p>다섯 방향의 즐거움이 하나의 서버로</p>
     </nav>
   </div>
-  <div class="wrap trust-line"><a href="#permissions">기능별 요청 권한 {% include icon.html name="arrow-right" %}</a><a href="{{ '/privacy' | relative_url }}">저장하는 정보 확인 {% include icon.html name="arrow-right" %}</a></div>
+  <div class="wrap trust-line"><a href="{{ '/privacy' | relative_url }}">저장하는 정보 확인 {% include icon.html name="arrow-right" %}</a></div>
 </section>
 <section class="section features-section" id="features">
   <div class="wrap">
