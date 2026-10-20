@@ -30,6 +30,7 @@ description: 미니게임·주식 음악 학교 정보 서버 관리를 한 봇�
 <section class="section features-section" id="features">
   <div class="wrap">
     <div class="section-heading"><div><p class="section-code">01 — OMNI의 다섯 방향</p><h2>따로 있던 즐거움<br>여기서 만나다</h2></div><p class="sub">학교·게임·음악 그리고 서버의 작은 일들<br>필요한 기능을 골라 우리 서버의 일상에 더해 보세요</p></div>
+    <a class="all-commands" href="{{ '/commands' | relative_url }}"><span>원하는 기능 바로 찾아보세요</span><strong>{{ site.data.bot.command_total }}개 명령어 모아보기 {% include icon.html name="arrow-right" %}</strong></a>
     <div class="feature-ledger">
       {% for c in site.data.commands.categories %}
       <article class="feature-row" id="feature-{{ c.key }}">
@@ -40,7 +41,6 @@ description: 미니게임·주식 음악 학교 정보 서버 관리를 한 봇�
       </article>
       {% endfor %}
     </div>
-    <a class="all-commands" href="{{ '/commands' | relative_url }}"><span>원하는 기능 바로 찾아보세요</span><strong>{{ site.data.bot.command_total }}개 명령어 모아보기 {% include icon.html name="arrow-right" %}</strong></a>
   </div>
 </section>
 <section class="section" id="faq">
