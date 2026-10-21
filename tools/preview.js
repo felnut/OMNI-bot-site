@@ -21,8 +21,10 @@ const siteUrl = cfg("url", "http://localhost");
 const EXCLUDE = new Set(["README.md", "package.json", "package-lock.json", "node_modules", "tools", ".preview", ".gitignore", ".git"]);
 
 const site = { title: cfg("title"), description: cfg("description"), url: siteUrl, baseurl, data: {} };
-for (const f of fs.readdirSync(path.join(ROOT, "_data"))) {
-  site.data[path.basename(f, path.extname(f))] = JSON.parse(fs.readFileSync(path.join(ROOT, "_data", f), "utf8"));
+function loadData() {
+  for (const f of fs.readdirSync(path.join(ROOT, "_data"))) {
+    site.data[path.basename(f, path.extname(f))] = JSON.parse(fs.readFileSync(path.join(ROOT, "_data", f), "utf8"));
+  }
 }
 
 const engine = new Liquid({ partials: [path.join(ROOT, "_includes")], jekyllInclude: true, extname: ".html", strictFilters: true });
@@ -42,9 +44,13 @@ function frontMatter(src) {
 }
 
 const layouts = {};
-for (const f of fs.readdirSync(path.join(ROOT, "_layouts"))) layouts[path.basename(f, ".html")] = fs.readFileSync(path.join(ROOT, "_layouts", f), "utf8");
+function loadLayouts() {
+  for (const f of fs.readdirSync(path.join(ROOT, "_layouts"))) layouts[path.basename(f, ".html")] = fs.readFileSync(path.join(ROOT, "_layouts", f), "utf8");
+}
 
 async function build() {
+  loadData();
+  loadLayouts();
   fs.rmSync(OUT, { recursive: true, force: true });
   const target = path.join(OUT, baseurl.replace(/^\//, ""));
   fs.mkdirSync(target, { recursive: true });
@@ -82,10 +88,26 @@ function serve() {
         res.writeHead(404, { "content-type": "text/plain; charset=utf-8" });
         return res.end("404");
       }
-      res.writeHead(200, { "content-type": types[path.extname(hit)] ?? "application/octet-stream" });
+      res.writeHead(200, { "content-type": types[path.extname(hit)] ?? "application/octet-stream", "cache-control": "no-store" });
       fs.createReadStream(hit).pipe(res);
     })
     .listen(PORT, "127.0.0.1", () => console.log(`\n미리보기: http://127.0.0.1:${PORT}${baseurl}/  (끄려면 Ctrl+C)`));
+  watch();
+}
+
+// 파일을 고치면 자동으로 다시 렌더링한다 (새로고침만 하면 최신 모습이 보인다)
+function watch() {
+  let timer;
+  const rebuild = () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => build().catch((e) => console.error("❌ 렌더링 오류:", e.message)), 150);
+  };
+  for (const dir of ["", "_includes", "_layouts", "_data", "assets"]) {
+    fs.watch(path.join(ROOT, dir), { recursive: dir === "assets" }, (_, name) => {
+      if (dir === "" && !/\.(md|html)$|^_config\.yml$/.test(name ?? "")) return;
+      rebuild();
+    });
+  }
 }
 
 build()
