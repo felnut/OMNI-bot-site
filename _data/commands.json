@@ -14,8 +14,10 @@
           "description": "현재 보유 금액을 확인합니다 💰",
           "usages": [
             {
+              "sub": null,
               "syntax": "/돈",
-              "description": "현재 보유 금액을 확인합니다 💰"
+              "description": "현재 보유 금액을 확인합니다 💰",
+              "options": []
             }
           ]
         },
@@ -24,8 +26,10 @@
           "description": "출석하고 돈 받자! 매일 밤 12시 갱신 💰",
           "usages": [
             {
+              "sub": null,
               "syntax": "/출석",
-              "description": "출석하고 돈 받자! 매일 밤 12시 갱신 💰"
+              "description": "출석하고 돈 받자! 매일 밤 12시 갱신 💰",
+              "options": []
             }
           ]
         },
@@ -34,8 +38,27 @@
           "description": "다른 유저에게 돈을 보냅니다 (24시간 최대 30,000원) 📤",
           "usages": [
             {
+              "sub": null,
               "syntax": "/송금 <유저> <금액>",
-              "description": "다른 유저에게 돈을 보냅니다 (24시간 최대 30,000원) 📤"
+              "description": "다른 유저에게 돈을 보냅니다 (24시간 최대 30,000원) 📤",
+              "options": [
+                {
+                  "name": "유저",
+                  "description": "돈을 보낼 유저",
+                  "required": true,
+                  "type": "유저"
+                },
+                {
+                  "name": "금액",
+                  "description": "보낼 금액",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    null
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -44,8 +67,10 @@
           "description": "돈 많은 사람들 TOP 10 💰 (전체 서버)",
           "usages": [
             {
+              "sub": null,
               "syntax": "/랭킹",
-              "description": "돈 많은 사람들 TOP 10 💰 (전체 서버)"
+              "description": "돈 많은 사람들 TOP 10 💰 (전체 서버)",
+              "options": []
             }
           ]
         },
@@ -54,32 +79,98 @@
           "description": "서버 주식 거래소 (1시간 마다 시세 변동)",
           "usages": [
             {
+              "sub": "주가",
               "syntax": "/주식 주가",
-              "description": "현재 주가 확인"
+              "description": "현재 주가 확인",
+              "options": []
             },
             {
+              "sub": "매수",
               "syntax": "/주식 매수 <종목> <수량>",
-              "description": "주식 사기"
+              "description": "주식 사기",
+              "options": [
+                {
+                  "name": "종목",
+                  "description": "종목명 (입력 시 목록이 뜹니다)",
+                  "required": true,
+                  "type": "글자",
+                  "autocomplete": true
+                },
+                {
+                  "name": "수량",
+                  "description": "수량",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    null
+                  ]
+                }
+              ]
             },
             {
+              "sub": "매도",
               "syntax": "/주식 매도 <종목> <수량>",
-              "description": "주식 팔기"
+              "description": "주식 팔기",
+              "options": [
+                {
+                  "name": "종목",
+                  "description": "종목명 (입력 시 목록이 뜹니다)",
+                  "required": true,
+                  "type": "글자",
+                  "autocomplete": true
+                },
+                {
+                  "name": "수량",
+                  "description": "수량",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    null
+                  ]
+                }
+              ]
             },
             {
+              "sub": "내주식",
               "syntax": "/주식 내주식",
-              "description": "내 자산 확인"
+              "description": "내 자산 확인",
+              "options": []
             },
             {
+              "sub": "랭킹",
               "syntax": "/주식 랭킹",
-              "description": "서버 자산가 순위"
+              "description": "서버 자산가 순위",
+              "options": []
             },
             {
+              "sub": "뉴스",
               "syntax": "/주식 뉴스 [종목]",
-              "description": "종목 뉴스 보기"
+              "description": "종목 뉴스 보기",
+              "options": [
+                {
+                  "name": "종목",
+                  "description": "비워 두면 전체",
+                  "required": false,
+                  "type": "글자",
+                  "autocomplete": true
+                }
+              ]
             },
             {
+              "sub": "차트",
               "syntax": "/주식 차트 <종목>",
-              "description": "종목 차트 보기"
+              "description": "종목 차트 보기",
+              "options": [
+                {
+                  "name": "종목",
+                  "description": "종목명 (입력 시 목록이 뜹니다)",
+                  "required": true,
+                  "type": "글자",
+                  "autocomplete": true
+                }
+              ]
             }
           ]
         },
@@ -88,12 +179,16 @@
           "description": "숫자 야구 (베팅 1000원)",
           "usages": [
             {
+              "sub": "시작",
               "syntax": "/숫자야구 시작",
-              "description": "게임 시작"
+              "description": "게임 시작",
+              "options": []
             },
             {
+              "sub": "포기",
               "syntax": "/숫자야구 포기",
-              "description": "포기하고 정답 보기"
+              "description": "포기하고 정답 보기",
+              "options": []
             }
           ]
         },
@@ -102,8 +197,21 @@
           "description": "21에 가까운 쪽이 이겨요! (베팅 100~100,000원, 승리금 수수료 3%)",
           "usages": [
             {
+              "sub": null,
               "syntax": "/블랙잭 <금액>",
-              "description": "21에 가까운 쪽이 이겨요! (베팅 100~100,000원, 승리금 수수료 3%)"
+              "description": "21에 가까운 쪽이 이겨요! (베팅 100~100,000원, 승리금 수수료 3%)",
+              "options": [
+                {
+                  "name": "금액",
+                  "description": "베팅할 금액",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    100,
+                    100000
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -112,8 +220,10 @@
           "description": "카드뽑기! 베팅 5만원, 카드 한 장으로 최대 10배!",
           "usages": [
             {
+              "sub": null,
               "syntax": "/카드뽑기",
-              "description": "카드뽑기! 베팅 5만원, 카드 한 장으로 최대 10배!"
+              "description": "카드뽑기! 베팅 5만원, 카드 한 장으로 최대 10배!",
+              "options": []
             }
           ]
         },
@@ -122,8 +232,31 @@
           "description": "이기면 베팅액만큼 받고, 지면 베팅액을 잃습니다. (승률 47%)",
           "usages": [
             {
+              "sub": null,
               "syntax": "/홀짝 <선택> <금액>",
-              "description": "이기면 베팅액만큼 받고, 지면 베팅액을 잃습니다. (승률 47%)"
+              "description": "이기면 베팅액만큼 받고, 지면 베팅액을 잃습니다. (승률 47%)",
+              "options": [
+                {
+                  "name": "선택",
+                  "description": "홀이나 짝을 선택하세요.",
+                  "required": true,
+                  "type": "글자",
+                  "choices": [
+                    "홀",
+                    "짝"
+                  ]
+                },
+                {
+                  "name": "금액",
+                  "description": "베팅할 금액",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    null
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -132,8 +265,10 @@
           "description": "500원으로 복권을 구매합니다. (200~50,000원 당첨)",
           "usages": [
             {
+              "sub": null,
               "syntax": "/복권",
-              "description": "500원으로 복권을 구매합니다. (200~50,000원 당첨)"
+              "description": "500원으로 복권을 구매합니다. (200~50,000원 당첨)",
+              "options": []
             }
           ]
         },
@@ -142,8 +277,42 @@
           "description": "룰렛! 색은 2배, 숫자를 맞히면 36배 (0과 00이 있어요)",
           "usages": [
             {
+              "sub": null,
               "syntax": "/룰렛 <종류> <금액> [숫자]",
-              "description": "룰렛! 색은 2배, 숫자를 맞히면 36배 (0과 00이 있어요)"
+              "description": "룰렛! 색은 2배, 숫자를 맞히면 36배 (0과 00이 있어요)",
+              "options": [
+                {
+                  "name": "종류",
+                  "description": "무엇에 걸까요?",
+                  "required": true,
+                  "type": "글자",
+                  "choices": [
+                    "🟥 빨강 (2배)",
+                    "⬛ 검정 (2배)",
+                    "숫자 (36배)"
+                  ]
+                },
+                {
+                  "name": "금액",
+                  "description": "베팅할 금액",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    10,
+                    null
+                  ]
+                },
+                {
+                  "name": "숫자",
+                  "description": "종류가 '숫자'일 때 0~36",
+                  "required": false,
+                  "type": "정수",
+                  "range": [
+                    0,
+                    36
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -162,36 +331,93 @@
           "description": "음성 채널에서 음악 재생",
           "usages": [
             {
+              "sub": "재생",
               "syntax": "/음악 재생 <검색어> [소스]",
-              "description": "검색어나 URL로 음악을 큐에 추가"
+              "description": "검색어나 URL로 음악을 큐에 추가",
+              "options": [
+                {
+                  "name": "검색어",
+                  "description": "제목 또는 URL",
+                  "required": true,
+                  "type": "글자",
+                  "autocomplete": true
+                },
+                {
+                  "name": "소스",
+                  "description": "검색어일 때 찾을 곳 (링크는 자동 인식, 기본: 유튜브)",
+                  "required": false,
+                  "type": "글자",
+                  "choices": [
+                    "유튜브",
+                    "사운드클라우드"
+                  ]
+                }
+              ]
             },
             {
+              "sub": "일시정지",
               "syntax": "/음악 일시정지",
-              "description": "일시정지/재개"
+              "description": "일시정지/재개",
+              "options": []
             },
             {
+              "sub": "스킵",
               "syntax": "/음악 스킵",
-              "description": "현재 곡 건너뛰기"
+              "description": "현재 곡 건너뛰기",
+              "options": []
             },
             {
+              "sub": "정지",
               "syntax": "/음악 정지",
-              "description": "재생 중지 및 퇴장"
+              "description": "재생 중지 및 퇴장",
+              "options": []
             },
             {
+              "sub": "큐",
               "syntax": "/음악 큐",
-              "description": "지금 곡과 대기열 보기"
+              "description": "지금 곡과 대기열 보기",
+              "options": []
             },
             {
+              "sub": "섞기",
               "syntax": "/음악 섞기",
-              "description": "대기열을 무작위로 섞기"
+              "description": "대기열을 무작위로 섞기",
+              "options": []
             },
             {
+              "sub": "반복",
               "syntax": "/음악 반복 <모드>",
-              "description": "반복 재생 설정"
+              "description": "반복 재생 설정",
+              "options": [
+                {
+                  "name": "모드",
+                  "description": "반복 방식",
+                  "required": true,
+                  "type": "글자",
+                  "choices": [
+                    "끄기",
+                    "한 곡 반복",
+                    "대기열 반복"
+                  ]
+                }
+              ]
             },
             {
+              "sub": "볼륨",
               "syntax": "/음악 볼륨 <값>",
-              "description": "볼륨 설정 (0~100)"
+              "description": "볼륨 설정 (0~100)",
+              "options": [
+                {
+                  "name": "값",
+                  "description": "0~100",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    0,
+                    100
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -200,28 +426,80 @@
           "description": "서버 운영자가 정한 음악 사이트(없으면 기본 차트)를 기준으로 곡을 추천받아요 · 설정은 서버 운영자 전용",
           "usages": [
             {
+              "sub": "받기",
               "syntax": "/음악추천 받기 [개수]",
-              "description": "지금 추천곡 받기"
+              "description": "지금 추천곡 받기",
+              "options": [
+                {
+                  "name": "개수",
+                  "description": "추천받을 곡 수 (1~10, 기본 5)",
+                  "required": false,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    10
+                  ]
+                }
+              ]
             },
             {
+              "sub": "차트",
               "syntax": "/음악추천 차트",
-              "description": "추천 기준 사이트별 순위 TOP 10을 카테고리로 나눠서 보기"
+              "description": "추천 기준 사이트별 순위 TOP 10을 카테고리로 나눠서 보기",
+              "options": []
             },
             {
+              "sub": "상태",
               "syntax": "/음악추천 상태",
-              "description": "자동 추천 켜짐/꺼짐과 등록된 사이트 보기"
+              "description": "자동 추천 켜짐/꺼짐과 등록된 사이트 보기",
+              "options": []
             },
             {
+              "sub": "자동",
               "syntax": "/음악추천 자동 <설정>",
-              "description": "재생이 끝났을 때 추천곡을 자동으로 올릴지 설정 (기본: 꺼짐)"
+              "description": "재생이 끝났을 때 추천곡을 자동으로 올릴지 설정 (기본: 꺼짐)",
+              "options": [
+                {
+                  "name": "설정",
+                  "description": "켜기 또는 끄기",
+                  "required": true,
+                  "type": "글자",
+                  "choices": [
+                    "켜기",
+                    "끄기"
+                  ]
+                }
+              ]
             },
             {
+              "sub": "사이트추가",
               "syntax": "/음악추천 사이트추가 <주소>",
-              "description": "추천 기준 사이트 추가 (유튜브·유튜브 뮤직 재생목록, 사운드클라우드 재생목록, 스포티파이 재생목록·앨범, 멜론 차트)"
+              "description": "추천 기준 사이트 추가 (유튜브·유튜브 뮤직 재생목록, 사운드클라우드 재생목록, 스포티파이 재생목록·앨범, 멜론 차트)",
+              "options": [
+                {
+                  "name": "주소",
+                  "description": "재생목록 또는 앨범 주소",
+                  "required": true,
+                  "type": "글자"
+                }
+              ]
             },
             {
+              "sub": "사이트삭제",
               "syntax": "/음악추천 사이트삭제 <번호>",
-              "description": "등록한 사이트 지우기"
+              "description": "등록한 사이트 지우기",
+              "options": [
+                {
+                  "name": "번호",
+                  "description": "`/음악추천 상태`에 나온 번호",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    5
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -240,20 +518,51 @@
           "description": "이 서버의 학교를 최대 5곳 등록해요 · 기본 학교 지정·해제는 관리자 전용",
           "usages": [
             {
+              "sub": "검색",
               "syntax": "/학교등록 검색 <이름>",
-              "description": "학교 이름으로 찾아서 추가 등록"
+              "description": "학교 이름으로 찾아서 추가 등록",
+              "options": [
+                {
+                  "name": "이름",
+                  "description": "학교 이름 (예: 한빛고등학교)",
+                  "required": true,
+                  "type": "글자"
+                }
+              ]
             },
             {
+              "sub": "확인",
               "syntax": "/학교등록 확인",
-              "description": "등록된 학교 목록 보기"
+              "description": "등록된 학교 목록 보기",
+              "options": []
             },
             {
+              "sub": "기본",
               "syntax": "/학교등록 기본 <학교>",
-              "description": "학교를 고르지 않았을 때 쓸 기본 학교 지정"
+              "description": "학교를 고르지 않았을 때 쓸 기본 학교 지정",
+              "options": [
+                {
+                  "name": "학교",
+                  "description": "기본으로 쓸 학교",
+                  "required": true,
+                  "type": "글자",
+                  "autocomplete": true
+                }
+              ]
             },
             {
+              "sub": "해제",
               "syntax": "/학교등록 해제 [학교]",
-              "description": "등록한 학교 지우기"
+              "description": "등록한 학교 지우기",
+              "options": [
+                {
+                  "name": "학교",
+                  "description": "지울 학교 (하나뿐이면 비워도 돼요)",
+                  "required": false,
+                  "type": "글자",
+                  "autocomplete": true
+                }
+              ]
             }
           ]
         },
@@ -262,8 +571,48 @@
           "description": "급식을 알려줘요!",
           "usages": [
             {
+              "sub": null,
               "syntax": "/급식 [월] [일] [날짜] [학교]",
-              "description": "급식을 알려줘요!"
+              "description": "급식을 알려줘요!",
+              "options": [
+                {
+                  "name": "월",
+                  "description": "월을 입력해주세요. 입력하지 않으면 현재 월입니다.",
+                  "required": false,
+                  "type": "숫자",
+                  "range": [
+                    1,
+                    12
+                  ]
+                },
+                {
+                  "name": "일",
+                  "description": "일을 입력해주세요. 입력하지 않으면 현재 일입니다.",
+                  "required": false,
+                  "type": "숫자",
+                  "range": [
+                    1,
+                    31
+                  ]
+                },
+                {
+                  "name": "날짜",
+                  "description": "오늘 또는 내일. 입력하면 월/일 옵션은 무시됩니다.",
+                  "required": false,
+                  "type": "글자",
+                  "choices": [
+                    "오늘",
+                    "내일"
+                  ]
+                },
+                {
+                  "name": "학교",
+                  "description": "학교 선택 (여러 곳을 등록한 경우. 비우면 기본 학교)",
+                  "required": false,
+                  "type": "글자",
+                  "autocomplete": true
+                }
+              ]
             }
           ]
         },
@@ -272,8 +621,49 @@
           "description": "우리 학교 학급 시간표를 알려줘요!",
           "usages": [
             {
+              "sub": null,
               "syntax": "/시간표 <학년> <반> [날짜] [학교]",
-              "description": "우리 학교 학급 시간표를 알려줘요!"
+              "description": "우리 학교 학급 시간표를 알려줘요!",
+              "options": [
+                {
+                  "name": "학년",
+                  "description": "학년",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    6
+                  ]
+                },
+                {
+                  "name": "반",
+                  "description": "반",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    20
+                  ]
+                },
+                {
+                  "name": "날짜",
+                  "description": "기본: 오늘",
+                  "required": false,
+                  "type": "글자",
+                  "choices": [
+                    "오늘",
+                    "내일",
+                    "모레"
+                  ]
+                },
+                {
+                  "name": "학교",
+                  "description": "학교 선택 (여러 곳을 등록한 경우. 비우면 기본 학교)",
+                  "required": false,
+                  "type": "글자",
+                  "autocomplete": true
+                }
+              ]
             }
           ]
         },
@@ -282,8 +672,29 @@
           "description": "우리 학교 학사일정을 알려줘요!",
           "usages": [
             {
+              "sub": null,
               "syntax": "/학사일정 [범위] [학교]",
-              "description": "우리 학교 학사일정을 알려줘요!"
+              "description": "우리 학교 학사일정을 알려줘요!",
+              "options": [
+                {
+                  "name": "범위",
+                  "description": "기본: 앞으로 30일",
+                  "required": false,
+                  "type": "글자",
+                  "choices": [
+                    "앞으로 30일",
+                    "이번 달 (오늘부터)",
+                    "다음 달"
+                  ]
+                },
+                {
+                  "name": "학교",
+                  "description": "학교 선택 (여러 곳을 등록한 경우. 비우면 기본 학교)",
+                  "required": false,
+                  "type": "글자",
+                  "autocomplete": true
+                }
+              ]
             }
           ]
         },
@@ -292,8 +703,24 @@
           "description": "학사일정에서 키워드로 다음 일정을 찾아요 (예: 기말고사, 방학, 수능)",
           "usages": [
             {
+              "sub": null,
               "syntax": "/일정검색 <키워드> [학교]",
-              "description": "학사일정에서 키워드로 다음 일정을 찾아요 (예: 기말고사, 방학, 수능)"
+              "description": "학사일정에서 키워드로 다음 일정을 찾아요 (예: 기말고사, 방학, 수능)",
+              "options": [
+                {
+                  "name": "키워드",
+                  "description": "찾을 단어",
+                  "required": true,
+                  "type": "글자"
+                },
+                {
+                  "name": "학교",
+                  "description": "학교 선택 (여러 곳을 등록한 경우. 비우면 기본 학교)",
+                  "required": false,
+                  "type": "글자",
+                  "autocomplete": true
+                }
+              ]
             }
           ]
         },
@@ -302,16 +729,29 @@
           "description": "평일 아침 7시 30분에 오늘 급식을 자동으로 올려요 (설정·해제는 서버 운영자 전용)",
           "usages": [
             {
+              "sub": "설정",
               "syntax": "/급식알림 설정 <채널>",
-              "description": "알림을 받을 채널 지정"
+              "description": "알림을 받을 채널 지정",
+              "options": [
+                {
+                  "name": "채널",
+                  "description": "급식을 올릴 채널",
+                  "required": true,
+                  "type": "채널"
+                }
+              ]
             },
             {
+              "sub": "해제",
               "syntax": "/급식알림 해제",
-              "description": "급식 알림 끄기"
+              "description": "급식 알림 끄기",
+              "options": []
             },
             {
+              "sub": "확인",
               "syntax": "/급식알림 확인",
-              "description": "현재 설정 보기"
+              "description": "현재 설정 보기",
+              "options": []
             }
           ]
         }
@@ -330,16 +770,70 @@
           "description": "서버 D-day 목록 (시험·행사 날짜 세기)",
           "usages": [
             {
+              "sub": "추가",
               "syntax": "/디데이 추가 <이름> <년> <월> <일>",
-              "description": "D-day 추가"
+              "description": "D-day 추가",
+              "options": [
+                {
+                  "name": "이름",
+                  "description": "예: 기말고사 (개인정보는 적지 마세요)",
+                  "required": true,
+                  "type": "글자"
+                },
+                {
+                  "name": "년",
+                  "description": "예: 2026",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    2000,
+                    2100
+                  ]
+                },
+                {
+                  "name": "월",
+                  "description": "1~12",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    12
+                  ]
+                },
+                {
+                  "name": "일",
+                  "description": "1~31",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    31
+                  ]
+                }
+              ]
             },
             {
+              "sub": "목록",
               "syntax": "/디데이 목록",
-              "description": "남은 D-day 보기"
+              "description": "남은 D-day 보기",
+              "options": []
             },
             {
+              "sub": "삭제",
               "syntax": "/디데이 삭제 <번호>",
-              "description": "D-day 삭제 (내가 만든 것 또는 관리자)"
+              "description": "D-day 삭제 (내가 만든 것 또는 관리자)",
+              "options": [
+                {
+                  "name": "번호",
+                  "description": "목록에 표시된 #번호",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    null
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -348,8 +842,27 @@
           "description": "항목 중에서 무작위로 뽑아줘요! (쉼표로 구분)",
           "usages": [
             {
+              "sub": null,
               "syntax": "/추첨 <항목> [개수]",
-              "description": "항목 중에서 무작위로 뽑아줘요! (쉼표로 구분)"
+              "description": "항목 중에서 무작위로 뽑아줘요! (쉼표로 구분)",
+              "options": [
+                {
+                  "name": "항목",
+                  "description": "예: 짜장, 짬뽕, 볶음밥",
+                  "required": true,
+                  "type": "글자"
+                },
+                {
+                  "name": "개수",
+                  "description": "뽑을 개수 (기본 1)",
+                  "required": false,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    50
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -358,8 +871,10 @@
           "description": "이 서버의 정보를 보여줘요!",
           "usages": [
             {
+              "sub": null,
               "syntax": "/서버정보",
-              "description": "이 서버의 정보를 보여줘요!"
+              "description": "이 서버의 정보를 보여줘요!",
+              "options": []
             }
           ]
         },
@@ -368,8 +883,17 @@
           "description": "내 정보 또는 다른 유저의 정보를 보여줘요!",
           "usages": [
             {
+              "sub": null,
               "syntax": "/유저정보 [유저]",
-              "description": "내 정보 또는 다른 유저의 정보를 보여줘요!"
+              "description": "내 정보 또는 다른 유저의 정보를 보여줘요!",
+              "options": [
+                {
+                  "name": "유저",
+                  "description": "비워 두면 내 정보",
+                  "required": false,
+                  "type": "유저"
+                }
+              ]
             }
           ]
         },
@@ -378,8 +902,10 @@
           "description": "봇의 응답 속도와 API 지연 시간을 확인합니다.",
           "usages": [
             {
+              "sub": null,
               "syntax": "/ping",
-              "description": "봇의 응답 속도와 API 지연 시간을 확인합니다."
+              "description": "봇의 응답 속도와 API 지연 시간을 확인합니다.",
+              "options": []
             }
           ]
         },
@@ -388,8 +914,31 @@
           "description": "OMNI 명령어 안내 (분류나 명령어를 골라 자세히 볼 수 있어요)",
           "usages": [
             {
+              "sub": null,
               "syntax": "/도움말 [분류] [명령어]",
-              "description": "OMNI 명령어 안내 (분류나 명령어를 골라 자세히 볼 수 있어요)"
+              "description": "OMNI 명령어 안내 (분류나 명령어를 골라 자세히 볼 수 있어요)",
+              "options": [
+                {
+                  "name": "분류",
+                  "description": "분류별 명령어 보기",
+                  "required": false,
+                  "type": "글자",
+                  "choices": [
+                    "게임·경제",
+                    "음악",
+                    "학교",
+                    "편의",
+                    "서버 운영"
+                  ]
+                },
+                {
+                  "name": "명령어",
+                  "description": "명령어 하나의 사용법 보기 (예: 랭킹)",
+                  "required": false,
+                  "type": "글자",
+                  "autocomplete": true
+                }
+              ]
             }
           ]
         }
@@ -408,16 +957,49 @@
           "description": "유저 경고 관리 (3회 누적마다 24시간 타임아웃) · 지급/차감은 서버 운영자 전용",
           "usages": [
             {
+              "sub": "지급",
               "syntax": "/경고 지급 <유저> [사유]",
-              "description": "경고 1회 주기"
+              "description": "경고 1회 주기",
+              "options": [
+                {
+                  "name": "유저",
+                  "description": "대상",
+                  "required": true,
+                  "type": "유저"
+                },
+                {
+                  "name": "사유",
+                  "description": "사유",
+                  "required": false,
+                  "type": "글자"
+                }
+              ]
             },
             {
+              "sub": "차감",
               "syntax": "/경고 차감 <유저>",
-              "description": "가장 최근 경고 1회 지우기"
+              "description": "가장 최근 경고 1회 지우기",
+              "options": [
+                {
+                  "name": "유저",
+                  "description": "대상",
+                  "required": true,
+                  "type": "유저"
+                }
+              ]
             },
             {
+              "sub": "조회",
               "syntax": "/경고 조회 <유저>",
-              "description": "경고 내역 보기"
+              "description": "경고 내역 보기",
+              "options": [
+                {
+                  "name": "유저",
+                  "description": "대상",
+                  "required": true,
+                  "type": "유저"
+                }
+              ]
             }
           ]
         },
@@ -426,16 +1008,42 @@
           "description": "[서버 운영자 전용] 유저를 서버에서 차단·해제하고 목록 보기",
           "usages": [
             {
+              "sub": "추가",
               "syntax": "/차단 추가 <유저> [사유]",
-              "description": "유저 차단 (서버에 없어도 가능)"
+              "description": "유저 차단 (서버에 없어도 가능)",
+              "options": [
+                {
+                  "name": "유저",
+                  "description": "대상",
+                  "required": true,
+                  "type": "유저"
+                },
+                {
+                  "name": "사유",
+                  "description": "사유",
+                  "required": false,
+                  "type": "글자"
+                }
+              ]
             },
             {
+              "sub": "해제",
               "syntax": "/차단 해제 <유저>",
-              "description": "차단 풀기"
+              "description": "차단 풀기",
+              "options": [
+                {
+                  "name": "유저",
+                  "description": "대상",
+                  "required": true,
+                  "type": "유저"
+                }
+              ]
             },
             {
+              "sub": "목록",
               "syntax": "/차단 목록",
-              "description": "차단된 유저 보기 (최대 25명)"
+              "description": "차단된 유저 보기 (최대 25명)",
+              "options": []
             }
           ]
         },
@@ -444,8 +1052,23 @@
           "description": "[서버 운영자 전용] 유저를 서버에서 추방 (다시 초대받으면 들어올 수 있어요)",
           "usages": [
             {
+              "sub": null,
               "syntax": "/추방 <유저> [사유]",
-              "description": "[서버 운영자 전용] 유저를 서버에서 추방 (다시 초대받으면 들어올 수 있어요)"
+              "description": "[서버 운영자 전용] 유저를 서버에서 추방 (다시 초대받으면 들어올 수 있어요)",
+              "options": [
+                {
+                  "name": "유저",
+                  "description": "대상",
+                  "required": true,
+                  "type": "유저"
+                },
+                {
+                  "name": "사유",
+                  "description": "사유",
+                  "required": false,
+                  "type": "글자"
+                }
+              ]
             }
           ]
         },
@@ -454,12 +1077,46 @@
           "description": "[서버 운영자 전용] 유저를 일정 시간 동안 채팅·음성 참여 제한",
           "usages": [
             {
+              "sub": "설정",
               "syntax": "/타임아웃 설정 <유저> <분> [사유]",
-              "description": "타임아웃 걸기"
+              "description": "타임아웃 걸기",
+              "options": [
+                {
+                  "name": "유저",
+                  "description": "대상",
+                  "required": true,
+                  "type": "유저"
+                },
+                {
+                  "name": "분",
+                  "description": "기간(분), 최대 40320(28일)",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    40320
+                  ]
+                },
+                {
+                  "name": "사유",
+                  "description": "사유",
+                  "required": false,
+                  "type": "글자"
+                }
+              ]
             },
             {
+              "sub": "해제",
               "syntax": "/타임아웃 해제 <유저>",
-              "description": "타임아웃 풀기"
+              "description": "타임아웃 풀기",
+              "options": [
+                {
+                  "name": "유저",
+                  "description": "대상",
+                  "required": true,
+                  "type": "유저"
+                }
+              ]
             }
           ]
         },
@@ -468,24 +1125,81 @@
           "description": "[서버 운영자 전용] 메시지 정리·슬로우모드·채널 잠금·공지",
           "usages": [
             {
+              "sub": "청소",
               "syntax": "/서버관리 청소 <개수> [유저]",
-              "description": "이 채널의 최근 메시지를 지워요 (14일 이내 메시지만)"
+              "description": "이 채널의 최근 메시지를 지워요 (14일 이내 메시지만)",
+              "options": [
+                {
+                  "name": "개수",
+                  "description": "지울 개수 (1~100)",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    100
+                  ]
+                },
+                {
+                  "name": "유저",
+                  "description": "이 유저의 메시지만 지우기",
+                  "required": false,
+                  "type": "유저"
+                }
+              ]
             },
             {
+              "sub": "슬로우모드",
               "syntax": "/서버관리 슬로우모드 <초>",
-              "description": "이 채널의 채팅 간격을 설정해요"
+              "description": "이 채널의 채팅 간격을 설정해요",
+              "options": [
+                {
+                  "name": "초",
+                  "description": "0이면 해제 (최대 21600초)",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    0,
+                    21600
+                  ]
+                }
+              ]
             },
             {
+              "sub": "잠금",
               "syntax": "/서버관리 잠금",
-              "description": "이 채널에서 @everyone의 채팅을 막아요"
+              "description": "이 채널에서 @everyone의 채팅을 막아요",
+              "options": []
             },
             {
+              "sub": "잠금해제",
               "syntax": "/서버관리 잠금해제",
-              "description": "이 채널의 채팅 제한을 풀어요"
+              "description": "이 채널의 채팅 제한을 풀어요",
+              "options": []
             },
             {
+              "sub": "공지",
               "syntax": "/서버관리 공지 <내용> [제목] [채널]",
-              "description": "공지 임베드를 보내요 (멘션 알림은 가지 않아요)"
+              "description": "공지 임베드를 보내요 (멘션 알림은 가지 않아요)",
+              "options": [
+                {
+                  "name": "내용",
+                  "description": "공지 내용 (줄바꿈은 \\n)",
+                  "required": true,
+                  "type": "글자"
+                },
+                {
+                  "name": "제목",
+                  "description": "공지 제목",
+                  "required": false,
+                  "type": "글자"
+                },
+                {
+                  "name": "채널",
+                  "description": "보낼 채널 (기본: 이 채널)",
+                  "required": false,
+                  "type": "채널"
+                }
+              ]
             }
           ]
         },
@@ -494,8 +1208,17 @@
           "description": "[서버 운영자 전용] 제재·경고 기록을 남길 채널 설정",
           "usages": [
             {
+              "sub": null,
               "syntax": "/로그채널설정 [채널]",
-              "description": "[서버 운영자 전용] 제재·경고 기록을 남길 채널 설정"
+              "description": "[서버 운영자 전용] 제재·경고 기록을 남길 채널 설정",
+              "options": [
+                {
+                  "name": "채널",
+                  "description": "비워 두면 설정을 해제해요",
+                  "required": false,
+                  "type": "채널"
+                }
+              ]
             }
           ]
         },
@@ -504,16 +1227,29 @@
           "description": "서버 운영자 연락처 등록 (운영 공지 수동 안내용) · 등록은 서버 운영자 전용",
           "usages": [
             {
+              "sub": "등록",
               "syntax": "/관리자 등록 <이메일>",
-              "description": "관리자 이메일 등록·변경 (운영 공지 수동 안내용, 안내 확인 후 동의 버튼으로 등록)"
+              "description": "관리자 이메일 등록·변경 (운영 공지 수동 안내용, 안내 확인 후 동의 버튼으로 등록)",
+              "options": [
+                {
+                  "name": "이메일",
+                  "description": "공지를 받을 이메일 주소",
+                  "required": true,
+                  "type": "글자"
+                }
+              ]
             },
             {
+              "sub": "확인",
               "syntax": "/관리자 확인",
-              "description": "내가 등록한 연락처 확인 (일부 가림)"
+              "description": "내가 등록한 연락처 확인 (일부 가림)",
+              "options": []
             },
             {
+              "sub": "해제",
               "syntax": "/관리자 해제",
-              "description": "등록한 이메일 즉시 삭제"
+              "description": "등록한 이메일 즉시 삭제",
+              "options": []
             }
           ]
         }

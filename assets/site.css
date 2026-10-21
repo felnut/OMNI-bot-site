@@ -392,3 +392,58 @@ code, .mono, kbd { font-family: var(--mono); }
 .versions .is-current a { border-left-color: var(--blue); background: #edf4ff; }
 @media (prefers-reduced-motion: reduce) { .versions > summary > .icon { transition: none; } }
 @media print { .is-scrolled body { padding-top: 0; } }
+/* ---------- 명령어 페이지: 정렬·보기·옵션 설명 ---------- */
+.view-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px 24px; flex-wrap: wrap; margin-top: 20px; }
+.view-bar .result-count { margin: 0; }
+.view-controls { display: flex; align-items: center; gap: 10px 16px; flex-wrap: wrap; }
+.seg { display: inline-flex; align-items: center; border: 1px solid var(--line); }
+.seg-label { font-size: .72rem; color: var(--ink-2); padding: 0 10px; align-self: stretch; display: inline-flex; align-items: center; background: var(--surface); }
+.seg button, .seg-btn { font-size: .78rem; padding: 7px 12px; background: white; color: var(--ink-2); border: 0; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button[aria-pressed="true"] { color: var(--blue); background: #f2f6ff; font-weight: 650; }
+.seg-btn { border: 1px solid var(--line); }
+.seg button:hover, .seg-btn:hover { background: #eef4ff; }
+.cmd-flat { margin-top: 8px; }
+.cmd-cat { display: none; margin-left: 8px; font-size: .68rem; font-weight: 500; color: var(--ink-2); }
+.is-flat .cmd-cat { display: inline; }
+.is-flat .cmd-group.is-collapsed { display: none; }
+.cmd > summary > .icon { grid-row: 1 / -1; }
+.cmd-subs { grid-column: 1; font-size: .72rem; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cmd-subs b { color: #124eb9; font-weight: 600; margin-right: 4px; }
+.cmd[open] .cmd-subs { white-space: normal; }
+.usage { padding: 12px 0; border-top: 1px solid #d9e4f8; }
+.usage:first-of-type { border-top: 0; padding-top: 4px; }
+.usage-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.usage-syntax { color: #163d81; background: #e5edfc; padding: 3px 6px; font-size: .8rem; word-break: break-all; }
+.copy-btn { flex-shrink: 0; font-size: .7rem; padding: 3px 9px; background: white; color: var(--blue); border: 1px solid #b9cdf3; cursor: pointer; }
+.copy-btn:hover { background: #eef4ff; }
+.copy-btn.is-done { color: #1b6b3a; border-color: #a8d8b9; background: #e3f5ea; }
+.usage-desc { margin: 8px 0 0; font-size: .8rem; color: var(--ink); }
+.opts { margin: 10px 0 0; display: grid; gap: 7px; }
+.opt { display: grid; grid-template-columns: minmax(0, 11em) minmax(0, 1fr); gap: 2px 14px; font-size: .78rem; }
+.opt dt { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.opt dt code { color: var(--ink); font-weight: 650; }
+.opt dd { margin: 0; color: var(--ink-2); }
+.opt-type { font-size: .66rem; color: var(--ink-2); background: var(--surface); padding: 0 5px; }
+.opt-req { font-size: .66rem; font-weight: 650; color: #b3261e; }
+.opt-opt { font-size: .66rem; color: var(--ink-2); }
+.opt-choices, .opt-range { display: block; margin-top: 3px; font-size: .72rem; }
+.opt-choices i { display: inline-block; font-style: normal; margin: 0 4px 3px 0; padding: 0 6px; color: #163d81; background: #e5edfc; }
+.cmd-hint { line-height: 1.7; margin-top: 12px; }
+.cmd-hint code { background: #e5edfc; padding: 0 4px; }
+/* 카드 보기: 한 항목이 한 장의 카드가 된다 */
+.is-cards .cmd-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 12px; }
+.is-cards .cmd { border: 1px solid var(--line); border-bottom: 1px solid var(--line); border-top: 3px solid var(--c, var(--blue)); background: white; }
+.is-cards .cmd-group .cmd { --c: var(--blue); }
+.is-cards .cmd > summary { padding: 14px; }
+.is-cards .cmd-summary { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.is-cards .cmd[open] .cmd-summary { display: block; }
+.is-cards .cmd[open] { background: #f3f7ff; }
+.is-cards .cmd-detail { padding: 0 14px 16px; }
+.is-cards .opt { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 1000px) { .is-cards .cmd-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 720px) {
+  .is-cards .cmd-list { grid-template-columns: minmax(0, 1fr); }
+  .opt { grid-template-columns: minmax(0, 1fr); }
+  .view-controls { width: 100%; }
+}
