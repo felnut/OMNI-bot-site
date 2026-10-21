@@ -329,6 +329,10 @@ code, .mono, kbd { font-family: var(--mono); }
 .more-menu a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; font-size: .86rem; text-decoration: none; border-radius: 8px; }
 .more-menu a:hover { background: var(--surface); }
 .more-menu .icon { width: 17px; height: 17px; color: var(--ink-2); }
+.acct-menu > summary.account { display: inline-flex; width: auto; height: auto; padding: 4px 12px 4px 4px; border-radius: 999px; background: transparent; cursor: pointer; list-style: none; }
+.acct-menu > summary.account:hover, .acct-menu[open] > summary.account { background: var(--surface); border-color: var(--ink); }
+.acct-menu .more-menu { min-width: 160px; z-index: 30; }
+@media (max-width: 860px) { .acct-menu > summary.account { padding: 3px; } }
 
 /* 홈: 소개 + 디스코드 목업 */
 .hero { padding: 56px 0 24px; }

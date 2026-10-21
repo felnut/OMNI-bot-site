@@ -300,13 +300,29 @@
   if (account) {
     if (!loggedIn) account.href = account.getAttribute("data-login");
     else api("/api/me").then(function (u) {
-      account.className = "account is-in";
-      account.textContent = "";
+      var icons = account.closest(".bar-end").querySelector(".more .icon use");
+      var base = icons ? icons.getAttribute("href").split("#")[0] : "/assets/icons.svg";
+      var ico = function (n) { return '<svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="' + base + "#" + n + '"></use></svg>'; };
+      var menu = document.createElement("details");
+      menu.className = "more acct-menu";
+      var sum = document.createElement("summary");
+      sum.className = "account is-in";
+      sum.setAttribute("aria-label", "내 계정 메뉴");
       var img = document.createElement("img");
       img.src = u.avatar; img.alt = ""; img.width = 28; img.height = 28;
       var name = document.createElement("span");
       name.textContent = u.name;
-      account.appendChild(img); account.appendChild(name);
+      sum.appendChild(img); sum.appendChild(name);
+      var list = document.createElement("div");
+      list.className = "more-menu";
+      list.innerHTML = '<a href="' + account.getAttribute("href") + '">' + ico("user") + "내 정보</a>" +
+        '<a href="/api/auth/logout">' + ico("log-out") + "로그아웃</a>";
+      menu.appendChild(sum); menu.appendChild(list);
+      account.replaceWith(menu);
+      document.addEventListener("click", function (event) { if (!menu.contains(event.target)) menu.open = false; });
+      menu.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && menu.open) { menu.open = false; sum.focus(); }
+      });
     }, function () {});
   }
   if (meBox) {
