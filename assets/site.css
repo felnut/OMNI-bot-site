@@ -359,20 +359,20 @@ code, .mono, kbd { font-family: var(--mono); }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 @media print { .mast-copy > * { animation: none !important; } }
-/* Compact navigation shares its height with sticky search and document tools. */
-.nav-toggle { display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--line); background: white; color: var(--ink); border-radius: 2px; padding: 8px 12px; font-size: .83rem; cursor: pointer; }
+/* Compact header keeps the navigation visible and only shrinks, sharing its height with sticky search and document tools. */
 .is-scrolled { --header-height: 58px; }
 .is-scrolled body { padding-top: calc(var(--header-height) + 1px); }
 .is-scrolled .site-header { position: fixed; top: 0; left: 0; right: 0; background: white; box-shadow: 0 3px 14px #181c220c; }
-.is-scrolled .site-header .bar { position: relative; min-height: var(--header-height); gap: 12px; padding-block: 7px; flex-wrap: nowrap; }
-.is-scrolled .brand { margin-right: auto; }
+.is-scrolled .site-header .bar { min-height: var(--header-height); gap: 28px; padding-block: 7px; flex-wrap: nowrap; }
 .is-scrolled .brand img { width: 28px; }
 .is-scrolled .wordmark { font-size: 23px; }
-.is-scrolled .nav { display: none; }
-.is-scrolled .site-header.nav-open .nav { display: flex; position: absolute; top: calc(100% + 8px); right: 0; width: min(340px,100%); flex-direction: column; align-items: stretch; gap: 0; padding: 8px; background: white; border: 1px solid var(--line); box-shadow: 0 12px 30px #181c221a; max-height: calc(100dvh - var(--header-height) - 24px); overflow-y: auto; }
-.is-scrolled .nav a { padding: 12px 14px; font-size: .9rem; }
-.is-scrolled .nav a:hover, .is-scrolled .nav a[aria-current="page"] { background: #edf4ff; }
-.is-scrolled .nav a::after { display: none; }
+.is-scrolled .nav a { padding-block: 6px; }
+@media (max-width: 860px) {
+  .is-scrolled { --header-height: 87px; }
+  .is-scrolled .site-header .bar { flex-wrap: wrap; gap: 2px 18px; padding: 8px 0 3px; }
+  .is-scrolled .nav { flex-basis: 100%; gap: 22px; }
+  .is-scrolled .btn-small { padding: 9px 12px; font-size: .74rem; }
+}
 /* Version links are a disclosure, not an ARIA application menu. */
 .legal-side { overflow: visible; max-height: none; z-index: 5; }
 .toc { max-height: calc(100dvh - var(--header-height) - 130px); overflow-y: auto; }
@@ -390,13 +390,5 @@ code, .mono, kbd { font-family: var(--mono); }
 .versions a span { font-size: .75rem; }
 .versions a:hover { background: var(--surface); }
 .versions .is-current a { border-left-color: var(--blue); background: #edf4ff; }
-@media (max-width: 600px) {
-  .is-scrolled .site-header .bar { gap: 8px; }
-  .is-scrolled .btn-small { padding: 9px 10px; font-size: .72rem; gap: 7px; }
-  .is-scrolled .nav-toggle { padding: 8px; font-size: .75rem; gap: 5px; }
-  .is-scrolled .nav-toggle .icon { width: 17px; height: 17px; }
-  .is-scrolled .brand { gap: 4px; }
-  .is-scrolled .wordmark { font-size: 21px; }
-}
 @media (prefers-reduced-motion: reduce) { .versions > summary > .icon { transition: none; } }
 @media print { .is-scrolled body { padding-top: 0; } }

@@ -2,43 +2,29 @@
 (function () {
   "use strict";
 
-  // Collapse navigation after leaving the top, without oscillating as its height changes.
+  // Shrink the header after leaving the top, without oscillating as its height changes.
   var header = document.querySelector(".site-header");
-  var nav = document.getElementById("primary-nav");
-  var navToggle = document.getElementById("nav-toggle");
   var compact = false;
   var scrollPending = false;
   var motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
-  var navigationAnimation;
+  var headerAnimation;
 
-  function closeNavigation(restoreFocus) {
-    header.classList.remove("nav-open");
-    navToggle.setAttribute("aria-expanded", "false");
-    if (restoreFocus) navToggle.focus({ preventScroll: true });
-  }
   function updateScrollState() {
     scrollPending = false;
     var nextCompact = compact ? window.scrollY > 40 : window.scrollY > 120;
-    if (nextCompact !== compact) {
-      var oldHeight = header.getBoundingClientRect().height;
-      if (navigationAnimation) navigationAnimation.cancel();
-      var focusInNav = nav.contains(document.activeElement);
-      var focusOnToggle = document.activeElement === navToggle;
-      compact = nextCompact;
-      document.documentElement.classList.toggle("is-scrolled", compact);
-      navToggle.hidden = !compact;
-      if (!compact) closeNavigation(false);
-      if (compact && focusInNav) navToggle.focus({ preventScroll: true });
-      if (!compact && focusOnToggle) header.querySelector(".brand").focus({ preventScroll: true });
-      if (!motionPreference.matches && header.animate) {
-        navigationAnimation = header.animate(
-          [{ height: oldHeight + "px", opacity: .8 }, { height: header.getBoundingClientRect().height + "px", opacity: 1 }],
-          { duration: 280, easing: "cubic-bezier(.22,1,.36,1)" }
-        );
-      }
+    if (nextCompact === compact) return;
+    var oldHeight = header.getBoundingClientRect().height;
+    if (headerAnimation) headerAnimation.cancel();
+    compact = nextCompact;
+    document.documentElement.classList.toggle("is-scrolled", compact);
+    if (!motionPreference.matches && header.animate) {
+      headerAnimation = header.animate(
+        [{ height: oldHeight + "px" }, { height: header.getBoundingClientRect().height + "px" }],
+        { duration: 280, easing: "cubic-bezier(.22,1,.36,1)" }
+      );
     }
   }
-  if (header && nav && navToggle) {
+  if (header) {
     updateScrollState();
     window.addEventListener("scroll", function () {
       if (!scrollPending) {
@@ -46,22 +32,8 @@
         requestAnimationFrame(updateScrollState);
       }
     }, { passive: true });
-    navToggle.addEventListener("click", function () {
-      var open = navToggle.getAttribute("aria-expanded") !== "true";
-      header.classList.toggle("nav-open", open);
-      navToggle.setAttribute("aria-expanded", String(open));
-    });
-    nav.addEventListener("click", function (event) {
-      if (event.target.closest("a") && compact) closeNavigation(true);
-    });
-    document.addEventListener("click", function (event) {
-      if (compact && !header.contains(event.target)) closeNavigation(false);
-    });
-    document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && header.classList.contains("nav-open")) closeNavigation(true);
-    });
     motionPreference.addEventListener("change", function () {
-      if (navigationAnimation) navigationAnimation.cancel();
+      if (headerAnimation) headerAnimation.cancel();
     });
   }
 
@@ -249,5 +221,16 @@
     }
     followHash();
     window.addEventListener("hashchange", followHash);
+  }
+
+  /* ---------- 이메일 링크: PC에서는 Gmail 작성 창, 모바일·JS 없음은 mailto 그대로 ---------- */
+  if (!/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)) {
+    [].forEach.call(document.querySelectorAll('a[href^="mailto:"]'), function (a) {
+      var to = a.getAttribute("href").slice(7).split("?")[0];
+      if (!to) return;
+      a.href = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(to).replace("%40", "@");
+      a.target = "_blank";
+      a.rel = "noopener";
+    });
   }
 })();

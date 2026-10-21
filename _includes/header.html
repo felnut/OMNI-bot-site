@@ -1,7 +1,6 @@
 <header class="site-header">
   <div class="wrap bar">
     <a class="brand" href="{{ '/' | relative_url }}" aria-label="OMNI 첫 화면"><img src="{{ '/assets/omni-mark.svg' | relative_url }}" width="36" height="36" alt=""><span class="wordmark">OMNI</span></a>
-    <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" hidden>메뉴 {% include icon.html name="menu" %}</button>
     <nav class="nav" id="primary-nav" aria-label="주요 메뉴">
       <a href="{{ '/' | relative_url }}#features">기능 소개</a>
       <a href="{{ '/commands' | relative_url }}"{% if page.url contains '/commands' %} aria-current="page"{% endif %}>명령어</a>
