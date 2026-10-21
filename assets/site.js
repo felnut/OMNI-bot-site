@@ -165,7 +165,6 @@
     var buttons = [].slice.call(filters.querySelectorAll("button"));
     var flat = document.getElementById("cmd-flat");
     var controls = document.getElementById("view-controls");
-    var toggleAll = document.getElementById("toggle-all");
     var page = document.querySelector("main .wrap") || document.body;
     var active = "";
     var sortMode = "cat";
@@ -190,6 +189,7 @@
       c._home = c.parentNode;
       c._order = i;
       c._name = c.getAttribute("data-name") || "";
+      c._uses = parseInt(c.getAttribute("data-uses"), 10) || 1;
       c._text = (c.getAttribute("data-text") || "").toLowerCase();
       c._cho = toCho(c._name + " " + (c.getAttribute("data-subs") || ""));
     });
@@ -207,7 +207,7 @@
       cmds.forEach(function (c) {
         var ok = matches(c, term);
         c.hidden = !ok;
-        if (ok) shown += 1;
+        if (ok) shown += c._uses;
       });
       groups.forEach(function (g) {
         [].forEach.call(g.querySelectorAll(".cmd-sub"), function (sub) {
@@ -252,12 +252,6 @@
       store.set("omni-cmd-view", mode);
     };
 
-    var setAll = function (open) {
-      cmds.forEach(function (c) { if (!c.hidden) c.open = open; });
-      toggleAll.setAttribute("aria-pressed", open ? "true" : "false");
-      toggleAll.textContent = open ? "모두 접기" : "모두 펼치기";
-    };
-
     buttons.forEach(function (b) { b.addEventListener("click", function () { select(b.getAttribute("data-cat")); }); });
     q.addEventListener("input", apply);
     document.getElementById("reset-filters").addEventListener("click", function () {
@@ -269,23 +263,9 @@
       controls.hidden = false;
       [].forEach.call(controls.querySelectorAll("[data-sort]"), function (b) { b.addEventListener("click", function () { setSort(b.getAttribute("data-sort")); }); });
       [].forEach.call(controls.querySelectorAll("[data-view]"), function (b) { b.addEventListener("click", function () { setView(b.getAttribute("data-view")); }); });
-      toggleAll.addEventListener("click", function () { setAll(toggleAll.getAttribute("aria-pressed") !== "true"); });
       if (store.get("omni-cmd-view") === "card") setView("card");
       if (store.get("omni-cmd-sort") === "name") setSort("name");
     }
-
-    // 사용법 이름 복사 (예: /음악 재생)
-    document.addEventListener("click", function (event) {
-      var btn = event.target.closest && event.target.closest(".copy-btn");
-      if (!btn) return;
-      var text = btn.getAttribute("data-copy");
-      var done = function () {
-        btn.textContent = "복사됨";
-        btn.classList.add("is-done");
-        setTimeout(function () { btn.textContent = "복사"; btn.classList.remove("is-done"); }, 1400);
-      };
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () {});
-    });
 
     // Deep links must reveal a command even after a different category was selected.
     function followHash() {
@@ -299,7 +279,6 @@
         if (target && target.classList.contains("cmd")) {
           q.value = "";
           select("");
-          target.open = true;
           requestAnimationFrame(function () { target.scrollIntoView({ block: "start" }); });
         }
       }
@@ -307,6 +286,19 @@
     followHash();
     window.addEventListener("hashchange", followHash);
   }
+
+  // 사용법 이름 복사 (예: /음악 재생)
+  document.addEventListener("click", function (event) {
+    var btn = event.target.closest && event.target.closest(".copy-btn");
+    if (!btn) return;
+    var text = btn.getAttribute("data-copy");
+    var done = function () {
+      btn.textContent = "복사됨";
+      btn.classList.add("is-done");
+      setTimeout(function () { btn.textContent = "복사"; btn.classList.remove("is-done"); }, 1400);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () {});
+  });
 
   /* ---------- 이메일 링크: PC에서는 Gmail 작성 창, 모바일·JS 없음은 mailto 그대로 ---------- */
   if (!/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)) {

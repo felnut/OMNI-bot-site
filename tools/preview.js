@@ -38,7 +38,7 @@ function frontMatter(src) {
   const data = {};
   for (const line of m[1].split(/\r?\n/)) {
     const kv = line.match(/^([A-Za-z_]+):\s*(.*)$/);
-    if (kv) data[kv[1]] = kv[2];
+    if (kv) data[kv[1]] = /^"(?:[^"\\]|\\.)*"$/.test(kv[2]) ? JSON.parse(kv[2]) : kv[2];
   }
   return { data, body: m[2] };
 }
@@ -48,15 +48,54 @@ function loadLayouts() {
   for (const f of fs.readdirSync(path.join(ROOT, "_layouts"))) layouts[path.basename(f, ".html")] = fs.readFileSync(path.join(ROOT, "_layouts", f), "utf8");
 }
 
+// 명령어마다 상세 페이지(commands/<이름>.html)를, 하위 명령어가 여러 개면 하위 명령어마다 commands/<이름>/<하위>.html도 만든다.
+// 내용은 _includes/command-page.html이 데이터에서 채우고, 이 파일들은 Jekyll(GitHub Pages)에서도 그대로 쓰도록 저장소에 함께 커밋한다.
+// 명령어를 추가·삭제하면 자동으로 맞춰진다.
+function generateCommandPages() {
+  const dir = path.join(ROOT, "commands");
+  fs.mkdirSync(dir, { recursive: true });
+  const want = new Map();
+  const stub = (title, permalink, desc, sub, name) => `---
+layout: wide
+title: ${JSON.stringify(title)}
+permalink: ${permalink}
+description: ${JSON.stringify(desc)}
+body_class: command-page
+---
+{% include command-page.html name="${name}"${sub ? ` sub="${sub}"` : ""} %}
+`;
+  for (const c of site.data.commands.categories) {
+    for (const m of c.commands) {
+      const clean = (t) => t.replace("[서버 운영자 전용] ", "").replace("(없으면 기본 차트)", "").split(" (")[0];
+      want.set(`${m.name}.html`, stub("/" + m.name, `/commands/${m.name}`, clean(m.description), "", m.name));
+      if (m.usages.length > 1) {
+        for (const u of m.usages) want.set(`${m.name}/${u.sub}.html`, stub(`/${m.name} ${u.sub}`, `/commands/${m.name}/${u.sub}`, clean(u.description), u.sub, m.name));
+      }
+    }
+  }
+  const have = (d, rel = "") => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? have(path.join(d, e.name), rel + e.name + "/") : e.name.endsWith(".html") ? [rel + e.name] : []));
+  for (const f of have(dir)) if (!want.has(f)) fs.rmSync(path.join(dir, f));
+  for (const [f, text] of want) {
+    const file = path.join(dir, f);
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    if (!fs.existsSync(file) || fs.readFileSync(file, "utf8").replaceAll("\r\n", "\n") !== text) fs.writeFileSync(file, text);
+  }
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) if (e.isDirectory() && !fs.readdirSync(path.join(dir, e.name)).length) fs.rmdirSync(path.join(dir, e.name));
+}
+
 async function build() {
   loadData();
   loadLayouts();
+  generateCommandPages();
   fs.rmSync(OUT, { recursive: true, force: true });
   const target = path.join(OUT, baseurl.replace(/^\//, ""));
   fs.mkdirSync(target, { recursive: true });
   fs.cpSync(path.join(ROOT, "assets"), path.join(target, "assets"), { recursive: true });
 
-  const pages = fs.readdirSync(ROOT).filter((f) => /\.(md|html)$/.test(f) && !EXCLUDE.has(f));
+  const pages = fs
+    .readdirSync(ROOT)
+    .filter((f) => /\.(md|html)$/.test(f) && !EXCLUDE.has(f))
+    .concat(fs.readdirSync(path.join(ROOT, "commands"), { recursive: true }).filter((f) => f.endsWith(".html")).map((f) => "commands/" + f.split(path.sep).join("/")));
   const report = [];
   for (const f of pages) {
     const fm = frontMatter(fs.readFileSync(path.join(ROOT, f), "utf8"));

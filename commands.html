@@ -7,7 +7,7 @@ description: OMNI의 슬래시 명령어를 분류별로 살펴보고 사용법�
 <div class="wrap">
   <div class="page-head">
     <h1>명령어 찾기</h1>
-    <p>{{ site.data.bot.command_total }}개 명령어, {{ site.data.bot.subcommand_total }}개 사용법을 모았어요. 이름이나 초성으로 찾고, 눌러서 옵션 설명까지 확인하세요.</p>
+    <p>{{ site.data.bot.subcommand_total }}개 명령어를 모았어요. 하위 명령도 하나씩 따로 세었어요. 이름이나 초성으로 찾고, 눌러서 옵션 설명까지 확인하세요.</p>
     <p class="legend"><code>&lt;이름&gt;</code>은 꼭 입력해야 하는 칸, <code>[이름]</code>은 선택 칸이에요.</p>
   </div>
 
@@ -15,40 +15,38 @@ description: OMNI의 슬래시 명령어를 분류별로 살펴보고 사용법�
     <label class="sr-only" for="q">명령어 검색</label>
     <div class="search-field">{% include icon.html name="search" %}<input class="search" id="q" type="search" placeholder="이름·기능·초성으로 검색 (예: 급식, 차단, ㄱㅅ)" autocomplete="off"></div>
     <div class="filters" id="filters" role="group" aria-label="분류">
-      <button type="button" data-cat="" aria-pressed="true">전체 <span class="filter-count">{{ site.data.bot.command_total }}</span></button>
+      <button type="button" data-cat="" aria-pressed="true">전체 <span class="filter-count">{{ site.data.bot.subcommand_total }}</span></button>
       {%- for g in site.data.command_groups %}
-      {%- assign total = 0 %}{% for s in g.sections %}{% assign total = total | plus: s.commands.size %}{% endfor %}
-      <button type="button" data-cat="{{ g.key }}" aria-pressed="false" style="--c: {{ g.color }}">{% include icon.html name=g.icon %} {{ g.label }} <span class="filter-count">{{ total }}</span></button>
+      {%- assign names = "" | split: "," %}{% for s in g.sections %}{% assign names = names | concat: s.commands %}{% endfor %}{% include count-uses.html names=names %}
+      <button type="button" data-cat="{{ g.key }}" aria-pressed="false" style="--c: {{ g.color }}">{% include icon.html name=g.icon %} {{ g.label }} <span class="filter-count">{{ uses }}</span></button>
       {%- endfor %}
     </div>
   </div>
 
   <div class="view-bar">
-    <p id="result-count" class="result-count" role="status">전체 {{ site.data.bot.command_total }}개 명령어 · 사용법 {{ site.data.bot.subcommand_total }}개</p>
+    <p id="result-count" class="result-count" role="status">전체 {{ site.data.bot.subcommand_total }}개 명령어</p>
     <div class="view-controls" id="view-controls" hidden>
       <div class="seg" role="group" aria-label="정렬"><span class="seg-label">정렬</span><button type="button" data-sort="cat" aria-pressed="true">분류순</button><button type="button" data-sort="name" aria-pressed="false">이름순</button></div>
-      <div class="seg" role="group" aria-label="보기"><span class="seg-label">보기</span><button type="button" data-view="list" aria-pressed="true">목록</button><button type="button" data-view="card" aria-pressed="false">카드</button></div>
-      <button type="button" class="seg-btn" id="toggle-all" aria-pressed="false">모두 펼치기</button>
+      <div class="seg" role="group" aria-label="보기"><span class="seg-label">보기</span><button type="button" data-view="list" aria-pressed="true">목록</button><button type="button" data-view="card" aria-pressed="false">카드</button></div>
     </div>
   </div>
   <div class="cmd-list cmd-flat" id="cmd-flat" hidden></div>
   {%- for g in site.data.command_groups %}
-  {%- assign total = 0 %}{% for s in g.sections %}{% assign total = total | plus: s.commands.size %}{% endfor %}
+  {%- assign names = "" | split: "," %}{% for s in g.sections %}{% assign names = names | concat: s.commands %}{% endfor %}{% include count-uses.html names=names %}
   <section class="cmd-group" id="{{ g.key }}" data-cat="{{ g.key }}" style="--c: {{ g.color }}">
-    <h2>{% include icon.html name=g.icon %} {{ g.label }} <small>명령어 {{ total }}개</small></h2>
+    <h2>{% include icon.html name=g.icon %} {{ g.label }} <small>명령어 {{ uses }}개</small></h2>
     <p class="blurb">{{ g.blurb }}</p>
-    {%- for s in g.sections %}
-    {%- assign sub = g.label | append: ' ' | append: s.label %}
+    {%- for name in names %}
+    {%- for c in site.data.commands.categories %}{% for m in c.commands %}{% if m.name == name %}
     <div class="cmd-sub">
-      <h3 class="cmd-sub-title">{{ s.label }} <span class="sub-count">{{ s.commands.size }}</span><small>{{ s.blurb }}</small></h3>
+      <h3 class="cmd-sub-title">/{{ m.name }} <span class="sub-count">{{ m.usages.size }}</span>{% if m.usages.size > 1 %}<small>{{ m.description | remove: '[서버 운영자 전용] ' | remove: '(없으면 기본 차트)' | split: ' (' | first }}</small>{% endif %}</h3>
       <div class="cmd-list">
-      {%- for name in s.commands %}
-      {%- for c in site.data.commands.categories %}{% for m in c.commands %}{% if m.name == name %}
-      {%- include command-item.html m=m sub=sub cat=g.label %}
-      {%- endif %}{% endfor %}{% endfor %}
+      {%- for u in m.usages %}
+      {%- include command-item.html m=m u=u first=forloop.first cat=g.label %}
       {%- endfor %}
       </div>
     </div>
+    {%- endif %}{% endfor %}{% endfor %}
     {%- endfor %}
   </section>
   {%- endfor %}

@@ -1,0 +1,2 @@
+{%- assign uses = 0 -%}
+{%- for name in include.names -%}{%- for c in site.data.commands.categories -%}{%- for m in c.commands -%}{%- if m.name == name -%}{%- assign uses = uses | plus: m.usages.size -%}{%- endif -%}{%- endfor -%}{%- endfor -%}{%- endfor -%}

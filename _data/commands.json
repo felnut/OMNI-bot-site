@@ -1,5 +1,5 @@
 {
-  "total": 32,
+  "total": 39,
   "categories": [
     {
       "key": "game",
@@ -7,7 +7,7 @@
       "label": "게임·경제",
       "color": "#E8590C",
       "blurb": "출석하고 돈을 모아 주식·미니게임으로 불려요",
-      "count": 11,
+      "count": 15,
       "commands": [
         {
           "name": "돈",
@@ -310,6 +310,121 @@
                   "range": [
                     0,
                     36
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "가위바위보",
+          "description": "봇과 가위바위보! 이기면 2배, 비기면 본전, 지면 잃어요",
+          "usages": [
+            {
+              "sub": null,
+              "syntax": "/가위바위보 <선택> <금액>",
+              "description": "봇과 가위바위보! 이기면 2배, 비기면 본전, 지면 잃어요",
+              "options": [
+                {
+                  "name": "선택",
+                  "description": "무엇을 낼까요?",
+                  "required": true,
+                  "type": "글자",
+                  "choices": [
+                    "✌️ 가위",
+                    "✊ 바위",
+                    "✋ 보"
+                  ]
+                },
+                {
+                  "name": "금액",
+                  "description": "베팅할 금액",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    10,
+                    null
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "동물경주",
+          "description": "우승할 동물에 걸어요! 확률이 낮을수록 배당이 커요",
+          "usages": [
+            {
+              "sub": null,
+              "syntax": "/동물경주 <동물> <금액>",
+              "description": "우승할 동물에 걸어요! 확률이 낮을수록 배당이 커요",
+              "options": [
+                {
+                  "name": "동물",
+                  "description": "누가 우승할까요?",
+                  "required": true,
+                  "type": "글자",
+                  "choices": [
+                    "🐆 치타 (우승 40% · 2.35배)",
+                    "🦊 여우 (우승 30% · 3.13배)",
+                    "🐇 토끼 (우승 20% · 4.7배)",
+                    "🐢 거북이 (우승 10% · 9.4배)"
+                  ]
+                },
+                {
+                  "name": "금액",
+                  "description": "베팅할 금액",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    10,
+                    null
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "슬롯",
+          "description": "슬롯머신! 777은 20배, 세 개 일치 5배, 두 개 일치 2배, 체리는 본전",
+          "usages": [
+            {
+              "sub": null,
+              "syntax": "/슬롯 <금액>",
+              "description": "슬롯머신! 777은 20배, 세 개 일치 5배, 두 개 일치 2배, 체리는 본전",
+              "options": [
+                {
+                  "name": "금액",
+                  "description": "베팅할 금액",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    10,
+                    null
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "낚시",
+          "description": "미끼 값을 내고 낚시해요! 잡은 물고기는 바로 팔려요 (황금물고기는 20배)",
+          "usages": [
+            {
+              "sub": null,
+              "syntax": "/낚시 <미끼>",
+              "description": "미끼 값을 내고 낚시해요! 잡은 물고기는 바로 팔려요 (황금물고기는 20배)",
+              "options": [
+                {
+                  "name": "미끼",
+                  "description": "미끼에 쓸 금액",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    10,
+                    null
                   ]
                 }
               ]
@@ -763,7 +878,7 @@
       "label": "편의",
       "color": "#2F9E44",
       "blurb": "디데이, 추첨, 서버·유저 정보와 도움말",
-      "count": 6,
+      "count": 9,
       "commands": [
         {
           "name": "디데이",
@@ -863,6 +978,70 @@
                   ]
                 }
               ]
+            }
+          ]
+        },
+        {
+          "name": "계산",
+          "description": "수식을 계산해줘요! (+ - * / % ^ 괄호, sqrt·abs·round 같은 함수)",
+          "usages": [
+            {
+              "sub": null,
+              "syntax": "/계산 <수식>",
+              "description": "수식을 계산해줘요! (+ - * / % ^ 괄호, sqrt·abs·round 같은 함수)",
+              "options": [
+                {
+                  "name": "수식",
+                  "description": "예: (3+4)*2, 2^10, sqrt(144)",
+                  "required": true,
+                  "type": "글자"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "주사위",
+          "description": "주사위를 굴려요! (기본: 6면 주사위 1개)",
+          "usages": [
+            {
+              "sub": null,
+              "syntax": "/주사위 [개수] [면]",
+              "description": "주사위를 굴려요! (기본: 6면 주사위 1개)",
+              "options": [
+                {
+                  "name": "개수",
+                  "description": "굴릴 주사위 개수 (기본 1, 최대 20)",
+                  "required": false,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    20
+                  ]
+                },
+                {
+                  "name": "면",
+                  "description": "주사위 면의 수 (기본 6, 최대 1000)",
+                  "required": false,
+                  "type": "정수",
+                  "range": [
+                    2,
+                    1000
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "운세",
+          "description": "오늘의 운세를 봐요 (하루에 한 가지 결과로 고정돼요)",
+          "usages": [
+            {
+              "sub": null,
+              "syntax": "/운세",
+              "description": "오늘의 운세를 봐요 (하루에 한 가지 결과로 고정돼요)",
+              "options": []
             }
           ]
         },

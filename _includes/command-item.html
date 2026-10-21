@@ -1,38 +1,11 @@
 {%- assign m = include.m -%}
+{%- assign u = include.u -%}
 {%- assign badges = site.data.command_badges.commands[m.name] -%}
-    <details class="cmd" id="cmd-{{ m.name }}" data-name="{{ m.name | escape }}" data-subs="{% for u in m.usages %}{{ u.sub | escape }} {% endfor %}" data-cat-label="{{ include.cat | escape }}" data-text="{{ m.name | escape }} {{ m.description | escape }}{% for u in m.usages %} {{ u.syntax | escape }} {{ u.description | escape }}{% for o in u.options %} {{ o.name | escape }} {{ o.description | escape }}{% endfor %}{% endfor %}{% for b in badges %} {{ site.data.command_badges.types[b].label }}{% endfor %} {{ include.sub | escape }}">
-      <summary>
-        <span class="cmd-name">/{{ m.name }}{% for b in badges %}{% assign t = site.data.command_badges.types[b] %}<span class="cmd-badge cmd-badge-{{ b }}" title="{{ t.hint }}">{{ t.label }}</span>{% endfor %}<span class="cmd-cat">{{ include.cat }}</span></span>
-        <span class="cmd-summary">{{ m.description | remove: '[서버 운영자 전용] ' | escape }}</span>
-        {%- if m.usages.size > 1 %}
-        <span class="cmd-subs"><b>하위 명령 {{ m.usages.size }}개</b> {% for u in m.usages limit: 5 %}{{ u.sub | escape }}{% unless forloop.last %} · {% endunless %}{% endfor %}{% if m.usages.size > 5 %} 외 {{ m.usages.size | minus: 5 }}개{% endif %}</span>
-        {%- endif %}
-        {% include icon.html name="plus" %}
-      </summary>
-      <div class="cmd-detail">
-        {%- for u in m.usages %}
-        <div class="usage">
-          <div class="usage-head">
-            <code class="usage-syntax">{{ u.syntax | escape }}</code>
-            <button type="button" class="copy-btn" data-copy="/{{ m.name | escape }}{% if u.sub %} {{ u.sub | escape }}{% endif %}" aria-label="{{ u.syntax | escape }} 명령어 이름 복사">복사</button>
-          </div>
-          {%- unless m.usages.size == 1 and u.description == m.description %}
-          <p class="usage-desc">{{ u.description | remove: '[서버 운영자 전용] ' | escape }}</p>
-          {%- endunless %}
-          {%- if u.options.size > 0 %}
-          <dl class="opts">
-            {%- for o in u.options %}
-            <div class="opt">
-              <dt><code>{{ o.name | escape }}</code><span class="opt-type">{{ o.type }}</span>{% if o.required %}<span class="opt-req">필수</span>{% else %}<span class="opt-opt">선택</span>{% endif %}</dt>
-              <dd>{{ o.description | escape }}{% if o.choices %}<span class="opt-choices">{% for c in o.choices %}<i>{{ c | escape }}</i>{% endfor %}</span>{% endif %}{% if o.range %}<span class="opt-range">{% if o.range[0] != nil %}최소 {{ o.range[0] }}{% endif %}{% if o.range[0] != nil and o.range[1] != nil %} · {% endif %}{% if o.range[1] != nil %}최대 {{ o.range[1] }}{% endif %}</span>{% endif %}</dd>
-            </div>
-            {%- endfor %}
-          </dl>
-          {%- endif %}
-        </div>
-        {%- endfor %}
-        <p class="cmd-hint">
-          <code>&lt;항목&gt;</code> 필수 · <code>[항목]</code> 선택{% for b in badges %}{% assign t = site.data.command_badges.types[b] %} · {{ t.label }}: {{ t.hint }}{% endfor %}
-        </p>
-      </div>
-    </details>
+{%- if u.sub %}{% capture ukey %}{{ m.name }} {{ u.sub }}{% endcapture %}{% assign ub = site.data.command_badges.usages[ukey] %}{% if ub %}{% assign badges = ub %}{% endif %}{% endif -%}
+{%- capture label %}/{{ m.name }}{% if u.sub %} {{ u.sub }}{% endif %}{% endcapture -%}
+    <a class="cmd" id="cmd-{{ m.name }}{% unless include.first %}-{{ u.sub }}{% endunless %}" href="{{ '/commands/' | append: m.name | relative_url }}{% if u.sub %}/{{ u.sub }}{% endif %}" data-name="{{ label | remove_first: '/' | escape }}" data-uses="1" data-text="{{ label | escape }} {{ m.name | escape }} {{ u.description | escape }} {{ u.syntax | escape }}{% for o in u.options %} {{ o.name | escape }} {{ o.description | escape }}{% endfor %}{% for b in badges %} {{ site.data.command_badges.types[b].label }}{% endfor %} {{ include.cat | escape }}">
+      <span class="cmd-name">{{ label }}<span class="cmd-cat">{{ include.cat }}</span></span>
+      <span class="cmd-badges">{% for b in badges %}{% assign t = site.data.command_badges.types[b] %}<span class="cmd-badge cmd-badge-{{ b }}" title="{{ t.hint }}">{{ t.label }}</span>{% endfor %}</span>
+      <span class="cmd-summary">{{ u.description | remove: '[서버 운영자 전용] ' | remove: '(없으면 기본 차트)' | split: ' (' | first | escape }}</span>
+      {% include icon.html name="arrow-right" %}
+    </a>

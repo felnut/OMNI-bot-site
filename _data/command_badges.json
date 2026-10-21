@@ -1,24 +1,190 @@
 {
   "types": {
-    "permission": { "label": "권한 필요", "hint": "서버 관리 권한이 있는 사람만 쓸 수 있어요" },
-    "partial": { "label": "운영자 설정 포함", "hint": "일부 기능(설정·지급 등)은 서버 운영자만 쓸 수 있어요" },
-    "guild": { "label": "서버 전용", "hint": "서버 채널에서만 쓸 수 있고 DM에서는 쓸 수 없어요" },
-    "voice": { "label": "음성 채널", "hint": "음성 채널에 들어가 있어야 쓸 수 있어요" }
+    "guild": {
+      "label": "서버 전용",
+      "hint": "서버 채널에서만 쓸 수 있고 DM에서는 쓸 수 없어요"
+    },
+    "dm": {
+      "label": "DM 전용",
+      "hint": "봇과의 DM에서만 쓸 수 있어요"
+    },
+    "universal": {
+      "label": "범용",
+      "hint": "서버 채널과 DM 어디서든 쓸 수 있어요"
+    },
+    "permission": {
+      "label": "권한 필요",
+      "hint": "서버 관리 권한이 있는 사람만 쓸 수 있어요"
+    },
+    "voice": {
+      "label": "음성 전용",
+      "hint": "음성 채널에 들어가 있어야 쓸 수 있어요"
+    }
   },
   "commands": {
-    "차단": ["permission", "guild"],
-    "추방": ["permission", "guild"],
-    "타임아웃": ["permission", "guild"],
-    "서버관리": ["permission", "guild"],
-    "로그채널설정": ["permission", "guild"],
-    "경고": ["partial", "guild"],
-    "관리자": ["partial", "guild"],
-    "학교등록": ["partial", "guild"],
-    "급식알림": ["partial", "guild"],
-    "음악추천": ["partial", "guild", "voice"],
-    "음악": ["voice"],
-    "디데이": ["guild"],
-    "서버정보": ["guild"],
-    "유저정보": ["guild"]
+    "돈": [
+      "universal"
+    ],
+    "출석": [
+      "universal"
+    ],
+    "송금": [
+      "universal"
+    ],
+    "랭킹": [
+      "universal"
+    ],
+    "주식": [
+      "universal"
+    ],
+    "숫자야구": [
+      "universal"
+    ],
+    "블랙잭": [
+      "universal"
+    ],
+    "카드뽑기": [
+      "universal"
+    ],
+    "홀짝": [
+      "universal"
+    ],
+    "복권": [
+      "universal"
+    ],
+    "룰렛": [
+      "universal"
+    ],
+    "가위바위보": [
+      "universal"
+    ],
+    "동물경주": [
+      "universal"
+    ],
+    "슬롯": [
+      "universal"
+    ],
+    "낚시": [
+      "universal"
+    ],
+    "음악": [
+      "voice"
+    ],
+    "음악추천": [
+      "guild"
+    ],
+    "학교등록": [
+      "guild"
+    ],
+    "급식": [
+      "universal"
+    ],
+    "시간표": [
+      "universal"
+    ],
+    "학사일정": [
+      "universal"
+    ],
+    "일정검색": [
+      "universal"
+    ],
+    "급식알림": [
+      "guild"
+    ],
+    "디데이": [
+      "guild"
+    ],
+    "추첨": [
+      "universal"
+    ],
+    "계산": [
+      "universal"
+    ],
+    "주사위": [
+      "universal"
+    ],
+    "운세": [
+      "universal"
+    ],
+    "서버정보": [
+      "guild"
+    ],
+    "유저정보": [
+      "guild"
+    ],
+    "ping": [
+      "universal"
+    ],
+    "도움말": [
+      "universal"
+    ],
+    "경고": [
+      "guild"
+    ],
+    "차단": [
+      "permission",
+      "guild"
+    ],
+    "추방": [
+      "permission",
+      "guild"
+    ],
+    "타임아웃": [
+      "permission",
+      "guild"
+    ],
+    "서버관리": [
+      "permission",
+      "guild"
+    ],
+    "로그채널설정": [
+      "permission",
+      "guild"
+    ],
+    "관리자": [
+      "guild"
+    ]
+  },
+  "usages": {
+    "음악추천 자동": [
+      "permission",
+      "guild"
+    ],
+    "음악추천 사이트추가": [
+      "permission",
+      "guild"
+    ],
+    "음악추천 사이트삭제": [
+      "permission",
+      "guild"
+    ],
+    "급식알림 설정": [
+      "permission",
+      "guild"
+    ],
+    "급식알림 해제": [
+      "permission",
+      "guild"
+    ],
+    "경고 지급": [
+      "permission",
+      "guild"
+    ],
+    "경고 차감": [
+      "permission",
+      "guild"
+    ],
+    "관리자 등록": [
+      "permission",
+      "guild"
+    ],
+    "학교등록 기본": [
+      "permission",
+      "guild"
+    ],
+    "학교등록 해제": [
+      "permission",
+      "guild"
+    ]
   }
 }

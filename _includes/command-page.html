@@ -1,0 +1,121 @@
+{%- for c in site.data.commands.categories %}{% for x in c.commands %}{% if x.name == include.name %}{% assign m = x %}{% endif %}{% endfor %}{% endfor -%}
+{%- for g in site.data.command_groups %}{% for s in g.sections %}{% for n in s.commands %}{% if n == include.name %}{% assign grp = g %}{% assign sec = s %}{% endif %}{% endfor %}{% endfor %}{% endfor -%}
+{%- assign badges = site.data.command_badges.commands[m.name] -%}
+{%- assign multi = false -%}{%- if m.usages.size > 1 %}{% assign multi = true %}{% endif -%}
+{%- assign u = nil -%}
+{%- if include.sub %}{% for x in m.usages %}{% if x.sub == include.sub %}{% assign u = x %}{% endif %}{% endfor %}{% elsif multi == false %}{% assign u = m.usages[0] %}{% endif -%}
+{%- if u -%}
+  {%- capture label %}/{{ m.name }}{% if u.sub %} {{ u.sub }}{% endif %}{% endcapture -%}
+  {%- assign tagline = u.description | remove: '[서버 운영자 전용] ' | remove: '(없으면 기본 차트)' | split: ' (' | first -%}
+{%- else -%}
+  {%- capture label %}/{{ m.name }}{% endcapture -%}
+  {%- assign tagline = m.description | remove: '[서버 운영자 전용] ' | remove: '(없으면 기본 차트)' | split: ' (' | first -%}
+{%- endif -%}
+{%- if u.sub %}{% capture ukey %}{{ m.name }} {{ u.sub }}{% endcapture %}{% assign ub = site.data.command_badges.usages[ukey] %}{% if ub %}{% assign badges = ub %}{% endif %}{% endif -%}
+{%- assign rq = "" | split: "," -%}{%- assign op = "" | split: "," -%}
+{%- for o in u.options %}{% if o.required %}{% assign rq = rq | push: o.name %}{% else %}{% assign op = op | push: o.name %}{% endif %}{% endfor -%}
+{%- assign intro = site.data.command_intros[m.name] -%}
+<div class="wrap cmd-page" style="--c: {{ grp.color }}">
+  <nav class="crumbs" aria-label="현재 위치">
+    <a href="{{ '/commands' | relative_url }}">명령어</a><span aria-hidden="true">›</span><a href="{{ '/commands' | relative_url }}#{{ grp.key }}">{{ grp.label }}</a><span aria-hidden="true">›</span>
+    {%- if include.sub %}<a href="{{ '/commands/' | append: m.name | relative_url }}">/{{ m.name }}</a><span aria-hidden="true">›</span>{% endif %}
+    <span aria-current="page">{{ label }}</span>
+  </nav>
+
+  <header class="cmd-hero">
+    <span class="cmd-tile" aria-hidden="true">{% include icon.html name=grp.icon %}</span>
+    <div class="cmd-hero-body">
+      <h1>{{ label }}</h1>
+      <p class="cmd-meta"><span>{{ grp.label }} · {{ sec.label }}</span>{% for b in badges %}{% assign t = site.data.command_badges.types[b] %}<span class="cmd-badge cmd-badge-{{ b }}" title="{{ t.hint }}">{{ t.label }}</span>{% endfor %}</p>
+    </div>
+  </header>
+
+  <div class="cmd-body">
+    <p class="cmd-tagline">{{ tagline }}</p>
+    {%- if u %}
+    <p class="cmd-lead">
+      {%- if multi == false and intro %}{{ intro }}
+      {%- else %}<b>{{ label }}</b> 명령어는 {{ grp.label }} 분류의 <b>/{{ m.name }}</b> 기능에 속해요.
+        {%- if u.options.size == 0 %} 따로 입력할 값이 없어서 명령어만 고르면 바로 실행돼요.
+        {%- elsif rq.size > 0 %} 꼭 입력해야 하는 값은 <b>{{ rq | join: ', ' }}</b>{% if op.size > 0 %}이고, 선택으로 <b>{{ op | join: ', ' }}</b>도 넣을 수 있어요.{% else %}이에요.{% endif %}
+        {%- else %} 입력하는 값은 모두 선택이라서 비워도 실행돼요. 넣을 수 있는 값은 <b>{{ op | join: ', ' }}</b>이에요.
+        {%- endif %}
+      {%- endif -%}
+    </p>
+
+    <section class="cmd-block">
+      <h2>사용법</h2>
+      <div class="usage-box">
+        <code class="usage-syntax">{{ u.syntax }}</code>
+        <button type="button" class="copy-btn" data-copy="{{ label }}" aria-label="{{ label }} 명령어 이름 복사">복사</button>
+      </div>
+      <p class="cmd-hint"><code>&lt;항목&gt;</code> 은 반드시 입력해야 하고, <code>[항목]</code> 은 생략할 수 있어요.</p>
+    </section>
+
+    {%- if u.options.size > 0 %}
+    <section class="cmd-block">
+      <h2>입력 항목</h2>
+      <dl class="opts">
+        {%- for o in u.options %}
+        <div class="opt">
+          <dt><code>{{ o.name }}</code><span class="opt-type">{{ o.type }}</span>{% if o.required %}<span class="opt-req">필수</span>{% else %}<span class="opt-opt">선택</span>{% endif %}</dt>
+          <dd>{{ o.description }}{% if o.choices %}<span class="opt-choices">{% for ch in o.choices %}<i>{{ ch }}</i>{% endfor %}</span>{% endif %}{% if o.range %}<span class="opt-range">{% if o.range[0] != nil %}최소 {{ o.range[0] }}{% endif %}{% if o.range[0] != nil and o.range[1] != nil %} · {% endif %}{% if o.range[1] != nil %}최대 {{ o.range[1] }}{% endif %}</span>{% endif %}</dd>
+        </div>
+        {%- endfor %}
+      </dl>
+    </section>
+    {%- endif %}
+    {%- else %}
+    <p class="cmd-lead">{{ intro | default: tagline }}</p>
+
+    <section class="cmd-block">
+      <h2>하위 명령어 {{ m.usages.size }}개</h2>
+      <div class="rel-grid">
+        {%- for x in m.usages %}
+        <a class="rel-card" href="{{ '/commands/' | append: m.name | append: '/' | append: x.sub | relative_url }}">
+          <strong>/{{ m.name }} {{ x.sub }}</strong>
+          <span>{{ x.description | remove: '[서버 운영자 전용] ' | remove: '(없으면 기본 차트)' | split: ' (' | first }}</span>
+          <em>자세히 {% include icon.html name="arrow-right" %}</em>
+        </a>
+        {%- endfor %}
+      </div>
+    </section>
+    {%- endif %}
+
+    <section class="cmd-note">
+      <h2>쓰기 전에 확인할 것</h2>
+      <ul>
+        {%- for b in badges %}{% assign t = site.data.command_badges.types[b] %}
+        <li><b>{{ t.label }}</b> · {{ t.hint }}</li>
+        {%- endfor %}
+        <li>채팅창에 <code>/</code> 를 입력하면 자동완성 목록에서 바로 고를 수 있어요.</li>
+      </ul>
+    </section>
+
+    {%- if include.sub %}
+    <section class="cmd-block">
+      <h2>함께 쓰는 명령어</h2>
+      <div class="rel-grid">
+        {%- for x in m.usages %}{% unless x.sub == include.sub %}
+        <a class="rel-card" href="{{ '/commands/' | append: m.name | append: '/' | append: x.sub | relative_url }}">
+          <strong>/{{ m.name }} {{ x.sub }}</strong>
+          <span>{{ x.description | remove: '[서버 운영자 전용] ' | remove: '(없으면 기본 차트)' | split: ' (' | first }}</span>
+          <em>자세히 {% include icon.html name="arrow-right" %}</em>
+        </a>
+        {%- endunless %}{% endfor %}
+      </div>
+    </section>
+    {%- else %}
+    <section class="cmd-block">
+      <h2>{{ grp.label }}의 다른 명령어</h2>
+      <ul class="chip-links">
+        {%- for s in grp.sections %}{% for n in s.commands %}{% unless n == m.name %}
+        <li><a href="{{ '/commands/' | append: n | relative_url }}">/{{ n }}</a></li>
+        {%- endunless %}{% endfor %}{% endfor %}
+      </ul>
+    </section>
+    {%- endif %}
+
+    <p class="back-link"><a href="{{ '/commands' | relative_url }}#{{ grp.key }}">← {{ grp.label }} 명령어 모두 보기</a></p>
+  </div>
+</div>
