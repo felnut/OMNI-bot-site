@@ -2,6 +2,9 @@
   "name": "omni-bot-site",
   "private": true,
   "description": "OMNI 디스코드 봇 소개 사이트 (Jekyll / GitHub Pages)",
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "preview": "node tools/preview.js",
     "build:check": "node tools/preview.js --build-only",
