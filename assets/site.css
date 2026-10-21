@@ -332,6 +332,8 @@ code, .mono, kbd { font-family: var(--mono); }
 .acct-menu > summary.account { display: inline-flex; width: auto; height: auto; padding: 4px 12px 4px 4px; border-radius: 999px; background: transparent; cursor: pointer; list-style: none; }
 .acct-menu > summary.account:hover, .acct-menu[open] > summary.account { background: var(--surface); border-color: var(--ink); }
 .acct-menu .more-menu { min-width: 160px; z-index: 30; }
+.acct-menu .more-menu a[href$="/logout"]:hover, .acct-menu .more-menu a[href$="/logout"]:focus-visible { color: #d92d20; background: #fdecea; }
+.acct-menu .more-menu a[href$="/logout"]:hover .icon, .acct-menu .more-menu a[href$="/logout"]:focus-visible .icon { color: inherit; }
 @media (max-width: 860px) { .acct-menu > summary.account { padding: 3px; } }
 
 /* 홈: 소개 + 디스코드 목업 */
