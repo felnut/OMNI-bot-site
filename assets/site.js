@@ -2,43 +2,10 @@
 (function () {
   "use strict";
 
-  // Shrink the header after leaving the top, without oscillating as its height changes.
-  var header = document.querySelector(".site-header");
-  var compact = false;
-  var scrollPending = false;
   var motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
-  var headerAnimation;
-
-  function updateScrollState() {
-    scrollPending = false;
-    var nextCompact = compact ? window.scrollY > 40 : window.scrollY > 120;
-    if (nextCompact === compact) return;
-    var oldHeight = header.getBoundingClientRect().height;
-    if (headerAnimation) headerAnimation.cancel();
-    compact = nextCompact;
-    document.documentElement.classList.toggle("is-scrolled", compact);
-    if (!motionPreference.matches && header.animate) {
-      headerAnimation = header.animate(
-        [{ height: oldHeight + "px" }, { height: header.getBoundingClientRect().height + "px" }],
-        { duration: 280, easing: "cubic-bezier(.22,1,.36,1)" }
-      );
-    }
-  }
-  if (header) {
-    updateScrollState();
-    window.addEventListener("scroll", function () {
-      if (!scrollPending) {
-        scrollPending = true;
-        requestAnimationFrame(updateScrollState);
-      }
-    }, { passive: true });
-    motionPreference.addEventListener("change", function () {
-      if (headerAnimation) headerAnimation.cancel();
-    });
-  }
 
   // Native disclosure works without JS; enhance dismissal for dropdown behavior.
-  document.querySelectorAll("details.versions").forEach(function (versions) {
+  document.querySelectorAll("details.versions, details.more").forEach(function (versions) {
     document.addEventListener("click", function (event) {
       if (!versions.contains(event.target)) versions.open = false;
     });
@@ -62,7 +29,7 @@
         revealObserver.unobserve(entry.target);
       });
     }, { threshold: 0.12 });
-    document.querySelectorAll(".section-heading, .feature-row, .faq details").forEach(function (el) {
+    document.querySelectorAll(".section-heading, .feat-card, .news-card").forEach(function (el) {
       revealObserver.observe(el);
     });
     motionPreference.addEventListener("change", function (event) {
@@ -91,13 +58,23 @@
       expanded = animation ? !expanded : !details.open;
       if (animation) animation.cancel();
       details.open = true;
-      var end = expanded ? details.getBoundingClientRect().height : summary.getBoundingClientRect().height + 1;
+      var border = details.offsetHeight - details.clientHeight;
+      var end = expanded ? details.getBoundingClientRect().height : summary.getBoundingClientRect().height + border;
       details.style.overflow = "hidden";
       animation = details.animate(
         [{ height: start + "px" }, { height: end + "px" }],
-        { duration: 300, easing: "cubic-bezier(.2,.7,.2,1)" }
+        { duration: 380, easing: "cubic-bezier(.2,.8,.2,1)" }
       );
+      // 답변이 위에서 아래로 스르륵 내려오도록
+      var answer = details.querySelector(".ans");
+      if (answer && expanded) {
+        answer.animate(
+          [{ opacity: 0, transform: "translateY(-14px)" }, { opacity: 1, transform: "translateY(0)" }],
+          { duration: 380, easing: "cubic-bezier(.2,.8,.2,1)" }
+        );
+      }
       animation.onfinish = finish;
+
     });
     motionPreference.addEventListener("change", function () {
       if (animation) finish();
@@ -309,5 +286,124 @@
       a.target = "_blank";
       a.rel = "noopener";
     });
+  }
+  /* ---------- 디스코드 로그인: 로그인했을 때만 /api/me를 불러 헤더에 이름과 사진을 보여준다 ---------- */
+  var loggedIn = /(?:^|; )omni_in=1/.test(document.cookie);
+  var account = document.getElementById("account");
+  var meBox = document.getElementById("me");
+  function api(path) {
+    return fetch(path, { credentials: "same-origin", headers: { Accept: "application/json" } }).then(function (r) {
+      return r.ok ? r.json() : Promise.reject(r.status);
+    });
+  }
+  function text(el, sel, v) { var n = el.querySelector(sel); if (n) n.textContent = v; }
+  if (account) {
+    if (!loggedIn) account.href = account.getAttribute("data-login");
+    else api("/api/me").then(function (u) {
+      account.className = "account is-in";
+      account.textContent = "";
+      var img = document.createElement("img");
+      img.src = u.avatar; img.alt = ""; img.width = 28; img.height = 28;
+      var name = document.createElement("span");
+      name.textContent = u.name;
+      account.appendChild(img); account.appendChild(name);
+    }, function () {});
+  }
+  if (meBox) {
+    var err = new URLSearchParams(location.search).get("error");
+    var show = function (state) { meBox.setAttribute("data-state", state); };
+    if (err) { text(meBox, ".me-error", err === "denied" ? "로그인을 취소했어요." : "로그인하지 못했어요. 잠시 뒤에 다시 시도해 주세요."); }
+    if (!loggedIn) show("out");
+    else api("/api/me").then(function (u) {
+      meBox.querySelector(".me-avatar").src = u.avatar;
+      text(meBox, ".me-name", u.name);
+      var money = meBox.querySelector(".me-money");
+      var streak = meBox.querySelector(".me-streak");
+      if (u.stats === "ok") {
+        money.textContent = Number(u.money).toLocaleString("ko-KR") + "원";
+        streak.textContent = u.streak + "일";
+      } else {
+        money.textContent = u.stats === "none" ? "아직 기록이 없어요" : "지금은 불러올 수 없어요";
+        streak.textContent = "-";
+      }
+      show("in");
+    }, function () { show("out"); });
+  }
+
+  /* ---------- 맨 위로 버튼 ---------- */
+  var toTop = document.getElementById("to-top");
+  if (toTop) {
+    var topTick = false;
+    window.addEventListener("scroll", function () {
+      if (topTick) return;
+      topTick = true;
+      requestAnimationFrame(function () { topTick = false; toTop.hidden = window.scrollY < 600; });
+    }, { passive: true });
+    toTop.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: motionPreference.matches ? "auto" : "smooth" }); });
+  }
+
+  /* ---------- Ctrl+K: 명령어 검색으로 이동 ---------- */
+  document.addEventListener("keydown", function (e) {
+    if (!((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k")) return;
+    e.preventDefault();
+    var box = document.getElementById("q");
+    if (box) { box.focus(); box.select(); } else { location.href = "/commands#search"; }
+  });
+  if (location.hash === "#search" && document.getElementById("q")) document.getElementById("q").focus();
+
+  /* ---------- 홈 목업: 명령어를 입력하고 보내면 봇의 답이 나오는 모습 (높이는 고정) ---------- */
+  var feed = document.getElementById("mock-feed");
+  var pop = document.getElementById("mock-pop");
+  var typed = document.getElementById("mock-typed");
+  if (feed && pop && typed && !motionPreference.matches) {
+    var rows = [].slice.call(pop.querySelectorAll(".mock-row"));
+    var PLACEHOLDER = typed.textContent;
+    var first = feed.querySelector(".mock-msg");
+    var scenes = [first, document.getElementById("mock-t3")].map(function (x) {
+      if (!x) return null;
+      var node = x.content ? x.content.firstElementChild : x;
+      return { cmd: node.getAttribute("data-cmd"), node: node.cloneNode(true) };
+    }).filter(Boolean);
+    var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+    var setInput = function (text, placeholder) {
+      typed.textContent = text;
+      typed.classList.toggle("is-ph", !!placeholder);
+    };
+    var filter = function (q) {
+      var any = false;
+      rows.forEach(function (r) {
+        var hit = r.getAttribute("data-name").indexOf(q.split(" ")[0]) === 0;
+        r.hidden = !hit;
+        r.classList.toggle("is-hit", hit && !any);
+        if (hit) any = true;
+      });
+      pop.hidden = !any;
+    };
+    var play = function (scene) {
+      var old = feed.querySelector(".mock-msg");
+      if (old) old.remove();
+      setInput(PLACEHOLDER, true);
+      return wait(700).then(function () {
+        setInput("/", false); filter(""); return wait(500);
+      }).then(function () {
+        var i = 0;
+        var step = function () {
+          i += 1;
+          setInput("/" + scene.cmd.slice(0, i), false);
+          filter(scene.cmd.slice(0, i));
+          return i < scene.cmd.length ? wait(280).then(step) : wait(700);
+        };
+        return step();
+      }).then(function () {
+        pop.hidden = true;
+        setInput(PLACEHOLDER, true);
+        feed.appendChild(scene.node.cloneNode(true));
+        return wait(4200);
+      });
+    };
+    var n = 0;
+    var loop = function () { play(scenes[n % scenes.length]).then(function () { n += 1; loop(); }); };
+    // 첫 장면은 이미 화면에 있으니 잠시 보여 준 뒤 시작한다
+    wait(3500).then(loop);
   }
 })();

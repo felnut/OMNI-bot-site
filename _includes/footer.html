@@ -1,7 +1,7 @@
 <footer class="site-footer">
   <div class="wrap footer">
     <div class="footer-about">
-      <p class="footer-brand" aria-hidden="true"><span>OMNI</span><img src="{{ '/assets/omni-mark.svg' | relative_url }}" width="140" height="140" alt=""></p>
+      <p class="footer-brand"><img src="{{ '/assets/omni-mark.svg' | relative_url }}" width="32" height="32" alt=""><span>OMNI</span></p>
       <p class="footer-note">게임·음악·학교 정보·서버 관리를 한 봇에</p>
       <p class="footer-copy">&copy; 2026 OMNI. All rights reserved.</p>
     </div>
@@ -11,6 +11,7 @@
         <ul>
           <li><a href="{{ '/commands' | relative_url }}">명령어</a></li>
           <li><a href="{{ '/updates' | relative_url }}">업데이트</a></li>
+          <li><a href="{{ '/' | relative_url }}#faq">자주 묻는 질문</a></li>
         </ul>
       </div>
       <div>
@@ -30,4 +31,5 @@
       </div>
     </nav>
   </div>
+  <button type="button" class="to-top" id="to-top" aria-label="맨 위로" hidden>{% include icon.html name="arrow-up" %}</button>
 </footer>

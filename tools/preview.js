@@ -51,6 +51,7 @@ function loadLayouts() {
 // 명령어마다 상세 페이지(commands/<이름>.html)를, 하위 명령어가 여러 개면 하위 명령어마다 commands/<이름>/<하위>.html도 만든다.
 // 내용은 _includes/command-page.html이 데이터에서 채우고, 이 파일들은 Jekyll(GitHub Pages)에서도 그대로 쓰도록 저장소에 함께 커밋한다.
 // 명령어를 추가·삭제하면 자동으로 맞춰진다.
+const slug = (sub) => sub.replace(/ /g, "-");
 function generateCommandPages() {
   const dir = path.join(ROOT, "commands");
   fs.mkdirSync(dir, { recursive: true });
@@ -69,7 +70,7 @@ body_class: command-page
       const clean = (t) => t.replace("[서버 운영자 전용] ", "").replace("(없으면 기본 차트)", "").split(" (")[0];
       want.set(`${m.name}.html`, stub("/" + m.name, `/commands/${m.name}`, clean(m.description), "", m.name));
       if (m.usages.length > 1) {
-        for (const u of m.usages) want.set(`${m.name}/${u.sub}.html`, stub(`/${m.name} ${u.sub}`, `/commands/${m.name}/${u.sub}`, clean(u.description), u.sub, m.name));
+        for (const u of m.usages) want.set(`${m.name}/${slug(u.sub)}.html`, stub(`/${m.name} ${u.sub}`, `/commands/${m.name}/${slug(u.sub)}`, clean(u.description), u.sub, m.name));
       }
     }
   }

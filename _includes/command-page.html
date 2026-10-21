@@ -15,6 +15,7 @@
 {%- assign rq = "" | split: "," -%}{%- assign op = "" | split: "," -%}
 {%- for o in u.options %}{% if o.required %}{% assign rq = rq | push: o.name %}{% else %}{% assign op = op | push: o.name %}{% endif %}{% endfor -%}
 {%- assign intro = site.data.command_intros[m.name] -%}
+{%- assign sub_intro = nil -%}{%- if include.sub %}{% capture ikey %}{{ m.name }} {{ include.sub }}{% endcapture %}{% assign sub_intro = site.data.command_intros[ikey] %}{% endif -%}
 <div class="wrap cmd-page" style="--c: {{ grp.color }}">
   <nav class="crumbs" aria-label="현재 위치">
     <a href="{{ '/commands' | relative_url }}">명령어</a><span aria-hidden="true">›</span><a href="{{ '/commands' | relative_url }}#{{ grp.key }}">{{ grp.label }}</a><span aria-hidden="true">›</span>
@@ -34,7 +35,8 @@
     <p class="cmd-tagline">{{ tagline }}</p>
     {%- if u %}
     <p class="cmd-lead">
-      {%- if multi == false and intro %}{{ intro }}
+      {%- if sub_intro %}{{ sub_intro }}
+      {%- elsif multi == false and intro %}{{ intro }}
       {%- else %}<b>{{ label }}</b> 명령어는 {{ grp.label }} 분류의 <b>/{{ m.name }}</b> 기능에 속해요.
         {%- if u.options.size == 0 %} 따로 입력할 값이 없어서 명령어만 고르면 바로 실행돼요.
         {%- elsif rq.size > 0 %} 꼭 입력해야 하는 값은 <b>{{ rq | join: ', ' }}</b>{% if op.size > 0 %}이고, 선택으로 <b>{{ op | join: ', ' }}</b>도 넣을 수 있어요.{% else %}이에요.{% endif %}
@@ -72,7 +74,7 @@
       <h2>하위 명령어 {{ m.usages.size }}개</h2>
       <div class="rel-grid">
         {%- for x in m.usages %}
-        <a class="rel-card" href="{{ '/commands/' | append: m.name | append: '/' | append: x.sub | relative_url }}">
+        <a class="rel-card" href="{{ '/commands/' | append: m.name | append: '/' | append: x.sub | replace: ' ', '-' | relative_url }}">
           <strong>/{{ m.name }} {{ x.sub }}</strong>
           <span>{{ x.description | remove: '[서버 운영자 전용] ' | remove: '(없으면 기본 차트)' | split: ' (' | first }}</span>
           <em>자세히 {% include icon.html name="arrow-right" %}</em>
@@ -97,7 +99,7 @@
       <h2>함께 쓰는 명령어</h2>
       <div class="rel-grid">
         {%- for x in m.usages %}{% unless x.sub == include.sub %}
-        <a class="rel-card" href="{{ '/commands/' | append: m.name | append: '/' | append: x.sub | relative_url }}">
+        <a class="rel-card" href="{{ '/commands/' | append: m.name | append: '/' | append: x.sub | replace: ' ', '-' | relative_url }}">
           <strong>/{{ m.name }} {{ x.sub }}</strong>
           <span>{{ x.description | remove: '[서버 운영자 전용] ' | remove: '(없으면 기본 차트)' | split: ' (' | first }}</span>
           <em>자세히 {% include icon.html name="arrow-right" %}</em>

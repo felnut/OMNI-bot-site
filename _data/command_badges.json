@@ -22,101 +22,47 @@
     }
   },
   "commands": {
-    "돈": [
+    "게임": [
       "universal"
     ],
-    "출석": [
-      "universal"
-    ],
-    "송금": [
-      "universal"
-    ],
-    "랭킹": [
-      "universal"
-    ],
-    "주식": [
-      "universal"
-    ],
-    "숫자야구": [
-      "universal"
-    ],
-    "블랙잭": [
-      "universal"
-    ],
-    "카드뽑기": [
-      "universal"
-    ],
-    "홀짝": [
-      "universal"
-    ],
-    "복권": [
-      "universal"
-    ],
-    "룰렛": [
-      "universal"
-    ],
-    "가위바위보": [
-      "universal"
-    ],
-    "동물경주": [
-      "universal"
-    ],
-    "슬롯": [
+    "도박": [
       "universal"
     ],
     "낚시": [
       "universal"
     ],
+    "복권": [
+      "universal"
+    ],
+    "주식": [
+      "universal"
+    ],
+    "무기": [
+      "universal"
+    ],
     "음악": [
       "voice"
     ],
-    "음악추천": [
-      "guild"
-    ],
-    "학교등록": [
-      "guild"
-    ],
-    "급식": [
+    "학교": [
       "universal"
     ],
-    "시간표": [
+    "유틸": [
       "universal"
     ],
-    "학사일정": [
-      "universal"
+    "알림": [
+      "dm"
     ],
-    "일정검색": [
-      "universal"
+    "메모": [
+      "dm"
     ],
-    "급식알림": [
-      "guild"
+    "타로": [
+      "dm"
     ],
-    "디데이": [
-      "guild"
+    "업다운": [
+      "dm"
     ],
-    "추첨": [
-      "universal"
-    ],
-    "계산": [
-      "universal"
-    ],
-    "주사위": [
-      "universal"
-    ],
-    "운세": [
-      "universal"
-    ],
-    "서버정보": [
-      "guild"
-    ],
-    "유저정보": [
-      "guild"
-    ],
-    "ping": [
-      "universal"
-    ],
-    "도움말": [
-      "universal"
+    "초성퀴즈": [
+      "dm"
     ],
     "경고": [
       "guild"
@@ -146,26 +92,6 @@
     ]
   },
   "usages": {
-    "음악추천 자동": [
-      "permission",
-      "guild"
-    ],
-    "음악추천 사이트추가": [
-      "permission",
-      "guild"
-    ],
-    "음악추천 사이트삭제": [
-      "permission",
-      "guild"
-    ],
-    "급식알림 설정": [
-      "permission",
-      "guild"
-    ],
-    "급식알림 해제": [
-      "permission",
-      "guild"
-    ],
     "경고 지급": [
       "permission",
       "guild"
@@ -178,12 +104,65 @@
       "permission",
       "guild"
     ],
-    "학교등록 기본": [
+    "학교 등록 기본": [
       "permission",
       "guild"
     ],
-    "학교등록 해제": [
+    "학교 등록 해제": [
       "permission",
+      "guild"
+    ],
+    "학교 급식알림설정 설정": [
+      "permission",
+      "guild"
+    ],
+    "학교 급식알림설정 해제": [
+      "permission",
+      "guild"
+    ],
+    "학교 등록 검색": [
+      "guild"
+    ],
+    "학교 등록 확인": [
+      "guild"
+    ],
+    "학교 급식알림설정 확인": [
+      "guild"
+    ],
+    "음악 추천받기": [
+      "guild"
+    ],
+    "음악 추천차트": [
+      "guild"
+    ],
+    "음악 상태": [
+      "guild"
+    ],
+    "음악 추천알림설정": [
+      "permission",
+      "guild"
+    ],
+    "음악 추천사이트추가": [
+      "permission",
+      "guild"
+    ],
+    "음악 추천사이트삭제": [
+      "permission",
+      "guild"
+    ],
+    "유틸 디데이 추가": [
+      "guild"
+    ],
+    "유틸 디데이 목록": [
+      "guild"
+    ],
+    "유틸 디데이 삭제": [
+      "guild"
+    ],
+    "유틸 서버정보": [
+      "guild"
+    ],
+    "유틸 유저정보": [
       "guild"
     ]
   }

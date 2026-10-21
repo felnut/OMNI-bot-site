@@ -1,0 +1,30 @@
+---
+layout: wide
+title: 내 정보
+permalink: /me
+description: 디스코드로 로그인해서 내 금액과 출석 기록을 확인해요.
+---
+<div class="wrap me-page">
+  <p class="section-code">내 정보</p>
+  <div class="me" id="me" data-state="loading">
+    <div class="me-loading"><p>불러오는 중이에요…</p></div>
+    <div class="me-out">
+      <h1>디스코드로 로그인</h1>
+      <p class="lead">내 금액과 연속 출석을 한눈에 볼 수 있어요.<br>공개 프로필(이름과 사진)만 확인하고, 서버 목록이나 이메일은 가져오지 않아요.</p>
+      <p class="me-error" role="alert"></p>
+      <a class="btn" href="/api/auth/login">디스코드로 로그인 {% include icon.html name="arrow-up-right" %}</a>
+    </div>
+    <div class="me-in">
+      <div class="me-card">
+        <img class="me-avatar" src="" alt="" width="72" height="72">
+        <div><h1 class="me-name"></h1><p class="me-sub">디스코드 계정으로 로그인했어요</p></div>
+      </div>
+      <dl class="me-stats">
+        <div><dt>보유 금액</dt><dd class="me-money">-</dd></div>
+        <div><dt>연속 출석</dt><dd class="me-streak">-</dd></div>
+      </dl>
+      <p class="me-note">금액은 OMNI 안에서만 쓰는 게임용 데이터예요.</p>
+      <a class="me-logout" href="/api/auth/logout">로그아웃</a>
+    </div>
+  </div>
+</div>

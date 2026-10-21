@@ -1,15 +1,27 @@
 <header class="site-header">
   <div class="wrap bar">
-    <a class="brand" href="{{ '/' | relative_url }}" aria-label="OMNI 첫 화면"><img src="{{ '/assets/omni-mark.svg' | relative_url }}" width="36" height="36" alt=""><span class="wordmark">OMNI</span></a>
+    <a class="brand" href="{{ '/' | relative_url }}" aria-label="OMNI 첫 화면"><img src="{{ '/assets/omni-mark.svg' | relative_url }}" width="32" height="32" alt=""><span class="wordmark">OMNI</span></a>
     <nav class="nav" id="primary-nav" aria-label="주요 메뉴">
-      <a href="{{ '/' | relative_url }}#features">기능 소개</a>
-      <a href="{{ '/commands' | relative_url }}"{% if page.url contains '/commands' %} aria-current="page"{% endif %}>명령어</a>
-      <a href="{{ '/updates' | relative_url }}"{% if page.url contains '/updates' %} aria-current="page"{% endif %}>업데이트</a>
-      <a href="{{ '/terms' | relative_url }}"{% if page.url contains '/terms' %} aria-current="page"{% endif %}>이용약관</a>
-      <a href="{{ '/privacy' | relative_url }}"{% if page.url contains '/privacy' %} aria-current="page"{% endif %}>개인정보처리방침</a>
+      <a href="{{ '/' | relative_url }}#features">{% include icon.html name="sparkles" %}기능</a>
+      <a href="{{ '/commands' | relative_url }}"{% if page.url contains '/commands' %} aria-current="page"{% endif %}>{% include icon.html name="list" %}명령어</a>
+      <a href="{{ '/updates' | relative_url }}"{% if page.url contains '/updates' %} aria-current="page"{% endif %}>{% include icon.html name="newspaper" %}업데이트</a>
+      <a href="{{ '/' | relative_url }}#faq">{% include icon.html name="circle-help" %}질문</a>
     </nav>
-    {%- if site.data.bot.invite_url %}
-    <a class="btn btn-small" href="{{ site.data.bot.invite_url | escape }}" target="_blank" rel="noopener noreferrer">서버에 초대하기 {% include icon.html name="arrow-up-right" %}</a>
-    {%- endif %}
+    <div class="bar-end">
+      <a class="account" id="account" href="{{ '/me' | relative_url }}" data-login="/api/auth/login">로그인</a>
+      {%- if site.data.bot.invite_url %}
+      <a class="btn btn-small" href="{{ site.data.bot.invite_url | escape }}" target="_blank" rel="noopener noreferrer">{% include icon.html name="plus" %}초대</a>
+      {%- endif %}
+      <details class="more">
+        <summary aria-label="더 보기">{% include icon.html name="ellipsis" %}</summary>
+        <div class="more-menu">
+          <a href="{{ '/terms' | relative_url }}">{% include icon.html name="file-text" %}이용약관</a>
+          <a href="{{ '/privacy' | relative_url }}">{% include icon.html name="shield-check" %}개인정보 처리방침</a>
+          <a href="{{ '/changelog' | relative_url }}">{% include icon.html name="history" %}문서 변경 내역</a>
+          <a href="{{ site.data.bot.github }}" target="_blank" rel="noopener noreferrer">{% include icon.html name="code" %}소스 코드</a>
+          <a href="mailto:{{ site.data.bot.contact }}">{% include icon.html name="mail" %}문의</a>
+        </div>
+      </details>
+    </div>
   </div>
 </header>

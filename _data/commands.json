@@ -1,45 +1,46 @@
 {
-  "total": 39,
+  "total": 21,
   "categories": [
     {
       "key": "game",
       "emoji": "🎮",
       "label": "게임·경제",
       "color": "#E8590C",
-      "blurb": "출석하고 돈을 모아 주식·미니게임으로 불려요",
-      "count": 15,
+      "blurb": "출석하고 돈을 모아 도박·낚시·주식·무기 강화로 불려요",
+      "count": 6,
       "commands": [
         {
-          "name": "돈",
-          "description": "현재 보유 금액을 확인합니다 💰",
+          "name": "게임",
+          "description": "게임 계정 (가입·정보·출석·송금·퀘스트·도전과제·배지·랭킹)",
           "usages": [
             {
-              "sub": null,
-              "syntax": "/돈",
-              "description": "현재 보유 금액을 확인합니다 💰",
+              "sub": "가입",
+              "syntax": "/게임 가입",
+              "description": "게임에 가입하고 내 지갑을 확인해요",
               "options": []
-            }
-          ]
-        },
-        {
-          "name": "출석",
-          "description": "출석하고 돈 받자! 매일 밤 12시 갱신 💰",
-          "usages": [
+            },
             {
-              "sub": null,
-              "syntax": "/출석",
+              "sub": "정보",
+              "syntax": "/게임 정보 [유저]",
+              "description": "내 게임 프로필(자산·기록·배지)을 봐요",
+              "options": [
+                {
+                  "name": "유저",
+                  "description": "비워 두면 내 프로필",
+                  "required": false,
+                  "type": "유저"
+                }
+              ]
+            },
+            {
+              "sub": "출석",
+              "syntax": "/게임 출석",
               "description": "출석하고 돈 받자! 매일 밤 12시 갱신 💰",
               "options": []
-            }
-          ]
-        },
-        {
-          "name": "송금",
-          "description": "다른 유저에게 돈을 보냅니다 (24시간 최대 30,000원) 📤",
-          "usages": [
+            },
             {
-              "sub": null,
-              "syntax": "/송금 <유저> <금액>",
+              "sub": "송금",
+              "syntax": "/게임 송금 <유저> <금액>",
               "description": "다른 유저에게 돈을 보냅니다 (24시간 최대 30,000원) 📤",
               "options": [
                 {
@@ -59,17 +60,303 @@
                   ]
                 }
               ]
+            },
+            {
+              "sub": "퀘스트",
+              "syntax": "/게임 퀘스트",
+              "description": "일일·주간·월간 퀘스트를 확인하고 보상을 받아요",
+              "options": []
+            },
+            {
+              "sub": "도전과제",
+              "syntax": "/게임 도전과제",
+              "description": "도전과제 진행도를 보고 보상과 배지를 받아요",
+              "options": []
+            },
+            {
+              "sub": "배지",
+              "syntax": "/게임 배지",
+              "description": "모은 배지를 보고 프로필에 장착해요",
+              "options": []
+            },
+            {
+              "sub": "랭킹",
+              "syntax": "/게임 랭킹",
+              "description": "돈 순위 (전체 + 이 서버 TOP 5)",
+              "options": []
             }
           ]
         },
         {
-          "name": "랭킹",
-          "description": "돈 많은 사람들 TOP 10 💰 (전체 서버)",
+          "name": "도박",
+          "description": "돈을 걸고 하는 게임 (블랙잭·룰렛·홀짝·가위바위보·동물경주·슬롯·카드뽑기·숫자야구)",
           "usages": [
             {
-              "sub": null,
-              "syntax": "/랭킹",
-              "description": "돈 많은 사람들 TOP 10 💰 (전체 서버)",
+              "sub": "블랙잭",
+              "syntax": "/도박 블랙잭 <금액>",
+              "description": "21에 가까운 쪽이 이겨요! (베팅 100~100,000원, 승리금 수수료 3%)",
+              "options": [
+                {
+                  "name": "금액",
+                  "description": "베팅할 금액",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    100,
+                    100000
+                  ]
+                }
+              ]
+            },
+            {
+              "sub": "룰렛",
+              "syntax": "/도박 룰렛 <종류> <금액> [숫자]",
+              "description": "룰렛! 색은 2배, 숫자를 맞히면 36배 (0과 00이 있어요)",
+              "options": [
+                {
+                  "name": "종류",
+                  "description": "무엇에 걸까요?",
+                  "required": true,
+                  "type": "글자",
+                  "choices": [
+                    "🟥 빨강 (2배)",
+                    "⬛ 검정 (2배)",
+                    "숫자 (36배)"
+                  ]
+                },
+                {
+                  "name": "금액",
+                  "description": "베팅할 금액",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    10,
+                    null
+                  ]
+                },
+                {
+                  "name": "숫자",
+                  "description": "종류가 '숫자'일 때 0~36",
+                  "required": false,
+                  "type": "정수",
+                  "range": [
+                    0,
+                    36
+                  ]
+                }
+              ]
+            },
+            {
+              "sub": "홀짝",
+              "syntax": "/도박 홀짝 <선택> <금액>",
+              "description": "이기면 베팅액만큼 받고, 지면 베팅액을 잃습니다. (승률 47%)",
+              "options": [
+                {
+                  "name": "선택",
+                  "description": "홀이나 짝을 선택하세요.",
+                  "required": true,
+                  "type": "글자",
+                  "choices": [
+                    "홀",
+                    "짝"
+                  ]
+                },
+                {
+                  "name": "금액",
+                  "description": "베팅할 금액",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    null
+                  ]
+                }
+              ]
+            },
+            {
+              "sub": "가위바위보",
+              "syntax": "/도박 가위바위보 <선택> <금액>",
+              "description": "봇과 가위바위보! 이기면 2배, 비기면 본전, 지면 잃어요",
+              "options": [
+                {
+                  "name": "선택",
+                  "description": "무엇을 낼까요?",
+                  "required": true,
+                  "type": "글자",
+                  "choices": [
+                    "✌️ 가위",
+                    "✊ 바위",
+                    "✋ 보"
+                  ]
+                },
+                {
+                  "name": "금액",
+                  "description": "베팅할 금액",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    10,
+                    null
+                  ]
+                }
+              ]
+            },
+            {
+              "sub": "동물경주",
+              "syntax": "/도박 동물경주 <동물> <금액>",
+              "description": "우승할 동물에 걸어요! 확률이 낮을수록 배당이 커요",
+              "options": [
+                {
+                  "name": "동물",
+                  "description": "누가 우승할까요?",
+                  "required": true,
+                  "type": "글자",
+                  "choices": [
+                    "🐆 치타 (우승 40% · 2.35배)",
+                    "🦊 여우 (우승 30% · 3.13배)",
+                    "🐇 토끼 (우승 20% · 4.7배)",
+                    "🐢 거북이 (우승 10% · 9.4배)"
+                  ]
+                },
+                {
+                  "name": "금액",
+                  "description": "베팅할 금액",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    10,
+                    null
+                  ]
+                }
+              ]
+            },
+            {
+              "sub": "슬롯",
+              "syntax": "/도박 슬롯 <금액>",
+              "description": "슬롯머신! 777은 20배, 세 개 일치 5배, 두 개 일치 2배, 체리는 본전",
+              "options": [
+                {
+                  "name": "금액",
+                  "description": "베팅할 금액",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    10,
+                    null
+                  ]
+                }
+              ]
+            },
+            {
+              "sub": "카드뽑기",
+              "syntax": "/도박 카드뽑기",
+              "description": "카드뽑기! 베팅 5만원, 카드 한 장으로 최대 10배!",
+              "options": []
+            },
+            {
+              "sub": "숫자야구 시작",
+              "syntax": "/도박 숫자야구 시작",
+              "description": "게임 시작",
+              "options": []
+            },
+            {
+              "sub": "숫자야구 포기",
+              "syntax": "/도박 숫자야구 포기",
+              "description": "포기하고 정답 보기",
+              "options": []
+            }
+          ]
+        },
+        {
+          "name": "낚시",
+          "description": "낚시하고 도감을 채워요 (미끼·낚싯대 구매, 랭킹)",
+          "usages": [
+            {
+              "sub": "시작",
+              "syntax": "/낚시 시작 [미끼]",
+              "description": "미끼를 써서 낚시해요! 잡은 물고기는 바로 팔려요",
+              "options": [
+                {
+                  "name": "미끼",
+                  "description": "쓸 미끼 (기본: 일반 미끼)",
+                  "required": false,
+                  "type": "글자",
+                  "choices": [
+                    "일반 미끼 (100원짜리)",
+                    "고급 미끼 (1,000원짜리)",
+                    "최고급 미끼 (10,000원짜리)"
+                  ]
+                }
+              ]
+            },
+            {
+              "sub": "도감",
+              "syntax": "/낚시 도감",
+              "description": "지금까지 잡은 물고기를 도감으로 확인해요",
+              "options": []
+            },
+            {
+              "sub": "미끼구매",
+              "syntax": "/낚시 미끼구매 <종류> <수량>",
+              "description": "낚시에 쓸 미끼를 사요",
+              "options": [
+                {
+                  "name": "종류",
+                  "description": "미끼 종류 (비쌀수록 한 번에 걸리는 판돈이 커요)",
+                  "required": true,
+                  "type": "글자",
+                  "choices": [
+                    "일반 미끼 (100원)",
+                    "고급 미끼 (1,000원)",
+                    "최고급 미끼 (10,000원)"
+                  ]
+                },
+                {
+                  "name": "수량",
+                  "description": "살 개수 (1~100, 한 종류당 500개까지 보관)",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    100
+                  ]
+                }
+              ]
+            },
+            {
+              "sub": "낚싯대구매",
+              "syntax": "/낚시 낚싯대구매 <단계>",
+              "description": "더 좋은 낚싯대를 사요 (새 물고기가 나타나요)",
+              "options": [
+                {
+                  "name": "단계",
+                  "description": "사려는 낚싯대",
+                  "required": true,
+                  "type": "정수",
+                  "choices": [
+                    "대나무 낚싯대 (1,500원)",
+                    "탄소 낚싯대 (8,000원)",
+                    "티타늄 낚싯대 (30,000원)"
+                  ]
+                }
+              ]
+            },
+            {
+              "sub": "랭킹",
+              "syntax": "/낚시 랭킹",
+              "description": "낚시 도감 순위 (전체 + 이 서버 TOP 5)",
+              "options": []
+            }
+          ]
+        },
+        {
+          "name": "복권",
+          "description": "복권을 사서 긁어요",
+          "usages": [
+            {
+              "sub": "구매",
+              "syntax": "/복권 구매",
+              "description": "500원으로 복권을 구매합니다. (200~50,000원 당첨)",
               "options": []
             }
           ]
@@ -139,9 +426,15 @@
               "options": []
             },
             {
+              "sub": "수익",
+              "syntax": "/주식 수익",
+              "description": "매도로 확정한 누적 손익 확인",
+              "options": []
+            },
+            {
               "sub": "랭킹",
               "syntax": "/주식 랭킹",
-              "description": "서버 자산가 순위",
+              "description": "주식 보유액 순위 (전체 + 이 서버 TOP 5)",
               "options": []
             },
             {
@@ -175,259 +468,38 @@
           ]
         },
         {
-          "name": "숫자야구",
-          "description": "숫자 야구 (베팅 1000원)",
+          "name": "무기",
+          "description": "무기를 만들고 강화해요 (최대 +10, 강화비는 돈으로 내요)",
           "usages": [
             {
-              "sub": "시작",
-              "syntax": "/숫자야구 시작",
-              "description": "게임 시작",
+              "sub": "생성",
+              "syntax": "/무기 생성",
+              "description": "무기를 만들어요 (1,000원)",
               "options": []
             },
             {
-              "sub": "포기",
-              "syntax": "/숫자야구 포기",
-              "description": "포기하고 정답 보기",
+              "sub": "강화",
+              "syntax": "/무기 강화",
+              "description": "내 무기를 한 단계 강화해요 (실패하면 단계가 내려갈 수 있어요)",
               "options": []
-            }
-          ]
-        },
-        {
-          "name": "블랙잭",
-          "description": "21에 가까운 쪽이 이겨요! (베팅 100~100,000원, 승리금 수수료 3%)",
-          "usages": [
+            },
             {
-              "sub": null,
-              "syntax": "/블랙잭 <금액>",
-              "description": "21에 가까운 쪽이 이겨요! (베팅 100~100,000원, 승리금 수수료 3%)",
-              "options": [
-                {
-                  "name": "금액",
-                  "description": "베팅할 금액",
-                  "required": true,
-                  "type": "정수",
-                  "range": [
-                    100,
-                    100000
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "카드뽑기",
-          "description": "카드뽑기! 베팅 5만원, 카드 한 장으로 최대 10배!",
-          "usages": [
-            {
-              "sub": null,
-              "syntax": "/카드뽑기",
-              "description": "카드뽑기! 베팅 5만원, 카드 한 장으로 최대 10배!",
+              "sub": "정보",
+              "syntax": "/무기 정보",
+              "description": "내 무기와 다음 강화 정보를 확인해요",
               "options": []
-            }
-          ]
-        },
-        {
-          "name": "홀짝",
-          "description": "이기면 베팅액만큼 받고, 지면 베팅액을 잃습니다. (승률 47%)",
-          "usages": [
+            },
             {
-              "sub": null,
-              "syntax": "/홀짝 <선택> <금액>",
-              "description": "이기면 베팅액만큼 받고, 지면 베팅액을 잃습니다. (승률 47%)",
-              "options": [
-                {
-                  "name": "선택",
-                  "description": "홀이나 짝을 선택하세요.",
-                  "required": true,
-                  "type": "글자",
-                  "choices": [
-                    "홀",
-                    "짝"
-                  ]
-                },
-                {
-                  "name": "금액",
-                  "description": "베팅할 금액",
-                  "required": true,
-                  "type": "정수",
-                  "range": [
-                    1,
-                    null
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "복권",
-          "description": "500원으로 복권을 구매합니다. (200~50,000원 당첨)",
-          "usages": [
-            {
-              "sub": null,
-              "syntax": "/복권",
-              "description": "500원으로 복권을 구매합니다. (200~50,000원 당첨)",
+              "sub": "판매",
+              "syntax": "/무기 판매",
+              "description": "내 무기를 팔아요",
               "options": []
-            }
-          ]
-        },
-        {
-          "name": "룰렛",
-          "description": "룰렛! 색은 2배, 숫자를 맞히면 36배 (0과 00이 있어요)",
-          "usages": [
+            },
             {
-              "sub": null,
-              "syntax": "/룰렛 <종류> <금액> [숫자]",
-              "description": "룰렛! 색은 2배, 숫자를 맞히면 36배 (0과 00이 있어요)",
-              "options": [
-                {
-                  "name": "종류",
-                  "description": "무엇에 걸까요?",
-                  "required": true,
-                  "type": "글자",
-                  "choices": [
-                    "🟥 빨강 (2배)",
-                    "⬛ 검정 (2배)",
-                    "숫자 (36배)"
-                  ]
-                },
-                {
-                  "name": "금액",
-                  "description": "베팅할 금액",
-                  "required": true,
-                  "type": "정수",
-                  "range": [
-                    10,
-                    null
-                  ]
-                },
-                {
-                  "name": "숫자",
-                  "description": "종류가 '숫자'일 때 0~36",
-                  "required": false,
-                  "type": "정수",
-                  "range": [
-                    0,
-                    36
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "가위바위보",
-          "description": "봇과 가위바위보! 이기면 2배, 비기면 본전, 지면 잃어요",
-          "usages": [
-            {
-              "sub": null,
-              "syntax": "/가위바위보 <선택> <금액>",
-              "description": "봇과 가위바위보! 이기면 2배, 비기면 본전, 지면 잃어요",
-              "options": [
-                {
-                  "name": "선택",
-                  "description": "무엇을 낼까요?",
-                  "required": true,
-                  "type": "글자",
-                  "choices": [
-                    "✌️ 가위",
-                    "✊ 바위",
-                    "✋ 보"
-                  ]
-                },
-                {
-                  "name": "금액",
-                  "description": "베팅할 금액",
-                  "required": true,
-                  "type": "정수",
-                  "range": [
-                    10,
-                    null
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "동물경주",
-          "description": "우승할 동물에 걸어요! 확률이 낮을수록 배당이 커요",
-          "usages": [
-            {
-              "sub": null,
-              "syntax": "/동물경주 <동물> <금액>",
-              "description": "우승할 동물에 걸어요! 확률이 낮을수록 배당이 커요",
-              "options": [
-                {
-                  "name": "동물",
-                  "description": "누가 우승할까요?",
-                  "required": true,
-                  "type": "글자",
-                  "choices": [
-                    "🐆 치타 (우승 40% · 2.35배)",
-                    "🦊 여우 (우승 30% · 3.13배)",
-                    "🐇 토끼 (우승 20% · 4.7배)",
-                    "🐢 거북이 (우승 10% · 9.4배)"
-                  ]
-                },
-                {
-                  "name": "금액",
-                  "description": "베팅할 금액",
-                  "required": true,
-                  "type": "정수",
-                  "range": [
-                    10,
-                    null
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "슬롯",
-          "description": "슬롯머신! 777은 20배, 세 개 일치 5배, 두 개 일치 2배, 체리는 본전",
-          "usages": [
-            {
-              "sub": null,
-              "syntax": "/슬롯 <금액>",
-              "description": "슬롯머신! 777은 20배, 세 개 일치 5배, 두 개 일치 2배, 체리는 본전",
-              "options": [
-                {
-                  "name": "금액",
-                  "description": "베팅할 금액",
-                  "required": true,
-                  "type": "정수",
-                  "range": [
-                    10,
-                    null
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "낚시",
-          "description": "미끼 값을 내고 낚시해요! 잡은 물고기는 바로 팔려요 (황금물고기는 20배)",
-          "usages": [
-            {
-              "sub": null,
-              "syntax": "/낚시 <미끼>",
-              "description": "미끼 값을 내고 낚시해요! 잡은 물고기는 바로 팔려요 (황금물고기는 20배)",
-              "options": [
-                {
-                  "name": "미끼",
-                  "description": "미끼에 쓸 금액",
-                  "required": true,
-                  "type": "정수",
-                  "range": [
-                    10,
-                    null
-                  ]
-                }
-              ]
+              "sub": "랭킹",
+              "syntax": "/무기 랭킹",
+              "description": "무기 단계 순위 (전체 + 이 서버 TOP 5)",
+              "options": []
             }
           ]
         }
@@ -439,11 +511,11 @@
       "label": "음악",
       "color": "#7048E8",
       "blurb": "음성 채널에서 재생하고, 차트와 추천곡을 받아요",
-      "count": 2,
+      "count": 1,
       "commands": [
         {
           "name": "음악",
-          "description": "음성 채널에서 음악 재생",
+          "description": "음성 채널에서 음악 재생 (대기열·반복·볼륨·추천)",
           "usages": [
             {
               "sub": "재생",
@@ -488,8 +560,8 @@
               "options": []
             },
             {
-              "sub": "큐",
-              "syntax": "/음악 큐",
+              "sub": "대기열",
+              "syntax": "/음악 대기열",
               "description": "지금 곡과 대기열 보기",
               "options": []
             },
@@ -533,16 +605,10 @@
                   ]
                 }
               ]
-            }
-          ]
-        },
-        {
-          "name": "음악추천",
-          "description": "서버 운영자가 정한 음악 사이트(없으면 기본 차트)를 기준으로 곡을 추천받아요 · 설정은 서버 운영자 전용",
-          "usages": [
+            },
             {
-              "sub": "받기",
-              "syntax": "/음악추천 받기 [개수]",
+              "sub": "추천받기",
+              "syntax": "/음악 추천받기 [개수]",
               "description": "지금 추천곡 받기",
               "options": [
                 {
@@ -558,20 +624,20 @@
               ]
             },
             {
-              "sub": "차트",
-              "syntax": "/음악추천 차트",
+              "sub": "추천차트",
+              "syntax": "/음악 추천차트",
               "description": "추천 기준 사이트별 순위 TOP 10을 카테고리로 나눠서 보기",
               "options": []
             },
             {
               "sub": "상태",
-              "syntax": "/음악추천 상태",
+              "syntax": "/음악 상태",
               "description": "자동 추천 켜짐/꺼짐과 등록된 사이트 보기",
               "options": []
             },
             {
-              "sub": "자동",
-              "syntax": "/음악추천 자동 <설정>",
+              "sub": "추천알림설정",
+              "syntax": "/음악 추천알림설정 <설정>",
               "description": "재생이 끝났을 때 추천곡을 자동으로 올릴지 설정 (기본: 꺼짐)",
               "options": [
                 {
@@ -587,8 +653,8 @@
               ]
             },
             {
-              "sub": "사이트추가",
-              "syntax": "/음악추천 사이트추가 <주소>",
+              "sub": "추천사이트추가",
+              "syntax": "/음악 추천사이트추가 <주소>",
               "description": "추천 기준 사이트 추가 (유튜브·유튜브 뮤직 재생목록, 사운드클라우드 재생목록, 스포티파이 재생목록·앨범, 멜론 차트)",
               "options": [
                 {
@@ -600,13 +666,13 @@
               ]
             },
             {
-              "sub": "사이트삭제",
-              "syntax": "/음악추천 사이트삭제 <번호>",
+              "sub": "추천사이트삭제",
+              "syntax": "/음악 추천사이트삭제 <번호>",
               "description": "등록한 사이트 지우기",
               "options": [
                 {
                   "name": "번호",
-                  "description": "`/음악추천 상태`에 나온 번호",
+                  "description": "`/음악 상태`에 나온 번호",
                   "required": true,
                   "type": "정수",
                   "range": [
@@ -626,15 +692,15 @@
       "label": "학교",
       "color": "#1971C2",
       "blurb": "급식·시간표·학사일정을 서버에서 바로 확인해요",
-      "count": 6,
+      "count": 1,
       "commands": [
         {
-          "name": "학교등록",
-          "description": "이 서버의 학교를 최대 5곳 등록해요 · 기본 학교 지정·해제는 관리자 전용",
+          "name": "학교",
+          "description": "학교 등록, 급식·시간표·학사일정 확인",
           "usages": [
             {
-              "sub": "검색",
-              "syntax": "/학교등록 검색 <이름>",
+              "sub": "등록 검색",
+              "syntax": "/학교 등록 검색 <이름>",
               "description": "학교 이름으로 찾아서 추가 등록",
               "options": [
                 {
@@ -646,14 +712,14 @@
               ]
             },
             {
-              "sub": "확인",
-              "syntax": "/학교등록 확인",
+              "sub": "등록 확인",
+              "syntax": "/학교 등록 확인",
               "description": "등록된 학교 목록 보기",
               "options": []
             },
             {
-              "sub": "기본",
-              "syntax": "/학교등록 기본 <학교>",
+              "sub": "등록 기본",
+              "syntax": "/학교 등록 기본 <학교>",
               "description": "학교를 고르지 않았을 때 쓸 기본 학교 지정",
               "options": [
                 {
@@ -666,8 +732,8 @@
               ]
             },
             {
-              "sub": "해제",
-              "syntax": "/학교등록 해제 [학교]",
+              "sub": "등록 해제",
+              "syntax": "/학교 등록 해제 [학교]",
               "description": "등록한 학교 지우기",
               "options": [
                 {
@@ -678,66 +744,10 @@
                   "autocomplete": true
                 }
               ]
-            }
-          ]
-        },
-        {
-          "name": "급식",
-          "description": "급식을 알려줘요!",
-          "usages": [
+            },
             {
-              "sub": null,
-              "syntax": "/급식 [월] [일] [날짜] [학교]",
-              "description": "급식을 알려줘요!",
-              "options": [
-                {
-                  "name": "월",
-                  "description": "월을 입력해주세요. 입력하지 않으면 현재 월입니다.",
-                  "required": false,
-                  "type": "숫자",
-                  "range": [
-                    1,
-                    12
-                  ]
-                },
-                {
-                  "name": "일",
-                  "description": "일을 입력해주세요. 입력하지 않으면 현재 일입니다.",
-                  "required": false,
-                  "type": "숫자",
-                  "range": [
-                    1,
-                    31
-                  ]
-                },
-                {
-                  "name": "날짜",
-                  "description": "오늘 또는 내일. 입력하면 월/일 옵션은 무시됩니다.",
-                  "required": false,
-                  "type": "글자",
-                  "choices": [
-                    "오늘",
-                    "내일"
-                  ]
-                },
-                {
-                  "name": "학교",
-                  "description": "학교 선택 (여러 곳을 등록한 경우. 비우면 기본 학교)",
-                  "required": false,
-                  "type": "글자",
-                  "autocomplete": true
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "시간표",
-          "description": "우리 학교 학급 시간표를 알려줘요!",
-          "usages": [
-            {
-              "sub": null,
-              "syntax": "/시간표 <학년> <반> [날짜] [학교]",
+              "sub": "시간표",
+              "syntax": "/학교 시간표 <학년> <반> [날짜] [학교]",
               "description": "우리 학교 학급 시간표를 알려줘요!",
               "options": [
                 {
@@ -779,16 +789,54 @@
                   "autocomplete": true
                 }
               ]
-            }
-          ]
-        },
-        {
-          "name": "학사일정",
-          "description": "우리 학교 학사일정을 알려줘요!",
-          "usages": [
+            },
             {
-              "sub": null,
-              "syntax": "/학사일정 [범위] [학교]",
+              "sub": "급식",
+              "syntax": "/학교 급식 [월] [일] [날짜] [학교]",
+              "description": "급식을 알려줘요!",
+              "options": [
+                {
+                  "name": "월",
+                  "description": "월을 입력해주세요. 입력하지 않으면 현재 월입니다.",
+                  "required": false,
+                  "type": "숫자",
+                  "range": [
+                    1,
+                    12
+                  ]
+                },
+                {
+                  "name": "일",
+                  "description": "일을 입력해주세요. 입력하지 않으면 현재 일입니다.",
+                  "required": false,
+                  "type": "숫자",
+                  "range": [
+                    1,
+                    31
+                  ]
+                },
+                {
+                  "name": "날짜",
+                  "description": "오늘 또는 내일. 입력하면 월/일 옵션은 무시됩니다.",
+                  "required": false,
+                  "type": "글자",
+                  "choices": [
+                    "오늘",
+                    "내일"
+                  ]
+                },
+                {
+                  "name": "학교",
+                  "description": "학교 선택 (여러 곳을 등록한 경우. 비우면 기본 학교)",
+                  "required": false,
+                  "type": "글자",
+                  "autocomplete": true
+                }
+              ]
+            },
+            {
+              "sub": "학사일정",
+              "syntax": "/학교 학사일정 [범위] [학교]",
               "description": "우리 학교 학사일정을 알려줘요!",
               "options": [
                 {
@@ -810,16 +858,10 @@
                   "autocomplete": true
                 }
               ]
-            }
-          ]
-        },
-        {
-          "name": "일정검색",
-          "description": "학사일정에서 키워드로 다음 일정을 찾아요 (예: 기말고사, 방학, 수능)",
-          "usages": [
+            },
             {
-              "sub": null,
-              "syntax": "/일정검색 <키워드> [학교]",
+              "sub": "일정검색",
+              "syntax": "/학교 일정검색 <키워드> [학교]",
               "description": "학사일정에서 키워드로 다음 일정을 찾아요 (예: 기말고사, 방학, 수능)",
               "options": [
                 {
@@ -836,16 +878,10 @@
                   "autocomplete": true
                 }
               ]
-            }
-          ]
-        },
-        {
-          "name": "급식알림",
-          "description": "평일 아침 7시 30분에 오늘 급식을 자동으로 올려요 (설정·해제는 서버 운영자 전용)",
-          "usages": [
+            },
             {
-              "sub": "설정",
-              "syntax": "/급식알림 설정 <채널>",
+              "sub": "급식알림설정 설정",
+              "syntax": "/학교 급식알림설정 설정 <채널>",
               "description": "알림을 받을 채널 지정",
               "options": [
                 {
@@ -857,14 +893,14 @@
               ]
             },
             {
-              "sub": "해제",
-              "syntax": "/급식알림 해제",
+              "sub": "급식알림설정 해제",
+              "syntax": "/학교 급식알림설정 해제",
               "description": "급식 알림 끄기",
               "options": []
             },
             {
-              "sub": "확인",
-              "syntax": "/급식알림 확인",
+              "sub": "급식알림설정 확인",
+              "syntax": "/학교 급식알림설정 확인",
               "description": "현재 설정 보기",
               "options": []
             }
@@ -877,16 +913,85 @@
       "emoji": "🛠️",
       "label": "편의",
       "color": "#2F9E44",
-      "blurb": "디데이, 추첨, 서버·유저 정보와 도움말",
-      "count": 9,
+      "blurb": "계산·주사위·운세·추첨·디데이, 서버·유저 정보와 도움말",
+      "count": 1,
       "commands": [
         {
-          "name": "디데이",
-          "description": "서버 D-day 목록 (시험·행사 날짜 세기)",
+          "name": "유틸",
+          "description": "계산·주사위·운세·추첨·디데이·정보 확인·도움말",
           "usages": [
             {
-              "sub": "추가",
-              "syntax": "/디데이 추가 <이름> <년> <월> <일>",
+              "sub": "계산",
+              "syntax": "/유틸 계산 <수식>",
+              "description": "수식을 계산해줘요! (+ - * / % ^ 괄호, sqrt·abs·round 같은 함수)",
+              "options": [
+                {
+                  "name": "수식",
+                  "description": "예: (3+4)*2, 2^10, sqrt(144)",
+                  "required": true,
+                  "type": "글자"
+                }
+              ]
+            },
+            {
+              "sub": "주사위",
+              "syntax": "/유틸 주사위 [개수] [면]",
+              "description": "주사위를 굴려요! (기본: 6면 주사위 1개)",
+              "options": [
+                {
+                  "name": "개수",
+                  "description": "굴릴 주사위 개수 (기본 1, 최대 20)",
+                  "required": false,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    20
+                  ]
+                },
+                {
+                  "name": "면",
+                  "description": "주사위 면의 수 (기본 6, 최대 1000)",
+                  "required": false,
+                  "type": "정수",
+                  "range": [
+                    2,
+                    1000
+                  ]
+                }
+              ]
+            },
+            {
+              "sub": "운세",
+              "syntax": "/유틸 운세",
+              "description": "오늘의 운세를 봐요 (하루에 한 가지 결과로 고정돼요)",
+              "options": []
+            },
+            {
+              "sub": "추첨",
+              "syntax": "/유틸 추첨 <항목> [개수]",
+              "description": "항목 중에서 무작위로 뽑아줘요! (쉼표로 구분)",
+              "options": [
+                {
+                  "name": "항목",
+                  "description": "예: 짜장, 짬뽕, 볶음밥",
+                  "required": true,
+                  "type": "글자"
+                },
+                {
+                  "name": "개수",
+                  "description": "뽑을 개수 (기본 1)",
+                  "required": false,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    50
+                  ]
+                }
+              ]
+            },
+            {
+              "sub": "디데이 추가",
+              "syntax": "/유틸 디데이 추가 <이름> <년> <월> <일>",
               "description": "D-day 추가",
               "options": [
                 {
@@ -928,14 +1033,14 @@
               ]
             },
             {
-              "sub": "목록",
-              "syntax": "/디데이 목록",
+              "sub": "디데이 목록",
+              "syntax": "/유틸 디데이 목록",
               "description": "남은 D-day 보기",
               "options": []
             },
             {
-              "sub": "삭제",
-              "syntax": "/디데이 삭제 <번호>",
+              "sub": "디데이 삭제",
+              "syntax": "/유틸 디데이 삭제 <번호>",
               "description": "D-day 삭제 (내가 만든 것 또는 관리자)",
               "options": [
                 {
@@ -949,121 +1054,16 @@
                   ]
                 }
               ]
-            }
-          ]
-        },
-        {
-          "name": "추첨",
-          "description": "항목 중에서 무작위로 뽑아줘요! (쉼표로 구분)",
-          "usages": [
+            },
             {
-              "sub": null,
-              "syntax": "/추첨 <항목> [개수]",
-              "description": "항목 중에서 무작위로 뽑아줘요! (쉼표로 구분)",
-              "options": [
-                {
-                  "name": "항목",
-                  "description": "예: 짜장, 짬뽕, 볶음밥",
-                  "required": true,
-                  "type": "글자"
-                },
-                {
-                  "name": "개수",
-                  "description": "뽑을 개수 (기본 1)",
-                  "required": false,
-                  "type": "정수",
-                  "range": [
-                    1,
-                    50
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "계산",
-          "description": "수식을 계산해줘요! (+ - * / % ^ 괄호, sqrt·abs·round 같은 함수)",
-          "usages": [
-            {
-              "sub": null,
-              "syntax": "/계산 <수식>",
-              "description": "수식을 계산해줘요! (+ - * / % ^ 괄호, sqrt·abs·round 같은 함수)",
-              "options": [
-                {
-                  "name": "수식",
-                  "description": "예: (3+4)*2, 2^10, sqrt(144)",
-                  "required": true,
-                  "type": "글자"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "주사위",
-          "description": "주사위를 굴려요! (기본: 6면 주사위 1개)",
-          "usages": [
-            {
-              "sub": null,
-              "syntax": "/주사위 [개수] [면]",
-              "description": "주사위를 굴려요! (기본: 6면 주사위 1개)",
-              "options": [
-                {
-                  "name": "개수",
-                  "description": "굴릴 주사위 개수 (기본 1, 최대 20)",
-                  "required": false,
-                  "type": "정수",
-                  "range": [
-                    1,
-                    20
-                  ]
-                },
-                {
-                  "name": "면",
-                  "description": "주사위 면의 수 (기본 6, 최대 1000)",
-                  "required": false,
-                  "type": "정수",
-                  "range": [
-                    2,
-                    1000
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "운세",
-          "description": "오늘의 운세를 봐요 (하루에 한 가지 결과로 고정돼요)",
-          "usages": [
-            {
-              "sub": null,
-              "syntax": "/운세",
-              "description": "오늘의 운세를 봐요 (하루에 한 가지 결과로 고정돼요)",
-              "options": []
-            }
-          ]
-        },
-        {
-          "name": "서버정보",
-          "description": "이 서버의 정보를 보여줘요!",
-          "usages": [
-            {
-              "sub": null,
-              "syntax": "/서버정보",
+              "sub": "서버정보",
+              "syntax": "/유틸 서버정보",
               "description": "이 서버의 정보를 보여줘요!",
               "options": []
-            }
-          ]
-        },
-        {
-          "name": "유저정보",
-          "description": "내 정보 또는 다른 유저의 정보를 보여줘요!",
-          "usages": [
+            },
             {
-              "sub": null,
-              "syntax": "/유저정보 [유저]",
+              "sub": "유저정보",
+              "syntax": "/유틸 유저정보 [유저]",
               "description": "내 정보 또는 다른 유저의 정보를 보여줘요!",
               "options": [
                 {
@@ -1073,28 +1073,16 @@
                   "type": "유저"
                 }
               ]
-            }
-          ]
-        },
-        {
-          "name": "ping",
-          "description": "봇의 응답 속도와 API 지연 시간을 확인합니다.",
-          "usages": [
+            },
             {
-              "sub": null,
-              "syntax": "/ping",
+              "sub": "핑",
+              "syntax": "/유틸 핑",
               "description": "봇의 응답 속도와 API 지연 시간을 확인합니다.",
               "options": []
-            }
-          ]
-        },
-        {
-          "name": "도움말",
-          "description": "OMNI 명령어 안내 (분류나 명령어를 골라 자세히 볼 수 있어요)",
-          "usages": [
+            },
             {
-              "sub": null,
-              "syntax": "/도움말 [분류] [명령어]",
+              "sub": "도움말",
+              "syntax": "/유틸 도움말 [분류] [명령어]",
               "description": "OMNI 명령어 안내 (분류나 명령어를 골라 자세히 볼 수 있어요)",
               "options": [
                 {
@@ -1107,17 +1095,171 @@
                     "음악",
                     "학교",
                     "편의",
+                    "DM 전용",
                     "서버 운영"
                   ]
                 },
                 {
                   "name": "명령어",
-                  "description": "명령어 하나의 사용법 보기 (예: 랭킹)",
+                  "description": "명령어 하나의 사용법 보기 (예: 도박)",
                   "required": false,
                   "type": "글자",
                   "autocomplete": true
                 }
               ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "dm",
+      "emoji": "💌",
+      "label": "DM 전용",
+      "color": "#D6336C",
+      "blurb": "봇과의 1:1 대화(DM)에서만 쓰는 알림·메모·오락 명령어",
+      "count": 5,
+      "commands": [
+        {
+          "name": "알림",
+          "description": "정해 둔 시간에 DM으로 알려 드려요 (DM 전용)",
+          "usages": [
+            {
+              "sub": "추가",
+              "syntax": "/알림 추가 <시간> <내용>",
+              "description": "알림을 맞춰요",
+              "options": [
+                {
+                  "name": "시간",
+                  "description": "지금부터 얼마 뒤인지 (예: 30분, 2시간 30분, 1일)",
+                  "required": true,
+                  "type": "글자"
+                },
+                {
+                  "name": "내용",
+                  "description": "알려 줄 내용",
+                  "required": true,
+                  "type": "글자"
+                }
+              ]
+            },
+            {
+              "sub": "목록",
+              "syntax": "/알림 목록",
+              "description": "맞춰 둔 알림을 봐요",
+              "options": []
+            },
+            {
+              "sub": "취소",
+              "syntax": "/알림 취소 <번호>",
+              "description": "알림을 취소해요",
+              "options": [
+                {
+                  "name": "번호",
+                  "description": "목록에 나온 번호",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    null
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "메모",
+          "description": "나만 보는 메모장 (DM 전용)",
+          "usages": [
+            {
+              "sub": "추가",
+              "syntax": "/메모 추가 <내용>",
+              "description": "메모를 남겨요",
+              "options": [
+                {
+                  "name": "내용",
+                  "description": "메모 내용 (비밀번호 같은 민감한 정보는 적지 마세요)",
+                  "required": true,
+                  "type": "글자"
+                }
+              ]
+            },
+            {
+              "sub": "목록",
+              "syntax": "/메모 목록",
+              "description": "최근 메모 25개를 봐요",
+              "options": []
+            },
+            {
+              "sub": "삭제",
+              "syntax": "/메모 삭제 <번호>",
+              "description": "메모를 지워요",
+              "options": [
+                {
+                  "name": "번호",
+                  "description": "목록에 나온 번호",
+                  "required": true,
+                  "type": "정수",
+                  "range": [
+                    1,
+                    null
+                  ]
+                }
+              ]
+            },
+            {
+              "sub": "전체삭제",
+              "syntax": "/메모 전체삭제",
+              "description": "내 메모를 모두 지워요",
+              "options": []
+            }
+          ]
+        },
+        {
+          "name": "타로",
+          "description": "타로 카드를 뽑아 봐요 (재미로만 봐 주세요, DM 전용)",
+          "usages": [
+            {
+              "sub": null,
+              "syntax": "/타로 [종류]",
+              "description": "타로 카드를 뽑아 봐요 (재미로만 봐 주세요, DM 전용)",
+              "options": [
+                {
+                  "name": "종류",
+                  "description": "비워 두면 오늘의 카드",
+                  "required": false,
+                  "type": "글자",
+                  "choices": [
+                    "오늘의 카드 (하루 동안 같은 카드)",
+                    "과거·현재·미래 3장"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "업다운",
+          "description": "봇이 생각한 1~100 숫자를 7번 안에 맞혀 보세요 (DM 전용)",
+          "usages": [
+            {
+              "sub": null,
+              "syntax": "/업다운",
+              "description": "봇이 생각한 1~100 숫자를 7번 안에 맞혀 보세요 (DM 전용)",
+              "options": []
+            }
+          ]
+        },
+        {
+          "name": "초성퀴즈",
+          "description": "초성을 보고 낱말을 맞혀 보세요 (DM 전용)",
+          "usages": [
+            {
+              "sub": null,
+              "syntax": "/초성퀴즈",
+              "description": "초성을 보고 낱말을 맞혀 보세요 (DM 전용)",
+              "options": []
             }
           ]
         }

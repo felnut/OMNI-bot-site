@@ -1,8 +1,8 @@
 {
   "name": "OMNI",
-  "command_total": 39,
-  "category_total": 5,
-  "subcommand_total": 76,
+  "command_total": 21,
+  "category_total": 6,
+  "subcommand_total": 100,
   "invite_url": "https://discord.com/oauth2/authorize?client_id=1466808879680848014&permissions=1374459882518&scope=bot%20applications.commands",
   "invite_permissions": "1374459882518",
   "contact": "dev@felnut.com",

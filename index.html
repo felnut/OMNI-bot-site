@@ -3,49 +3,99 @@ layout: wide
 body_class: home
 description: 미니게임·주식 음악 학교 정보 서버 관리를 한 봇에 담은 한국어 디스코드 봇 OMNI. 슬래시 명령어를 무료로 쓸 수 있어요
 ---
-<section class="masthead" aria-labelledby="home-title">
-  <div class="wrap mast-grid">
-    <div class="mast-copy">
+<section class="hero" aria-labelledby="home-title">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      {%- assign latest = site.data.news[0] %}
+      <a class="news-pill" href="{{ '/updates' | relative_url }}"><span class="news-tag">{% include icon.html name="newspaper" %}{{ latest.tag }}</span><span class="news-text">{{ latest.title }} · {{ latest.date }}</span>{% include icon.html name="chevron-down" %}</a>
       <h1 id="home-title">놀고 듣고<br><span>매일을 나누고</span></h1>
       <p class="lead">게임부터 음악과 학교 정보까지,<br>서버의 일상을 함께하는 디스코드 봇 <b>OMNI</b></p>
       <div class="actions">
-        {% if site.data.bot.invite_url %}<a class="btn btn-invite" href="{{ site.data.bot.invite_url | escape }}" target="_blank" rel="noopener noreferrer">서버에 초대하기 {% include icon.html name="arrow-up-right" %}</a>{% endif %}
-        <p class="invite-note">{% include icon.html name="shield-check" %} 관리자 권한 요청 없음 <a href="#permissions">요청 권한 보기</a></p>
+        {% if site.data.bot.invite_url %}<a class="btn" href="{{ site.data.bot.invite_url | escape }}" target="_blank" rel="noopener noreferrer">{% include icon.html name="plus" %}서버에 초대하기</a>{% endif %}
+        <a class="btn btn-ghost" href="{{ '/commands' | relative_url }}">{% include icon.html name="list" %}명령어 보기</a>
       </div>
-      <div class="mast-caption"><span>한국어 디스코드 봇</span><span>모든 기능 무료</span></div>
-      <div class="mast-arc" aria-hidden="true"></div>
+      <p class="invite-note">{% include icon.html name="shield-check" %} 관리자 권한 요청 없음 <a href="#permissions">요청 권한 보기</a></p>
+      <ul class="stat-chips" aria-label="OMNI 한눈에">
+        <li>{% include icon.html name="square-slash" %}<b>{{ site.data.bot.subcommand_total }}</b> 명령어</li>
+        <li>{% include icon.html name="layout-grid" %}<b>{{ site.data.command_groups.size }}</b> 분류</li>
+        <li>{% include icon.html name="gift" %}<b>모두</b> 무료</li>
+      </ul>
     </div>
-    <nav class="function-index" aria-label="기능 바로 탐색">
-      <div class="index-heading"><h2>오늘은<br>어느 쪽으로?</h2><img src="{{ '/assets/omni-mark.svg' | relative_url }}" width="64" height="64" alt=""></div>
-      <ol>
-        {% for c in site.data.commands.categories %}
-        <li><a href="#feature-{{ c.key }}"><span class="index-number">0{{ forloop.index }}</span>{% include category-icon.html category=c.key %}<span>{{ c.label }}</span>{% include icon.html name="arrow-down" %}</a></li>
-        {% endfor %}
-      </ol>
-      <p>다섯 방향의 즐거움이 하나의 서버로</p>
-    </nav>
+
+    <div class="mock" aria-label="디스코드에서 /게임 출석 명령어를 사용하는 모습 (예시)" role="img">
+      <div class="mock-bar"><span class="mock-hash">#</span> 일반</div>
+      <div class="mock-body">
+        <div class="mock-feed" id="mock-feed">
+          <div class="mock-welcome">
+            <span class="mock-badge">#</span>
+            <h2>#일반 채널에 오신 걸 환영해요!</h2>
+            <p>여기는 #일반 채널의 시작이에요.</p>
+          </div>
+          <div class="mock-msg" data-cmd="게임 출석">
+          <p class="mock-used"><i class="mock-dot"></i><b>민수</b> 님이 <em>/게임 출석</em> 사용</p>
+          <div class="mock-bot"><img class="mock-av" src="{{ '/assets/omni-mark.svg' | relative_url }}" width="40" height="40" alt=""><div class="mock-bot-main"><p class="mock-bot-name"><b>OMNI</b><span class="mock-app">앱</span><time>오후 3:42</time></p><div class="mock-embed" style="--bar: #f1c40f"><h3>✅ 출석 완료! Day 3 🔥</h3><p><b>출석 인정!</b><br><br>기본 보상: <b>273 원</b><br>연속 보너스: <b>0 원</b><br><br>🎉 총 <b>273 원</b> 받았어요!</p><dl><div><dt>💰 현재 잔고</dt><dd>12,773 원</dd></div><div><dt>🔥 연속 출석</dt><dd>3일째!</dd></div></dl><small>매일 밤 12시에 초기화돼요!</small></div><p class="mock-eph">나에게만 표시돼요</p></div></div>
+        </div>
+        </div>
+        {%- assign demo = "게임,도박,낚시,복권,주식,음악,학교,유틸" | split: "," %}
+        <ul class="mock-pop" id="mock-pop" hidden>
+          <li class="mock-pop-head">명령어 · OMNI</li>
+          {%- for n in demo %}
+          {%- for g in site.data.command_groups %}{% for sc in g.sections %}{% for cn in sc.commands %}{% if cn == n %}{% assign dg = g %}{% endif %}{% endfor %}{% endfor %}{% endfor %}
+          {%- for c in site.data.commands.categories %}{% for m in c.commands %}{% if m.name == n %}
+          <li class="mock-row" data-name="{{ m.name }}" style="--c: {{ dg.color }}"><span class="mock-ico">{% include icon.html name=dg.icon %}</span><b>/{{ m.name }}</b><span>{{ m.description | remove: '[서버 운영자 전용] ' | remove: '(없으면 기본 차트)' | split: ' (' | first | split: ' · ' | first }}</span></li>
+          {%- endif %}{% endfor %}{% endfor %}
+          {%- endfor %}
+        </ul>
+        <div class="mock-input"><span class="mock-plus">+</span><span class="mock-typed" id="mock-typed">메시지 보내기 #일반</span><span class="mock-caret" aria-hidden="true"></span></div>
+      </div>
+      <template id="mock-t3"><div class="mock-msg" data-cmd="유틸 주사위">
+          <p class="mock-used"><i class="mock-dot"></i><b>민수</b> 님이 <em>/유틸 주사위</em> 사용</p>
+          <div class="mock-bot"><img class="mock-av" src="{{ '/assets/omni-mark.svg' | relative_url }}" width="40" height="40" alt=""><div class="mock-bot-main"><p class="mock-bot-name"><b>OMNI</b><span class="mock-app">앱</span><time>오후 3:42</time></p><p class="mock-text">🎲 <b>1d6</b> 결과: <b>4</b></p></div></div>
+        </div></template>
+    </div>
   </div>
-  <div class="wrap trust-line"><a href="{{ '/privacy' | relative_url }}">저장하는 정보 확인 {% include icon.html name="arrow-right" %}</a></div>
 </section>
+
 <section class="section features-section" id="features">
   <div class="wrap">
-    <div class="section-heading"><div><p class="section-code">01 — OMNI의 다섯 방향</p><h2>따로 있던 즐거움<br>여기서 만나다</h2></div><p class="sub">학교·게임·음악 그리고 서버의 작은 일들<br>필요한 기능을 골라 우리 서버의 일상에 더해 보세요</p></div>
-    <a class="all-commands" href="{{ '/commands' | relative_url }}"><span>원하는 기능 바로 찾아보세요</span><strong>{{ site.data.bot.subcommand_total }}개 명령어 모아보기 {% include icon.html name="arrow-right" %}</strong></a>
-    <div class="feature-ledger">
-      {% for c in site.data.commands.categories %}
-      <article class="feature-row" id="feature-{{ c.key }}">
-        <span class="feature-number" aria-hidden="true">0{{ forloop.index }}</span>
-        <div class="feature-title"><span class="feature-symbol">{% include category-icon.html category=c.key %}</span><h3><a href="{{ '/commands' | relative_url }}#{{ c.key }}">{{ c.label }} {% include icon.html name="arrow-up-right" %}</a></h3>{%- assign n = 0 %}{% for m in c.commands %}{% assign n = n | plus: m.usages.size %}{% endfor %}<span class="count">{{ n }}개 명령어</span></div>
-        <div class="feature-description"><p class="feature-tagline">{% case c.key %}{% when 'game' %}오늘의 출석이 내일의 순위로{% when 'music' %}같이 있으면 같은 노래가 좋아서{% when 'school' %}내일 급식부터 방학까지{% when 'util' %}작은 일은 가볍게 해결하고{% else %}즐거운 서버에는 든든한 운영도{% endcase %}</p><p>{{ c.blurb | remove: ',' | remove: '.' }}</p>
-        <ul class="command-links">{% for m in c.commands limit: 3 %}<li><a href="{{ '/commands/' | append: m.name | relative_url }}">/{{ m.name }}</a></li>{% endfor %}</ul></div>
-      </article>
-      {% endfor %}
+    <div class="section-heading"><div><p class="section-code">OMNI가 하는 일</p><h2>필요한 것만<br>골라서 쓰세요</h2></div><p class="sub">게임·음악·학교·서버 관리까지,<br>우리 서버에 필요한 기능을 하나의 봇으로</p></div>
+    <div class="feat-grid">
+      {%- for g in site.data.command_groups %}
+      {%- assign names = "" | split: "," %}{% for sc in g.sections %}{% assign names = names | concat: sc.commands %}{% endfor %}{% include count-uses.html names=names %}
+      <a class="feat-card" href="{{ '/commands' | relative_url }}#{{ g.key }}" style="--c: {{ g.color }}">
+        <span class="feat-ico">{% include icon.html name=g.icon %}</span>
+        <h3>{{ g.label }}<small>{{ uses }}개</small></h3>
+        <p>{{ g.blurb }}</p>
+        <span class="feat-cmds">{% for n in names limit: 3 %}<code>/{{ n }}</code>{% endfor %}</span>
+      </a>
+      {%- endfor %}
+      <a class="feat-card feat-all" href="{{ '/commands' | relative_url }}">
+        <span class="feat-ico">{% include icon.html name="list" %}</span>
+        <h3>전체 명령어</h3>
+        <p>이름이나 초성으로 {{ site.data.bot.subcommand_total }}개를 한 번에 찾아봐요</p>
+        <span class="feat-more">명령어 보기 {% include icon.html name="arrow-right" %}</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section news-section" id="news">
+  <div class="wrap">
+    <div class="section-heading"><div><p class="section-code">새 소식</p><h2>업데이트를<br>가장 먼저</h2></div><a class="more-link" href="{{ '/updates' | relative_url }}">전체 보기 {% include icon.html name="arrow-right" %}</a></div>
+    <div class="news-grid">
+      {%- for n in site.data.news %}
+      <a class="news-card" href="{{ '/updates' | relative_url }}">
+        <span class="news-meta"><em>{{ n.tag }}</em><time datetime="{{ n.date }}">{{ n.date }}</time></span>
+        <h3>{{ n.title }}</h3>
+        <p>{{ n.text }}</p>
+      </a>
+      {%- endfor %}
     </div>
   </div>
 </section>
 <section class="section" id="faq">
   <div class="wrap">
-    <p class="section-code">02 — 자주 묻는 질문</p>
+    <p class="section-code">자주 묻는 질문</p>
     <h2>궁금한 건<br>여기서 풀고 가요</h2>
     <p class="sub">처음 쓰기 전에 많이 궁금해하는 것들이에요</p>
     <div class="faq">
@@ -82,4 +132,4 @@ description: 미니게임·주식 음악 학교 정보 서버 관리를 한 봇�
   </div>
 </section>
 
-<section class="join-section"><div class="wrap join-grid"><div><p class="section-code">다음은 우리 서버 차례</p><h2>함께할 준비<br>됐나요?</h2></div><div class="join-action"><p>OMNI를 초대하고<br>우리 서버의 다섯 방향을 열어 보세요</p>{% if site.data.bot.invite_url %}<a class="btn" href="{{ site.data.bot.invite_url | escape }}" target="_blank" rel="noopener noreferrer">우리 서버에 초대하기 {% include icon.html name="arrow-up-right" %}</a>{% endif %}<a href="#permissions" class="join-check">초대 전 요청 권한 확인하기</a></div><span class="join-orbit" aria-hidden="true"></span></div></section>
+<section class="join-section"><div class="wrap"><div class="join-card"><div><p class="section-code">다음은 우리 서버 차례</p><h2>함께할 준비<br>됐나요?</h2></div><div class="join-action"><p>OMNI를 초대하고<br>우리 서버의 일상을 열어 보세요</p>{% if site.data.bot.invite_url %}<a class="btn" href="{{ site.data.bot.invite_url | escape }}" target="_blank" rel="noopener noreferrer">{% include icon.html name="plus" %}우리 서버에 초대하기</a>{% endif %}<a href="#permissions" class="join-check">초대 전 요청 권한 확인하기</a></div></div></div></section>
