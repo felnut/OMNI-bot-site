@@ -1,2 +1,4 @@
 node_modules/
 .preview/
+.claude/
+CLAUDE.md

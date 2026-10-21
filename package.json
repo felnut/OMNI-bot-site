@@ -11,7 +11,7 @@
     "update-data": "node ../01_DanBungBot/scripts/build-site-data.js"
   },
   "devDependencies": {
-    "liquidjs": "10.16.7",
+    "liquidjs": "10.30.0",
     "marked": "12.0.2"
   }
 }
