@@ -1,0 +1,80 @@
+[
+  {
+    "key": "game",
+    "label": "게임",
+    "icon": "gamepad-2",
+    "color": "#E8590C",
+    "blurb": "베팅하고 맞히고 뽑는 미니게임",
+    "sections": [
+      { "label": "카드·두뇌", "blurb": "카드와 숫자로 겨루는 게임", "commands": ["숫자야구", "블랙잭", "카드뽑기"] },
+      { "label": "내기·추첨", "blurb": "운에 맡기는 한 판", "commands": ["홀짝", "룰렛", "복권"] }
+    ]
+  },
+  {
+    "key": "economy",
+    "label": "경제",
+    "icon": "coins",
+    "color": "#F08C00",
+    "blurb": "출석하고 돈을 모아 주식으로 불려요",
+    "sections": [
+      { "label": "지갑·출석", "blurb": "내 돈을 확인하고 받고 보내요", "commands": ["돈", "출석", "송금"] },
+      { "label": "순위·투자", "blurb": "전체 순위를 보고 주식으로 불려요", "commands": ["랭킹", "주식"] }
+    ]
+  },
+  {
+    "key": "music",
+    "label": "음악",
+    "icon": "music-2",
+    "color": "#7048E8",
+    "blurb": "음성 채널에서 함께 듣고 곡을 추천받아요",
+    "sections": [
+      { "label": "재생", "blurb": "음성 채널에서 음악 틀기", "commands": ["음악"] },
+      { "label": "추천", "blurb": "서버 분위기에 맞는 곡 찾기", "commands": ["음악추천"] }
+    ]
+  },
+  {
+    "key": "school",
+    "label": "학교",
+    "icon": "school",
+    "color": "#1971C2",
+    "blurb": "급식·시간표·학사일정을 서버에서 바로 확인해요",
+    "sections": [
+      { "label": "학교 설정", "blurb": "서버의 학교 등록과 급식 알림", "commands": ["학교등록", "급식알림"] },
+      { "label": "급식·시간표", "blurb": "오늘 먹을 것과 들을 수업", "commands": ["급식", "시간표"] },
+      { "label": "학사일정", "blurb": "시험·방학 같은 일정 찾기", "commands": ["학사일정", "일정검색"] }
+    ]
+  },
+  {
+    "key": "util",
+    "label": "편의",
+    "icon": "sparkles",
+    "color": "#2F9E44",
+    "blurb": "날짜 세기와 추첨 같은 작은 일들",
+    "sections": [
+      { "label": "날짜", "blurb": "시험·행사까지 남은 날 세기", "commands": ["디데이"] },
+      { "label": "선택 도우미", "blurb": "고르기 어려울 때 무작위로 뽑기", "commands": ["추첨"] }
+    ]
+  },
+  {
+    "key": "admin",
+    "label": "서버 관리",
+    "icon": "shield-check",
+    "color": "#C92A2A",
+    "blurb": "경고·차단·타임아웃과 서버 관리를 도와줘요",
+    "sections": [
+      { "label": "제재", "blurb": "유저에게 경고를 주거나 내보내요", "commands": ["경고", "차단", "추방", "타임아웃"] },
+      { "label": "서버 운영", "blurb": "정리·잠금·기록 채널과 운영자 연락처", "commands": ["서버관리", "로그채널설정", "관리자"] }
+    ]
+  },
+  {
+    "key": "tools",
+    "label": "유틸",
+    "icon": "wrench",
+    "color": "#0C8599",
+    "blurb": "서버·유저 정보와 봇 상태, 도움말",
+    "sections": [
+      { "label": "정보 보기", "blurb": "서버와 유저의 정보 확인", "commands": ["서버정보", "유저정보"] },
+      { "label": "봇 상태·안내", "blurb": "응답 속도 확인과 명령어 안내", "commands": ["ping", "도움말"] }
+    ]
+  }
+]

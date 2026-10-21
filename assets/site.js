@@ -198,10 +198,15 @@
       groups.forEach(function (g) {
         var inCat = !active || g.getAttribute("data-cat") === active;
         var visible = 0;
-        [].forEach.call(g.querySelectorAll(".cmd"), function (c) {
-          var match = inCat && (!term || c.getAttribute("data-text").toLowerCase().indexOf(term) !== -1);
-          c.hidden = !match;
-          if (match) visible += 1;
+        [].forEach.call(g.querySelectorAll(".cmd-sub"), function (sub) {
+          var inSub = 0;
+          [].forEach.call(sub.querySelectorAll(".cmd"), function (c) {
+            var match = inCat && (!term || c.getAttribute("data-text").toLowerCase().indexOf(term) !== -1);
+            c.hidden = !match;
+            if (match) inSub += 1;
+          });
+          sub.hidden = inSub === 0;
+          visible += inSub;
         });
         g.hidden = visible === 0;
         shown += visible;

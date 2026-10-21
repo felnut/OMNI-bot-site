@@ -15,29 +15,32 @@ description: OMNI의 슬래시 명령어를 분류별로 살펴보고 사용법�
     <label class="sr-only" for="q">명령어 검색</label>
     <div class="search-field">{% include icon.html name="search" %}<input class="search" id="q" type="search" placeholder="명령어나 기능으로 검색 (예: 급식, 순위, 차단)" autocomplete="off"></div>
     <div class="filters" id="filters" role="group" aria-label="분류">
-      <button type="button" data-cat="" aria-pressed="true">전체</button>
-      {%- for c in site.data.commands.categories %}
-      <button type="button" data-cat="{{ c.key }}" aria-pressed="false" style="--c: {{ c.color }}">{% include category-icon.html category=c.key %} {{ c.label }}</button>
+      <button type="button" data-cat="" aria-pressed="true">전체 <span class="filter-count">{{ site.data.bot.command_total }}</span></button>
+      {%- for g in site.data.command_groups %}
+      {%- assign total = 0 %}{% for s in g.sections %}{% assign total = total | plus: s.commands.size %}{% endfor %}
+      <button type="button" data-cat="{{ g.key }}" aria-pressed="false" style="--c: {{ g.color }}">{% include icon.html name=g.icon %} {{ g.label }} <span class="filter-count">{{ total }}</span></button>
       {%- endfor %}
     </div>
   </div>
 
   <p id="result-count" class="result-count" role="status">전체 {{ site.data.bot.command_total }}개 명령어</p>
-  {%- for c in site.data.commands.categories %}
-  <section class="cmd-group" id="{{ c.key }}" data-cat="{{ c.key }}" style="--c: {{ c.color }}">
-    <h2>{% include category-icon.html category=c.key %} {{ c.label }} <small>명령어 {{ c.count }}개</small></h2>
-    <p class="blurb">{{ c.blurb }}</p>
-    {%- for m in c.commands %}
-    <details class="cmd" id="cmd-{{ m.name }}" data-text="{{ m.name }} {{ m.description }}{% for u in m.usages %} {{ u.syntax }} {{ u.description }}{% endfor %}">
-      {%- assign op_only = m.description contains '[서버 운영자 전용]' -%}
-      <summary><span class="cmd-name">/{{ m.name }}{% if op_only %}<span class="cmd-badge">운영자 전용</span>{% endif %}</span><span class="cmd-summary">{{ m.description | remove: '[서버 운영자 전용] ' }}</span>{% include icon.html name="plus" %}</summary>
-      <div class="cmd-detail"><p class="cmd-hint">사용법 · <code>&lt;항목&gt;</code> 필수 / <code>[항목]</code> 선택</p>
-      <ul>
-        {%- for u in m.usages %}
-        <li><code>{{ u.syntax }}</code>{% unless m.usages.size == 1 and u.description == m.description %}<span>{{ u.description | remove: '[서버 운영자 전용] ' }}</span>{% endunless %}</li>
-        {%- endfor %}
-      </ul></div>
-    </details>
+  {%- for g in site.data.command_groups %}
+  {%- assign total = 0 %}{% for s in g.sections %}{% assign total = total | plus: s.commands.size %}{% endfor %}
+  <section class="cmd-group" id="{{ g.key }}" data-cat="{{ g.key }}" style="--c: {{ g.color }}">
+    <h2>{% include icon.html name=g.icon %} {{ g.label }} <small>명령어 {{ total }}개</small></h2>
+    <p class="blurb">{{ g.blurb }}</p>
+    {%- for s in g.sections %}
+    {%- assign sub = g.label | append: ' ' | append: s.label %}
+    <div class="cmd-sub">
+      <h3 class="cmd-sub-title">{{ s.label }} <span class="sub-count">{{ s.commands.size }}</span><small>{{ s.blurb }}</small></h3>
+      <div class="cmd-list">
+      {%- for name in s.commands %}
+      {%- for c in site.data.commands.categories %}{% for m in c.commands %}{% if m.name == name %}
+      {%- include command-item.html m=m sub=sub %}
+      {%- endif %}{% endfor %}{% endfor %}
+      {%- endfor %}
+      </div>
+    </div>
     {%- endfor %}
   </section>
   {%- endfor %}
