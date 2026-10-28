@@ -118,7 +118,7 @@ async function build() {
   }
   const escapeXml = (value) => value.replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("'", "&apos;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
   fs.writeFileSync(path.join(target, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...new Set(sitemapUrls)].map((url) => `  <url><loc>${escapeXml(url)}</loc></url>`).join("\n")}\n</urlset>\n`);
-  fs.writeFileSync(path.join(OUT, "robots.txt"), `User-agent: *\nAllow: /\nDisallow: ${baseurl}/api/\nDisallow: ${baseurl}/me\n\nSitemap: ${new URL(baseurl + "/sitemap.xml", siteUrl).href}\n`);
+  fs.writeFileSync(path.join(OUT, "robots.txt"), `User-agent: *\nAllow: /\nDisallow: ${baseurl}/api/\n\nSitemap: ${new URL(baseurl + "/sitemap.xml", siteUrl).href}\n`);
   console.log(`✅ ${pages.length}개 페이지를 렌더링했어요\n${report.join("\n")}`);
 }
 
@@ -126,9 +126,20 @@ const types = { ".txt": "text/plain; charset=utf-8", ".xml": "application/xml; c
 function serve() {
   http
     .createServer((req, res) => {
-      const file = path.join(OUT, decodeURIComponent(req.url.split("?")[0]));
+      let pathname;
+      try {
+        pathname = decodeURIComponent(req.url.split("?")[0]);
+        if (pathname.includes("\0")) throw new URIError("Invalid path");
+      } catch {
+        res.writeHead(400, { "content-type": "text/plain; charset=utf-8" });
+        return res.end("400");
+      }
+      const file = path.join(OUT, pathname);
       // 확장자 없는 주소(/terms)는 .html 파일로 연결한다 (GitHub Pages와 같은 동작)
-      const hit = [file, file + ".html", path.join(file, "index.html")].find((f) => f.startsWith(OUT) && fs.existsSync(f) && fs.statSync(f).isFile());
+      const hit = [file, file + ".html", path.join(file, "index.html")].find((f) => {
+        const relative = path.relative(OUT, f);
+        return relative !== ".." && !relative.startsWith(".." + path.sep) && !path.isAbsolute(relative) && fs.existsSync(f) && fs.statSync(f).isFile();
+      });
       if (!hit) {
         res.writeHead(404, { "content-type": "text/plain; charset=utf-8" });
         return res.end("404");

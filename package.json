@@ -6,6 +6,7 @@
     "node": "24.x"
   },
   "scripts": {
+    "test": "node tools/regression-check.js",
     "preview": "node tools/preview.js",
     "build:check": "node tools/preview.js --build-only",
     "update-data": "node ../01_DanBungBot/scripts/build-site-data.js"

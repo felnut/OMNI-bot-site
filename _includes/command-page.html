@@ -48,7 +48,7 @@
     <section class="cmd-block">
       <h2>사용법</h2>
       <div class="usage-box">
-        <code class="usage-syntax">{{ u.syntax }}</code>
+        <code class="usage-syntax">{{ u.syntax | escape }}</code>
         <button type="button" class="copy-btn" data-copy="{{ label }}" aria-label="{{ label }} 명령어 이름 복사">복사</button>
       </div>
       <p class="cmd-hint"><code>&lt;항목&gt;</code> 은 반드시 입력해야 하고, <code>[항목]</code> 은 생략할 수 있어요.</p>

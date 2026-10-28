@@ -37,7 +37,12 @@ function parseCookies(req) {
   const out = {};
   for (const part of (req.headers.cookie || "").split(";")) {
     const i = part.indexOf("=");
-    if (i > 0) out[part.slice(0, i).trim()] = decodeURIComponent(part.slice(i + 1).trim());
+    if (i <= 0) continue;
+    try {
+      out[part.slice(0, i).trim()] = decodeURIComponent(part.slice(i + 1).trim());
+    } catch {
+      // 잘못 인코딩된 쿠키는 무시하고 나머지 세션 쿠키를 읽는다.
+    }
   }
   return out;
 }

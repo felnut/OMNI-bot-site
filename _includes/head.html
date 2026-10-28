@@ -4,13 +4,16 @@
 <meta name="color-scheme" content="light">
 {%- assign is_home = false -%}
 {%- if page.url == "/" or page.url == "/index.html" -%}{%- assign is_home = true -%}{%- endif -%}
-<title>{% if is_home %}OMNI — 게임부터 급식까지, 슬래시 하나로{% else %}{{ page.title | default: "OMNI" }} · OMNI{% endif %}</title>
-<meta name="description" content="{{ page.description | default: site.description }}">
+{%- assign canonical_path = page.url | replace: '/index.html', '/' | remove: '.html' -%}
+<title>{% if is_home %}OMNI(옴니봇) · 게임·음악·급식 디스코드 봇{% else %}{{ page.title | default: "OMNI" | escape }} · OMNI(옴니봇){% endif %}</title>
+<meta name="description" content="{{ page.description | default: site.description | escape }}">
+<link rel="canonical" href="{{ canonical_path | absolute_url | escape }}">
+{% if page.url == '/me' %}<meta name="robots" content="noindex">{% endif %}
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="OMNI">
-<meta property="og:title" content="{% if is_home %}OMNI — 게임부터 급식까지, 슬래시 하나로{% else %}{{ page.title | default: 'OMNI' }} · OMNI{% endif %}">
-<meta property="og:description" content="{{ page.description | default: site.description }}">
-<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta property="og:title" content="{% if is_home %}OMNI(옴니봇) · 게임·음악·급식 디스코드 봇{% else %}{{ page.title | default: 'OMNI' | escape }} · OMNI(옴니봇){% endif %}">
+<meta property="og:description" content="{{ page.description | default: site.description | escape }}">
+<meta property="og:url" content="{{ canonical_path | absolute_url | escape }}">
 <link rel="icon" type="image/svg+xml" href="{{ '/assets/favicon.svg' | relative_url }}">
 <link rel="preload" href="{{ '/assets/fonts/PretendardVariable.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{{ '/assets/site.css' | relative_url }}">
