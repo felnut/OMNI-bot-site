@@ -51,6 +51,8 @@ Vercel 배포도 같은 렌더러를 사용합니다. `npm run preview`는 파�
 - `cleanUrls: true`로 `/commands`, `/terms` 같은 확장자 없는 주소를 제공합니다.
 - `_config.yml`: `url`은 배포 도메인, `baseurl`은 빈 문자열입니다.
 
+빌드할 때 `/robots.txt`와 `/sitemap.xml`을 자동 생성합니다. 사이트맵에는 홈·명령어 상세·약관 등 공개 페이지가 들어가며, 로그인 페이지 `/me`와 API는 제외합니다. 새 페이지와 배포 도메인 변경도 다음 빌드에 반영됩니다. 배포 후 Google Search Console의 Sitemaps에 `https://omni-bot-site.vercel.app/sitemap.xml`을 제출하세요.
+
 Vercel 프로젝트를 이 저장소의 `main`에 연결하면 푸시할 때 자동 배포합니다. 배포 성공은 Vercel의 Deployments에서 확인하세요. Vercel은 저장소의 Liquid/Markdown 렌더러를 사용하며 Jekyll을 실행하지 않습니다.
 
 ### 디자인

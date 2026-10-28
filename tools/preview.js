@@ -98,6 +98,7 @@ async function build() {
     .filter((f) => /\.(md|html)$/.test(f) && !EXCLUDE.has(f))
     .concat(fs.readdirSync(path.join(ROOT, "commands"), { recursive: true }).filter((f) => f.endsWith(".html")).map((f) => "commands/" + f.split(path.sep).join("/")));
   const report = [];
+  const sitemapUrls = [];
   for (const f of pages) {
     const fm = frontMatter(fs.readFileSync(path.join(ROOT, f), "utf8"));
     const name = path.basename(f, path.extname(f));
@@ -112,12 +113,16 @@ async function build() {
     const outFile = path.join(target, url === "/" ? "index.html" : url.replace(/^\//, "").replace(/\.html$/, "") + ".html");
     fs.mkdirSync(path.dirname(outFile), { recursive: true });
     fs.writeFileSync(outFile, html);
+    if (url !== "/me") sitemapUrls.push(new URL(baseurl + url.replace(/\.html$/, ""), siteUrl).href);
     report.push(`  ${(baseurl + url).padEnd(36)} ${title ?? ""}`);
   }
+  const escapeXml = (value) => value.replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("'", "&apos;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+  fs.writeFileSync(path.join(target, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...new Set(sitemapUrls)].map((url) => `  <url><loc>${escapeXml(url)}</loc></url>`).join("\n")}\n</urlset>\n`);
+  fs.writeFileSync(path.join(OUT, "robots.txt"), `User-agent: *\nAllow: /\nDisallow: ${baseurl}/api/\nDisallow: ${baseurl}/me\n\nSitemap: ${new URL(baseurl + "/sitemap.xml", siteUrl).href}\n`);
   console.log(`✅ ${pages.length}개 페이지를 렌더링했어요\n${report.join("\n")}`);
 }
 
-const types = { ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".svg": "image/svg+xml", ".json": "application/json; charset=utf-8" };
+const types = { ".txt": "text/plain; charset=utf-8", ".xml": "application/xml; charset=utf-8", ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".svg": "image/svg+xml", ".json": "application/json; charset=utf-8" };
 function serve() {
   http
     .createServer((req, res) => {
