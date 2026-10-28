@@ -1,7 +1,7 @@
 title: OMNI
 description: 게임, 음악, 학교 정보, 서버 관리를 한 봇에 담은 한국어 디스코드 봇 OMNI
 lang: ko
-url: https://omni-bot-site.vercel.app
+url: https://omni.felnut.com
 # ⚠️ baseurl은 게시하는 주소에 맞춰야 합니다 (README의 '게시' 참고).
 #  - 프로젝트 사이트(felnut.github.io/저장소이름)면 "/저장소이름"
 #  - 사용자 사이트(felnut.github.io 저장소)나 사용자 지정 도메인이면 ""
